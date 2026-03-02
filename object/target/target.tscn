@@ -8,6 +8,11 @@ size = Vector2(48, 48)
 [node name="Target" type="CharacterBody2D"]
 script = ExtResource("1_0vddg")
 
+[node name="FreezeTimer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xhwiw")
+
 [node name="Box" type="ColorRect" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -22,7 +27,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_xhwiw")
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[node name="Bullseye" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(10, 10)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

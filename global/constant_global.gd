@@ -1,2 +1,4 @@
 const SCREEN_WIDTH := 1920
 const SCREEN_HEIGHT := 1080
+
+const FREEZE_DURATION = 3

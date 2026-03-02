@@ -2,6 +2,7 @@ extends Node
 class_name Wave
 
 signal defeated()
+signal target_defeated(position: Vector2)
 
 const WAVE_SIZE := 3
 var target_factory := TargetFactory.new()
@@ -13,11 +14,19 @@ func _ready():
 func spawn():
 	for i in range(WAVE_SIZE):
 		var target = target_factory.create()
+		target.speed = 100
 		target.position = random_position()
 		target.defeated.connect(_on_target_defeated)
 		add_child(target)
 		
+func get_targets() -> Array[Target]:
+	var targets: Array[Target]
+	for child in get_children():
+		targets.append(child as Target)
+	return targets
+		
 func _on_target_defeated(target: Target):
+	target_defeated.emit(target.position)
 	if !targets_defeated.has(target):
 		targets_defeated.append(target)
 	if targets_defeated.size() == WAVE_SIZE:

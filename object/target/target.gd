@@ -4,16 +4,21 @@ class_name Target
 signal defeated(target: Target)
 
 @onready var box = $Box
+@onready var bullseye = $Bullseye
 
 const BASE_COLOR = Color.WHITE
-const DAMAGE_AMOUNT = 5
+const DEFAULT_SPEED = 100
+const BULLSEYE_RADIUS = 10
+const BULLSEYE_BONUS = 3
 
-var speed: float = 300
+var speed: float = DEFAULT_SPEED
 var health: float = 10
+var freeze_timer: SceneTreeTimer
+var is_frozen := false
 
 func _ready():
-	input_pickable = true
 	velocity = _random_up_direction() * speed
+	bullseye.size = Vector2(BULLSEYE_RADIUS, BULLSEYE_RADIUS)
 
 func _random_up_direction():
 	var x = deg_to_rad(randf_range(0, 180))
@@ -24,27 +29,54 @@ func _physics_process(delta: float) -> void:
 	
 	if col:
 		velocity = velocity.bounce(col.get_normal())
-
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event.is_action_pressed('left_click'):
-		_take_damage(DAMAGE_AMOUNT)
-		
-func _take_damage(damage: float):
-	if health - damage < 0:
-		health = 0
-	else:
-		health -= damage
-		await _flash()
-	if health == 0:
-		_on_defeated()
 		
 func _on_defeated():
 	defeated.emit(self)
 	queue_free()
 	
 #--- Animations ---
-func _flash():
+func _flash(color: Color):
 	var tween = create_tween()
-	tween.tween_property(box, 'modulate', Color.GREEN, 0.1)
+	tween.tween_property(box, 'modulate', color, 0.1)
 	tween.tween_property(box, 'modulate', BASE_COLOR, 0.1)
 	await tween.finished
+	
+#--- Public --- 
+func take_damage(amount: float, is_bullseye: bool):
+	var color: Color
+	if is_bullseye:
+		amount += BULLSEYE_BONUS
+		color = Color.YELLOW
+	else:
+		color = Color.GREEN
+	if health - amount < 0:
+		health = 0
+	else:
+		health -= amount
+		await _flash(color)
+	if health == 0:
+		_on_defeated()
+		
+func freeze(amount: float):
+	is_frozen = true
+	if speed < amount:
+		speed = 0
+	else:
+		speed -= amount
+	update_velocity()
+	var timer = get_tree().create_timer(Constant.FREEZE_DURATION)
+	unfreeze_after_timeout(timer)
+	
+func update_velocity():
+	if velocity.length() != 0:
+		velocity = velocity.normalized() * speed
+	
+func unfreeze_after_timeout(timer: SceneTreeTimer):
+	freeze_timer = timer
+	await freeze_timer.timeout
+	if timer != freeze_timer:
+		return
+	is_frozen = false
+	speed = DEFAULT_SPEED
+	update_velocity()
+	

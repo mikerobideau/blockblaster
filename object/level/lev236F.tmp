@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=4 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
-[ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
 size = Vector2(1920, 68)
@@ -36,7 +35,5 @@ shape = SubResource("RectangleShape2D_cb2ky")
 [node name="Right" type="CollisionShape2D" parent="Walls"]
 position = Vector2(1952, 542.75)
 shape = SubResource("RectangleShape2D_cb2ky")
-
-[node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
 
 [node name="Waves" type="Node" parent="."]
