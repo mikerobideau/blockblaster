@@ -37,6 +37,6 @@ shape = SubResource("RectangleShape2D_cb2ky")
 position = Vector2(1952, 542.75)
 shape = SubResource("RectangleShape2D_cb2ky")
 
-[node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
-
 [node name="Waves" type="Node" parent="."]
+
+[node name="Blaster" parent="." instance=ExtResource("2_w61g8")]

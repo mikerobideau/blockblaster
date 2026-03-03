@@ -4,7 +4,7 @@ class_name Wave
 signal defeated()
 signal target_defeated(position: Vector2)
 
-const WAVE_SIZE := 3
+const WAVE_SIZE := 20
 var target_factory := TargetFactory.new()
 var targets_defeated: Array[Target] = []
 
