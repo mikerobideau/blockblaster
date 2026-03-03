@@ -4,21 +4,35 @@ class_name Target
 signal defeated(target: Target)
 
 @onready var box = $Box
+@onready var hitbox = $HitBox
 @onready var bullseye = $Bullseye
 
 const BASE_COLOR = Color.WHITE
 const DEFAULT_SPEED = 100
-const BULLSEYE_RADIUS = 10
 const BULLSEYE_BONUS = 3
 
-var speed: float = DEFAULT_SPEED
-var health: float = 10
+@export var radius := 100
+@export var bullseye_radius = 10
+@export var speed: float = DEFAULT_SPEED
+@export var health: float = 10
+@export var is_fragment := false
+@export var number_of_fragments = 10
+
 var freeze_timer: SceneTreeTimer
 var is_frozen := false
 
 func _ready():
+	box.size = Vector2(radius, radius)
+	box.position = -box.size/2
+	
+	bullseye.size = Vector2(bullseye_radius, bullseye_radius)
+	bullseye.position = -bullseye.size / 2
+	
+	var rect_shape = hitbox.shape as RectangleShape2D
+	rect_shape.extents = box.size / 2
+	hitbox.position = Vector2.ZERO
+	
 	velocity = _random_up_direction() * speed
-	bullseye.size = Vector2(BULLSEYE_RADIUS, BULLSEYE_RADIUS)
 
 func _random_up_direction():
 	var x = deg_to_rad(randf_range(0, 180))

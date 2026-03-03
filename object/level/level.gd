@@ -3,27 +3,28 @@ class_name Level
 
 var ProjectileScene = preload("res://object/blaster/projectile.tscn")
 
-@onready var waves = $Waves
+@onready var targets = $Targets
 @onready var blaster = $Blaster
 
 const NUMBER_OF_WAVES = 3
+const WAVE_SIZE = 20
 
 var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
 var waves_defeated := 0
+var target_factory := TargetFactory.new()
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	spawn_wave()
+	_spawn()
 	blaster.fired.connect(_on_blaster_fired)
 	
 func _on_blaster_fired(position: Vector2):
 	_add_projectile(position)
-	var wave = get_current_wave()
-	for target in wave.get_targets():
+	for target in targets.get_children():
 		var distance = target.position.distance_to(position)
 		if distance < blaster.radius:
-			var is_bullseye = distance < target.BULLSEYE_RADIUS
+			var is_bullseye = distance < target.bullseye_radius
 			target.take_damage(blaster.damage_amount, is_bullseye)
 			target.freeze(blaster.freeze)	
 	
@@ -32,21 +33,33 @@ func _add_projectile(position: Vector2):
 	projectile.position = position
 	add_child(projectile)
 	
-func spawn_wave():
-	var wave = wave_factory.create()
-	wave.defeated.connect(_on_wave_defeated)
-	wave.target_defeated.connect(_on_target_defeated)
-	waves.add_child(wave)
+func _spawn():
+	for i in range(WAVE_SIZE):
+		var target = target_factory.create()
+		target.speed = 100
+		target.position = _random_position()
+		target.defeated.connect(_on_target_defeated)
+		targets.add_child(target)
 	
-func _on_target_defeated(position: Vector2):
+func _on_target_defeated(target: Target):
+	_add_fragments(target)
+		
+func _on_fragment_defeated(target: Target):
 	var gold = loot_factory.create_gold()
-	gold.position = position
+	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
 	gold.collected.connect(_on_gold_collected)
 	add_child(gold)
 	
+func _add_fragments(target: Target):
+	for i in range(target.number_of_fragments):
+		var fragment = target_factory.create_fragment()
+		fragment.speed = 100
+		fragment.position = target.position
+		fragment.defeated.connect(_on_fragment_defeated)
+		targets.add_child(fragment)
+	
 func _on_gold_collected(gold: Gold):
-	print_debug('Gold collected')
 	gold.queue_free()
 	
 func _on_wave_defeated():
@@ -54,15 +67,15 @@ func _on_wave_defeated():
 	if waves_defeated == NUMBER_OF_WAVES:
 		level_clear()
 	else:
-		for wave in waves.get_children():
+		for wave in targets.get_children():
 			wave.queue_free()
-		spawn_wave()
+		_spawn()
 		
 func get_current_wave() -> Wave:
-	return waves.get_child(0) as Wave
+	return targets.get_child(0) as Wave
 	
 func level_clear():
 	print_debug('Level clear!')
 
-func _process(delta: float) -> void:
-	pass
+func _random_position() -> Vector2:
+	return Vector2(randi() % Constant.SCREEN_WIDTH, randi() % Constant.SCREEN_HEIGHT)
