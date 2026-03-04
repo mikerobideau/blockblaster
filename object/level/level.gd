@@ -5,9 +5,11 @@ var ProjectileScene = preload("res://object/blaster/projectile.tscn")
 
 @onready var targets = $Targets
 @onready var blaster = $Blaster
+@onready var ultimate = $CanvasLayer/Ultimate
 
 const NUMBER_OF_WAVES = 3
 const WAVE_SIZE = 20
+const TARGET_DEFEATED_ULTIMATE_CHARGE = 7
 
 var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
@@ -18,12 +20,13 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	_spawn()
 	blaster.fired.connect(_on_blaster_fired)
+	blaster.set_ultimate(ultimate)
 	
 func _on_blaster_fired(position: Vector2):
 	_add_projectile(position)
 	for target in targets.get_children():
 		var distance = target.position.distance_to(position)
-		if distance < blaster.radius:
+		if distance < blaster.damage_radius:
 			var is_bullseye = distance < target.bullseye_radius
 			target.take_damage(blaster.damage_amount, is_bullseye)
 			target.freeze(blaster.freeze)	
@@ -45,6 +48,7 @@ func _on_target_defeated(target: Target):
 	_add_fragments(target)
 		
 func _on_fragment_defeated(target: Target):
+	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters

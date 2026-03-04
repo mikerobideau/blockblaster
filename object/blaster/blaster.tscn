@@ -9,4 +9,8 @@ script = ExtResource("1_c2crq")
 [node name="FireTimer" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="UltimateTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [node name="Crosshair" parent="." instance=ExtResource("2_enexy")]

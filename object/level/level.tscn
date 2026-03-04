@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=6 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
 [ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
+[ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
 size = Vector2(1920, 68)
@@ -40,3 +41,7 @@ shape = SubResource("RectangleShape2D_cb2ky")
 [node name="Targets" type="Node2D" parent="."]
 
 [node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Ultimate" parent="CanvasLayer" instance=ExtResource("3_bvvwg")]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgdpt4v6ldpdx"]
+
+[ext_resource type="Script" path="res://object/ability/ultimate/ultimate.gd" id="1_bywn4"]
+
+[node name="Ultimate" type="Node2D"]
+script = ExtResource("1_bywn4")
+
+[node name="TickTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Pct" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0%"
