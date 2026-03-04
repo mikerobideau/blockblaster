@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" path="res://object/ability/ultimate/ultimate.gd" id="1_bywn4"]
 
-[node name="Ultimate" type="Node2D"]
+[node name="Ultimate" type="Control"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_bywn4")
 
 [node name="TickTimer" type="Timer" parent="."]
@@ -11,4 +14,5 @@ autostart = true
 [node name="Pct" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
 text = "0%"

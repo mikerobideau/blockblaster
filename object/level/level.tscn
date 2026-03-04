@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=7 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
 [ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
+[ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
 size = Vector2(1920, 68)
@@ -44,4 +45,25 @@ shape = SubResource("RectangleShape2D_cb2ky")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Ultimate" parent="CanvasLayer" instance=ExtResource("3_bvvwg")]
+[node name="BottomBar" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/BottomBar"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Ultimate" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("3_bvvwg")]
+layout_mode = 2
+
+[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
+layout_mode = 2

@@ -4,6 +4,7 @@ class_name Blaster
 signal fired(position: Vector2)
 signal vacuum_started()
 signal vacuum_stopped()
+signal ability1_fired()
 
 @onready var fire_timer = $FireTimer
 @onready var ultimate_timer = $UltimateTimer
@@ -15,7 +16,8 @@ signal vacuum_stopped()
 @export var freeze := 25
 @export var ultimate: Ultimate
 @export var ultimate_damage_amount := 10
-@export var ultimate_damage_radius = 500
+@export var ultimate_damage_radius = 250
+@export var ability1: Cooldown
 
 var damage_amount: int
 var damage_radius: int
@@ -43,9 +45,14 @@ func _input(event):
 		vacuum_stopped.emit()
 	elif event.is_action_pressed('ultimate'):
 		_ultimate()
+	elif event.is_action_pressed('ability1'):
+		_ability1()
 		
 func set_ultimate(ultimate: Ultimate):
 	self.ultimate = ultimate
+
+func set_ability1(ability: Cooldown):
+	ability1 = ability
 
 func _blast():
 	if not firing:
@@ -59,10 +66,12 @@ func _ultimate():
 		damage_radius = ultimate_damage_radius
 		
 func _ultimate_complete():
-	print_debug('ultimate complete')
 	_reset_to_default_damage()
 		
 func _reset_to_default_damage():
 	damage_amount = default_damage_amount
 	damage_radius = default_damage_radius
 	
+func _ability1():
+	ability1_fired.emit(get_global_mouse_position())
+	ability1.reset_cooldown()

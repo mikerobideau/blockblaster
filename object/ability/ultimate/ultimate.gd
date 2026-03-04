@@ -1,10 +1,10 @@
-extends Node2D
+extends Control
 class_name Ultimate
 
 @onready var pct_label = $Pct
 @onready var timer = $TickTimer
 
-@export var full_charge := 2000
+@export var full_charge := 1000
 @export var charge_tick = 5
 
 var current_charge := 0

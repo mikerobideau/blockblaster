@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://iwiqxjsgj2wb"]
+
+[ext_resource type="Script" path="res://object/ability/cooldown/cooldown.gd" id="1_5mwd0"]
+
+[node name="Cooldown" type="Control"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5mwd0")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
+
+[node name="Timer" type="Timer" parent="."]

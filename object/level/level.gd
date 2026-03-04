@@ -5,7 +5,8 @@ var ProjectileScene = preload("res://object/blaster/projectile.tscn")
 
 @onready var targets = $Targets
 @onready var blaster = $Blaster
-@onready var ultimate = $CanvasLayer/Ultimate
+@onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
+@onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 
 const NUMBER_OF_WAVES = 3
 const WAVE_SIZE = 20
@@ -20,7 +21,9 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	_spawn()
 	blaster.fired.connect(_on_blaster_fired)
+	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ultimate(ultimate)
+	blaster.set_ability1(ability1)
 	
 func _on_blaster_fired(position: Vector2):
 	_add_projectile(position)
@@ -31,6 +34,14 @@ func _on_blaster_fired(position: Vector2):
 			target.take_damage(blaster.damage_amount, is_bullseye)
 			target.freeze(blaster.freeze)	
 	
+func _on_ability1_fired(position: Vector2):
+	print_debug('ability 1 fired')
+	_add_projectile(position)
+	for target in targets.get_children():
+		var distance = target.position.distance_to(position)
+		if distance < blaster.ability1.damage_radius:
+			target.take_damage(blaster.ability1.damage_amount, false)
+
 func _add_projectile(position: Vector2):
 	var projectile = ProjectileScene.instantiate()
 	projectile.position = position
