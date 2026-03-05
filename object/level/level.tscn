@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=9 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
 [ext_resource type="PackedScene" uid="uid://dow2arcl6qfyk" path="res://object/ship/ship.tscn" id="2_j5ybf"]
 [ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
 [ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
+[ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
 size = Vector2(1920, 68)
@@ -70,3 +71,7 @@ layout_mode = 2
 
 [node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
 layout_mode = 2
+
+[node name="Health" parent="CanvasLayer/BottomBar" instance=ExtResource("6_c5xln")]
+layout_mode = 2
+size_flags_horizontal = 4

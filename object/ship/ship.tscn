@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dow2arcl6qfyk"]
+[gd_scene load_steps=3 format=3 uid="uid://dow2arcl6qfyk"]
 
 [ext_resource type="Script" path="res://object/ship/ship.gd" id="1_kfrqc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msgp3"]
+size = Vector2(35.3498, 62.0061)
 
 [node name="Ship" type="CharacterBody2D"]
 script = ExtResource("1_kfrqc")
@@ -8,8 +11,15 @@ script = ExtResource("1_kfrqc")
 [node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(40, 60)
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 60.0
 color = Color(0.641934, 0.641934, 0.641934, 1)
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="HitBox" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(20, 30)
+scale = Vector2(1.13155, 0.969752)
+shape = SubResource("RectangleShape2D_msgp3")
 
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(20, 0)

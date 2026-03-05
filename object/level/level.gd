@@ -9,6 +9,7 @@ var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 @onready var blaster = $Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
+@onready var health = $CanvasLayer/BottomBar/Health
 
 const NUMBER_OF_WAVES = 3
 const WAVE_SIZE = 20
@@ -21,11 +22,19 @@ var target_factory := TargetFactory.new()
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	_spawn()
+	ship.take_damage.connect(_on_take_ship_damage)
+	health.game_over.connect(_on_game_over)
 	blaster.fired.connect(_on_blaster_fired)
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
+	_spawn()
+	
+func _on_game_over():
+	print_debug('game over')
+	
+func _on_take_ship_damage(amount: int):
+	health.take_damage(amount)
 
 func _on_blaster_fired(position: Vector2):
 	var start_pos =  ship.emitter.global_position
