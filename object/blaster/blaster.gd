@@ -10,11 +10,13 @@ signal ability1_fired()
 @onready var ultimate_timer = $UltimateTimer
 @onready var crosshair = $Crosshair
 
-@export var default_damage_amount := 4
-@export var default_damage_radius := 100
+@export var default_damage_amount := 3
+@export var default_damage_radius := 10
+@export var speed := 1500
 @export var vacuum_radius := 25
 @export var freeze := 25
 @export var ultimate: Ultimate
+@export var ultimate_duration = 5
 @export var ultimate_damage_amount := 10
 @export var ultimate_damage_radius = 250
 @export var ability1: Cooldown
@@ -27,6 +29,7 @@ var vacuuming := false
 func _ready():
 	_reset_to_default_damage()
 	fire_timer.timeout.connect(_blast)
+	ultimate_timer.wait_time = ultimate_duration
 	ultimate_timer.timeout.connect(_ultimate_complete)
 
 func _input(event):
@@ -61,12 +64,14 @@ func _blast():
 	
 func _ultimate():
 	if ultimate.fully_charged():
+		print_debug('ultimate')
 		ultimate_timer.start()
 		damage_amount = ultimate_damage_amount
 		damage_radius = ultimate_damage_radius
 		
 func _ultimate_complete():
 	_reset_to_default_damage()
+	ultimate.reset_charge()
 		
 func _reset_to_default_damage():
 	damage_amount = default_damage_amount

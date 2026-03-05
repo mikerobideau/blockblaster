@@ -12,13 +12,14 @@ signal collected(gold: Gold)
 
 var being_vacuumed := false
 var blaster: Blaster
+var ship: Ship
 
 func _ready():
 	velocity = _random_up_direction() * speed
 	
 func _process(delta):
 	if being_vacuumed:
-		var destination = blaster.crosshair.global_position
+		var destination = ship.global_position
 		var dir = destination - global_position
 		var dist = dir.length()
 		if dist < blaster.vacuum_radius:
@@ -33,6 +34,9 @@ func _process(delta):
 		)
 		velocity = velocity.limit_length(max_speed)
 	global_position += velocity * delta
+	
+func set_ship(s: Ship):
+	ship = s
 	
 func set_blaster(b: Blaster):
 	blaster = b

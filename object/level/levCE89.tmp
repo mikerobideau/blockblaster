@@ -43,6 +43,7 @@ shape = SubResource("RectangleShape2D_cb2ky")
 [node name="Targets" type="Node2D" parent="."]
 
 [node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(956, 469)
 
 [node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
 

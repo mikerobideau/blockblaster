@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dow2arcl6qfyk"]
+
+[ext_resource type="Script" path="res://object/ship/ship.gd" id="1_kfrqc"]
+
+[node name="Ship" type="CharacterBody2D"]
+script = ExtResource("1_kfrqc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 60)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.641934, 0.641934, 0.641934, 1)
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(20, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Emitter"]
+custom_minimum_size = Vector2(5, 5)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2.5
+offset_right = 2.5
+offset_bottom = 5.0
+grow_horizontal = 2

@@ -2,15 +2,17 @@ extends Node2D
 class_name Level
 
 var ProjectileScene = preload("res://object/blaster/projectile.tscn")
+var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 
 @onready var targets = $Targets
+@onready var ship = $Ship
 @onready var blaster = $Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 
 const NUMBER_OF_WAVES = 3
 const WAVE_SIZE = 20
-const TARGET_DEFEATED_ULTIMATE_CHARGE = 7
+const TARGET_DEFEATED_ULTIMATE_CHARGE = 500
 
 var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
@@ -24,18 +26,19 @@ func _ready() -> void:
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
-	
+
 func _on_blaster_fired(position: Vector2):
-	_add_projectile(position)
-	for target in targets.get_children():
-		var distance = target.position.distance_to(position)
-		if distance < blaster.damage_radius:
-			var is_bullseye = distance < target.bullseye_radius
-			target.take_damage(blaster.damage_amount, is_bullseye)
-			target.freeze(blaster.freeze)	
+	var start_pos =  ship.emitter.global_position
+	var target_pos = get_global_mouse_position()
+	var energy = EnergyScene.instantiate()
+	energy.global_position = start_pos
+	energy.direction = target_pos - start_pos
+	energy.damage = blaster.damage_amount
+	energy.radius = blaster.damage_radius
+	energy.speed = blaster.speed
+	add_child(energy)
 	
 func _on_ability1_fired(position: Vector2):
-	print_debug('ability 1 fired')
 	_add_projectile(position)
 	for target in targets.get_children():
 		var distance = target.position.distance_to(position)
@@ -63,6 +66,7 @@ func _on_fragment_defeated(target: Target):
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
+	gold.set_ship(ship)
 	gold.collected.connect(_on_gold_collected)
 	add_child(gold)
 	
