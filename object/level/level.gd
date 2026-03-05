@@ -33,8 +33,8 @@ func _on_blaster_fired(position: Vector2):
 	var energy = EnergyScene.instantiate()
 	energy.global_position = start_pos
 	energy.direction = target_pos - start_pos
-	energy.damage = blaster.damage_amount
-	energy.radius = blaster.damage_radius
+	energy.damage = blaster.damage
+	energy.radius = blaster.damage
 	energy.speed = blaster.speed
 	add_child(energy)
 	

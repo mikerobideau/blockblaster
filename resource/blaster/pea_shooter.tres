@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlasterData" load_steps=2 format=3 uid="uid://cb88qcsk788x8"]
+
+[ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_e1opw"]
+
+[resource]
+script = ExtResource("1_e1opw")
+name = "Pea Shooter"
+damage = 3
+radius = 10
+speed = 1500
+ultimate_damage = 10
+ultimate_radius = 25
+ultimate_duration = 3
+color = Color(0, 1, 0, 1)
