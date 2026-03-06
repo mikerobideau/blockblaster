@@ -16,6 +16,9 @@ size = Vector2(65, 1216)
 [node name="Level" type="Node2D"]
 script = ExtResource("1_cga3n")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(963, 543)
+
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
 offset_right = 1920.0
@@ -76,3 +79,5 @@ size_flags_horizontal = 4
 
 [node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
 position = Vector2(971, 551)
+
+[node name="Menu" type="Node2D" parent="."]

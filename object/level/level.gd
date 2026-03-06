@@ -3,6 +3,9 @@ class_name Level
 
 var ProjectileScene = preload("res://object/blaster/projectile.tscn")
 var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
+var CardScene = preload("res://object/ui/card/card.tscn")
+var BlasterScene = preload("res://object/blaster/blaster.tscn")
+var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
 
 @onready var targets = $Targets
 @onready var ship = $Ship
@@ -10,6 +13,7 @@ var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/Health
+@onready var menu = $Menu
 
 const NUMBER_OF_WAVES = 3
 const WAVE_SIZE = 3
@@ -37,6 +41,14 @@ func _on_game_over():
 	is_game_over = true
 	print_debug('game over')
 	
+func _pause():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().paused = true
+	
+func _unpause():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	get_tree().paused = false
+	
 func _on_take_ship_damage(amount: int):
 	health.take_damage(amount)
 
@@ -63,13 +75,7 @@ func _add_projectile(position: Vector2):
 	projectile.position = position
 	add_child(projectile)
 	
-func _spawn():
-	for i in range(WAVE_SIZE):
-		var target = target_factory.create_wimpy()
-		target.speed = 100
-		target.position = _random_position()
-		target.defeated.connect(_on_target_defeated)
-		targets.add_child(target)
+func _spawn():	
 	for i in range(WAVE_SIZE):
 		var target = target_factory.create_meteor()
 		target.speed = 100
@@ -78,7 +84,40 @@ func _spawn():
 		targets.add_child(target)
 	
 func _on_target_defeated(target: Target):
-	_add_crystals(target)
+	#_add_crystals(target)
+	_add_loot(target)
+	
+func _add_loot(target: Target):
+	var loot_blaster = loot_factory.create_loot_blaster()
+	loot_blaster.position = target.position
+	loot_blaster.picked_up.connect(_preview_loot_blaster)
+	add_child(loot_blaster)
+		
+func _preview_loot_blaster(loot_blaster: LootBlaster):
+	loot_blaster.queue_free()
+	_pause()
+	var card = CardScene.instantiate()
+	card.added.connect(_on_blaster_added)
+	card.declined.connect(_on_blaster_declined)
+	card.data = pea_shooter
+	var camera = get_viewport().get_camera_2d()
+	var center = camera.get_screen_center_position()
+	card.global_position = center
+	menu.add_child(card)
+		
+func _on_blaster_added(data: BlasterData):
+	var blaster = BlasterScene.instantiate()
+	blaster.data = data
+	_clear_menu()
+	_unpause()
+	
+func _on_blaster_declined():
+	_clear_menu()
+	_unpause()
+	
+func _clear_menu():
+	for child in menu.get_children():
+		child.queue_free()
 		
 func _on_crystal_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)

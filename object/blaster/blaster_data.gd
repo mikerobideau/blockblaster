@@ -2,6 +2,7 @@ extends Resource
 class_name BlasterData
 
 @export var name: String
+@export var icon: Texture2D
 @export var damage: int
 @export var radius: int
 @export var speed: int

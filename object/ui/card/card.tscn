@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://of0molnro06i"]
+
+[ext_resource type="Script" path="res://object/ui/card/card.gd" id="1_1xgfc"]
+[ext_resource type="Texture2D" uid="uid://dmsrm2lmbwklf" path="res://asset/icon/peas.png" id="2_qruk3"]
+[ext_resource type="Texture2D" uid="uid://d3gvyqcmq6ei0" path="res://asset/space-shooter-game-kit/Space-shooter-game-gui/PNG/Ship_Shop/Table_01.png" id="2_xoniu"]
+
+[node name="Card" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_1xgfc")
+
+[node name="CardSprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.0
+offset_top = -255.5
+offset_right = 197.0
+offset_bottom = 255.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xoniu")
+
+[node name="IconSprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -165.0
+offset_right = 347.0
+offset_bottom = 347.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.653564, 0.653564)
+texture = ExtResource("2_qruk3")
+
+[node name="Type" type="Label" parent="."]
+offset_left = -36.0
+offset_top = -247.0
+offset_right = 164.0
+offset_bottom = -185.0
+theme_override_font_sizes/font_size = 24
+text = "BLASTER"
+horizontal_alignment = 2
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+offset_left = -162.0
+offset_top = -175.0
+offset_right = 163.0
+offset_bottom = -108.0
+theme_override_font_sizes/font_size = 48
+text = "Pea Shooter"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Description" type="Label" parent="."]
+offset_left = -162.0
+offset_top = 117.0
+offset_right = 232.0
+offset_bottom = 161.0
+theme_override_font_sizes/font_size = 18
+text = "Damage: 3, Radius: 10
+"
+autowrap_mode = 2
+
+[node name="Decline" type="Button" parent="."]
+offset_left = -46.0
+offset_top = 189.0
+offset_right = 58.0
+offset_bottom = 228.0
+text = "Decline"
+
+[node name="Add" type="Button" parent="."]
+offset_left = 66.0
+offset_top = 189.0
+offset_right = 170.0
+offset_bottom = 228.0
+text = "Add"
+
+[connection signal="pressed" from="Decline" to="." method="_on_decline_pressed"]
+[connection signal="pressed" from="Add" to="." method="_on_add_pressed"]

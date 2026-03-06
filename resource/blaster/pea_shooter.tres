@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="BlasterData" load_steps=2 format=3 uid="uid://cb88qcsk788x8"]
+[gd_resource type="Resource" script_class="BlasterData" load_steps=3 format=3 uid="uid://cb88qcsk788x8"]
 
+[ext_resource type="Texture2D" uid="uid://dmsrm2lmbwklf" path="res://asset/icon/peas.png" id="1_05oet"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_e1opw"]
 
 [resource]
 script = ExtResource("1_e1opw")
 name = "Pea Shooter"
+icon = ExtResource("1_05oet")
 damage = 3
 radius = 25
 speed = 1500

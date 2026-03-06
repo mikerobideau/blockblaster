@@ -39,8 +39,6 @@ func _physics_process(delta: float):
 	rotation = to_cursor.angle() + PI / 2
 
 func _on_body_entered(body: Node):
-	print_debug('ship body entered')
-	print_debug(body.get_class())
 	if body is Target:
 		if !overlapping_targets.has(body):
 			overlapping_targets.append(body)
