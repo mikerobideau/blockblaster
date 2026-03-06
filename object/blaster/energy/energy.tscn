@@ -1,26 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqiousprphhvf"]
+[gd_scene load_steps=4 format=3 uid="uid://dqiousprphhvf"]
 
 [ext_resource type="Script" path="res://object/blaster/energy/energy.gd" id="1_suvay"]
+[ext_resource type="Texture2D" uid="uid://u4l2lpxr1rqr" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Laser_3_4.png" id="2_g46pl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pujh1"]
 
 [node name="Energy" type="Area2D"]
 script = ExtResource("1_suvay")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.5
-offset_top = -2.5
-offset_right = 2.5
-offset_bottom = 2.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.98023e-08, 0)
+scale = Vector2(0.232143, 0.232143)
+texture = ExtResource("2_g46pl")
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_pujh1")

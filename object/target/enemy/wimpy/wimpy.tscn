@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqefimkkxfwb0"]
+
+[ext_resource type="Script" path="res://object/target/enemy/wimpy/wimpy.gd" id="1_uasys"]
+[ext_resource type="Texture2D" uid="uid://b50gwmfnwv0m0" path="res://asset/space-shooter-game-kit/Pirate-spaceship-game-sprites/PNG/Ships/Ship_01.png" id="2_2h14h"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rwypu"]
+radius = 54.0
+height = 165.0
+
+[node name="Wimpy" type="CharacterBody2D"]
+script = ExtResource("1_uasys")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_2h14h")
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(0, -78)
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("CapsuleShape2D_rwypu")
+
+[node name="FireTimer" type="Timer" parent="."]

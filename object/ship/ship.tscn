@@ -1,35 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://dow2arcl6qfyk"]
+[gd_scene load_steps=4 format=3 uid="uid://dow2arcl6qfyk"]
 
 [ext_resource type="Script" path="res://object/ship/ship.gd" id="1_kfrqc"]
+[ext_resource type="Texture2D" uid="uid://bliljwd22kly8" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_01/Ship_LVL_1.png" id="2_ssoch"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_msgp3"]
-size = Vector2(35.3498, 62.0061)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pqrpl"]
+size = Vector2(156, 125)
 
 [node name="Ship" type="CharacterBody2D"]
 script = ExtResource("1_kfrqc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(40, 60)
-offset_right = 40.0
-offset_bottom = 60.0
-color = Color(0.641934, 0.641934, 0.641934, 1)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, 15)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_ssoch")
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(0, -29)
 
 [node name="HitBox" type="Area2D" parent="."]
 
 [node name="HitBox" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(20, 30)
-scale = Vector2(1.13155, 0.969752)
-shape = SubResource("RectangleShape2D_msgp3")
+position = Vector2(0, 14.5)
+shape = SubResource("RectangleShape2D_pqrpl")
 
-[node name="Emitter" type="Node2D" parent="."]
-position = Vector2(20, 0)
+[node name="ProjectileHitBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14.5)
+shape = SubResource("RectangleShape2D_pqrpl")
 
-[node name="ColorRect" type="ColorRect" parent="Emitter"]
-custom_minimum_size = Vector2(5, 5)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -2.5
-offset_right = 2.5
-offset_bottom = 5.0
-grow_horizontal = 2
+[node name="InvulnerabilityOverlay" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.14902, 1)
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]

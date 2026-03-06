@@ -43,8 +43,6 @@ shape = SubResource("RectangleShape2D_cb2ky")
 
 [node name="Targets" type="Node2D" parent="."]
 
-[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-
 [node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -75,3 +73,6 @@ layout_mode = 2
 [node name="Health" parent="CanvasLayer/BottomBar" instance=ExtResource("6_c5xln")]
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(971, 551)

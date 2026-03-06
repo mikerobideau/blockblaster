@@ -12,13 +12,14 @@ var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 @onready var health = $CanvasLayer/BottomBar/Health
 
 const NUMBER_OF_WAVES = 3
-const WAVE_SIZE = 20
+const WAVE_SIZE = 3
 const TARGET_DEFEATED_ULTIMATE_CHARGE = 500
 
 var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
 var waves_defeated := 0
 var target_factory := TargetFactory.new()
+var is_game_over := false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -31,6 +32,9 @@ func _ready() -> void:
 	_spawn()
 	
 func _on_game_over():
+	if is_game_over == true:
+		return
+	is_game_over = true
 	print_debug('game over')
 	
 func _on_take_ship_damage(amount: int):
@@ -43,7 +47,7 @@ func _on_blaster_fired(position: Vector2):
 	energy.global_position = start_pos
 	energy.direction = target_pos - start_pos
 	energy.damage = blaster.damage
-	energy.radius = blaster.damage
+	energy.radius = blaster.radius
 	energy.speed = blaster.speed
 	add_child(energy)
 	
@@ -61,16 +65,22 @@ func _add_projectile(position: Vector2):
 	
 func _spawn():
 	for i in range(WAVE_SIZE):
-		var target = target_factory.create()
+		var target = target_factory.create_wimpy()
+		target.speed = 100
+		target.position = _random_position()
+		target.defeated.connect(_on_target_defeated)
+		targets.add_child(target)
+	for i in range(WAVE_SIZE):
+		var target = target_factory.create_meteor()
 		target.speed = 100
 		target.position = _random_position()
 		target.defeated.connect(_on_target_defeated)
 		targets.add_child(target)
 	
 func _on_target_defeated(target: Target):
-	_add_fragments(target)
+	_add_crystals(target)
 		
-func _on_fragment_defeated(target: Target):
+func _on_crystal_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
@@ -79,13 +89,13 @@ func _on_fragment_defeated(target: Target):
 	gold.collected.connect(_on_gold_collected)
 	add_child(gold)
 	
-func _add_fragments(target: Target):
+func _add_crystals(target: Target):
 	for i in range(target.number_of_fragments):
-		var fragment = target_factory.create_fragment()
-		fragment.speed = 100
-		fragment.position = target.position
-		fragment.defeated.connect(_on_fragment_defeated)
-		targets.add_child(fragment)
+		var crystal = target_factory.create_crystal()
+		crystal.speed = 100
+		crystal.position = target.position
+		crystal.defeated.connect(_on_crystal_defeated)
+		targets.add_child(crystal)
 	
 func _on_gold_collected(gold: Gold):
 	gold.queue_free()

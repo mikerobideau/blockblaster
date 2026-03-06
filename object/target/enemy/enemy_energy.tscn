@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkcbcjcf05wjj"]
+
+[ext_resource type="Script" path="res://object/target/enemy/enemy_energy.gd" id="1_arp1w"]
+[ext_resource type="Texture2D" uid="uid://u4l2lpxr1rqr" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Laser_3_4.png" id="1_kthxm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4lwci"]
+radius = 47.3846
+
+[node name="EnemyEnergy" type="Area2D"]
+script = ExtResource("1_arp1w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.98023e-08, 0)
+scale = Vector2(0.232143, 0.232143)
+texture = ExtResource("1_kthxm")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(2.98023e-08, 0)
+scale = Vector2(0.232143, 0.232143)
+shape = SubResource("CircleShape2D_4lwci")

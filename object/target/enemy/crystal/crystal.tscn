@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4qcn3lvy5y05"]
+
+[ext_resource type="Script" path="res://object/target/enemy/crystal/crystal.gd" id="1_lvw80"]
+[ext_resource type="Texture2D" uid="uid://xkafn23sk0fh" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Props/Crystal_02.png" id="2_ty7de"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wclvs"]
+radius = 13.9651
+height = 78.1021
+
+[node name="Crystal" type="CharacterBody2D"]
+script = ExtResource("1_lvw80")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(7.62939e-06, -6.99998)
+scale = Vector2(0.221239, 0.221239)
+texture = ExtResource("2_ty7de")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -7)
+rotation = -0.698132
+shape = SubResource("CapsuleShape2D_wclvs")

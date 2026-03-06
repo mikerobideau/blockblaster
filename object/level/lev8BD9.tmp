@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5ewwlnp5ljqy"]
+
+[ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
+[ext_resource type="PackedScene" uid="uid://dow2arcl6qfyk" path="res://object/ship/ship.tscn" id="2_j5ybf"]
+[ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
+[ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
+[ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
+[ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
+size = Vector2(1920, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cb2ky"]
+size = Vector2(65, 1216)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_cga3n")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2(959.5, -30)
+shape = SubResource("RectangleShape2D_ibg6m")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 1116)
+shape = SubResource("RectangleShape2D_ibg6m")
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-32, 544)
+shape = SubResource("RectangleShape2D_cb2ky")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1952, 542.75)
+shape = SubResource("RectangleShape2D_cb2ky")
+
+[node name="Targets" type="Node2D" parent="."]
+
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+
+[node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BottomBar" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/BottomBar"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Ultimate" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("3_bvvwg")]
+layout_mode = 2
+
+[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
+layout_mode = 2
+
+[node name="Health" parent="CanvasLayer/BottomBar" instance=ExtResource("6_c5xln")]
+layout_mode = 2
+size_flags_horizontal = 4

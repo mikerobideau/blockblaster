@@ -6,7 +6,7 @@
 script = ExtResource("1_e1opw")
 name = "Pea Shooter"
 damage = 3
-radius = 10
+radius = 25
 speed = 1500
 ultimate_damage = 10
 ultimate_radius = 25

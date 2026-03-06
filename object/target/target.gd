@@ -5,7 +5,7 @@ signal defeated(target: Target)
 
 @onready var box = $Box
 @onready var hitbox = $HitBox
-@onready var bullseye = $Bullseye
+@onready var bullseye = $Bullseyeb
 
 const BASE_COLOR = Color.WHITE
 const DEFAULT_SPEED = 100
@@ -16,33 +16,36 @@ const BULLSEYE_BONUS = 3
 @export var speed: float = DEFAULT_SPEED
 @export var health: float = 10
 @export var is_fragment := false
-@export var number_of_fragments = 10
+@export var number_of_fragments = 3
 
 var freeze_timer: SceneTreeTimer
 var is_frozen := false
-
+	
 func _ready():
-	box.size = Vector2(radius, radius)
-	box.position = -box.size/2
+	_start()
 	
-	bullseye.size = Vector2(bullseye_radius, bullseye_radius)
-	bullseye.position = -bullseye.size / 2
-	
-	var rect_shape = hitbox.shape as RectangleShape2D
-	rect_shape.extents = box.size / 2
-	hitbox.position = Vector2.ZERO
-	
+func _start():
 	velocity = _random_up_direction() * speed
+
+func _on_area_entered(body: Node):
+	print_debug('target area entered')
+	if body is Ship:
+		body.take_damage(1)
 
 func _random_up_direction():
 	var x = deg_to_rad(randf_range(0, 180))
 	return Vector2(cos(x), sin(x)).normalized()
 	
 func _physics_process(delta: float) -> void:
-	var col = move_and_collide(velocity * delta)
+	position += velocity * delta
 	
-	if col:
-		velocity = velocity.bounce(col.get_normal())
+	var screen_rect = Rect2(Vector2.ZERO, get_viewport_rect().size)
+	if position.x < 0 or position.x > screen_rect.size.x:
+		velocity.x = -velocity.x
+		position.x = clamp(position.x, 0, screen_rect.size.x)
+	if position.y < 0 or position.y > screen_rect.size.y:
+		velocity.y = -velocity.y
+		position.y = clamp(position.y, 0, screen_rect.size.y)
 		
 func _on_defeated():
 	defeated.emit(self)
