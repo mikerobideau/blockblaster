@@ -1,10 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7qkuy4g4kk72"]
+[gd_scene load_steps=5 format=3 uid="uid://c7qkuy4g4kk72"]
 
 [ext_resource type="Script" path="res://object/blaster/blaster.gd" id="1_c2crq"]
 [ext_resource type="PackedScene" uid="uid://c2mftptyebvk" path="res://object/blaster/crosshair.tscn" id="2_enexy"]
+[ext_resource type="Texture2D" uid="uid://d26aicfa1hhg3" path="res://asset/space-shooter-game-kit/Space-shooter-game-gui/PNG/Main_UI/Bonus_BTN_02.png" id="2_erg7k"]
+[ext_resource type="Texture2D" uid="uid://dmsrm2lmbwklf" path="res://asset/icon/peas.png" id="3_8qt62"]
 
-[node name="Blaster" type="Node2D"]
+[node name="Blaster" type="Control"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_c2crq")
+
+[node name="Border" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_erg7k")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -3.0
+offset_right = 507.0
+offset_bottom = 509.0
+scale = Vector2(0.225, 0.225)
+texture = ExtResource("3_8qt62")
 
 [node name="FireTimer" type="Timer" parent="."]
 wait_time = 0.2

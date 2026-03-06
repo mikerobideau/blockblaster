@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BlasterData" load_steps=3 format=3 uid="uid://bt7xpbeymdtw"]
+
+[ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_3n2rq"]
+[ext_resource type="Texture2D" uid="uid://rg18w5k4isoa" path="res://asset/icon/eruption.png" id="1_cds8g"]
+
+[resource]
+script = ExtResource("1_3n2rq")
+name = "Lava Shooter"
+icon = ExtResource("1_cds8g")
+damage = 5
+radius = 5
+speed = 1500
+ultimate_damage = 10
+ultimate_radius = 10
+ultimate_duration = 5
+color = Color(0.913725, 0, 0, 1)

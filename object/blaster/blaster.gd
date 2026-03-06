@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 class_name Blaster
 
 var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
@@ -11,6 +11,7 @@ signal ability1_fired()
 @onready var fire_timer = $FireTimer
 @onready var ultimate_timer = $UltimateTimer
 @onready var crosshair = $Crosshair
+@onready var icon = $Icon
 
 @export var data: BlasterData
 @export var vacuum_radius := 25
@@ -18,6 +19,7 @@ signal ability1_fired()
 @export var ultimate: Ultimate
 @export var ability1: Cooldown
 
+var default_blaster = pea_shooter
 var damage: int
 var radius: int
 var speed: int
@@ -25,11 +27,15 @@ var firing := false
 var vacuuming := false
 
 func _ready():
-	data = pea_shooter
-	_reset_to_default_damage()
+	update(default_blaster)
 	fire_timer.timeout.connect(_blast)
-	ultimate_timer.wait_time = data.ultimate_duration
 	ultimate_timer.timeout.connect(_ultimate_complete)
+	
+func update(d: BlasterData):
+	data = d
+	icon.texture = d.icon
+	ultimate_timer.wait_time = d.ultimate_duration
+	_reset_to_default_damage()
 
 func _input(event):
 	if event.is_action_pressed('primary'):

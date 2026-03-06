@@ -23,5 +23,4 @@ func _on_add_pressed() -> void:
 	added.emit(data)
 
 func _on_decline_pressed() -> void:
-	print_debug('declined')
 	declined.emit()

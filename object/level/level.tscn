@@ -46,7 +46,8 @@ shape = SubResource("RectangleShape2D_cb2ky")
 
 [node name="Targets" type="Node2D" parent="."]
 
-[node name="Blaster" parent="." instance=ExtResource("2_w61g8")]
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(971, 551)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -64,20 +65,26 @@ theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 10
 
 [node name="HBox" type="HBoxContainer" parent="CanvasLayer/BottomBar"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Blaster" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("2_w61g8")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 
 [node name="Ultimate" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("3_bvvwg")]
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="Health" parent="CanvasLayer/BottomBar" instance=ExtResource("6_c5xln")]
 layout_mode = 2
 size_flags_horizontal = 4
-
-[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-position = Vector2(971, 551)
+size_flags_vertical = 8
 
 [node name="Menu" type="Node2D" parent="."]

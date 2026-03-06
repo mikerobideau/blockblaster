@@ -6,10 +6,11 @@ var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 var CardScene = preload("res://object/ui/card/card.tscn")
 var BlasterScene = preload("res://object/blaster/blaster.tscn")
 var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
+var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
 @onready var targets = $Targets
 @onready var ship = $Ship
-@onready var blaster = $Blaster
+@onready var blaster = $CanvasLayer/BottomBar/HBox/Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/Health
@@ -99,17 +100,16 @@ func _preview_loot_blaster(loot_blaster: LootBlaster):
 	var card = CardScene.instantiate()
 	card.added.connect(_on_blaster_added)
 	card.declined.connect(_on_blaster_declined)
-	card.data = pea_shooter
+	card.data = lava_shooter
 	var camera = get_viewport().get_camera_2d()
 	var center = camera.get_screen_center_position()
 	card.global_position = center
 	menu.add_child(card)
 		
 func _on_blaster_added(data: BlasterData):
-	var blaster = BlasterScene.instantiate()
-	blaster.data = data
 	_clear_menu()
 	_unpause()
+	blaster.update(data)
 	
 func _on_blaster_declined():
 	_clear_menu()
