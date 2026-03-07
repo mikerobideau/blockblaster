@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=11 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
 [ext_resource type="PackedScene" uid="uid://dow2arcl6qfyk" path="res://object/ship/ship.tscn" id="2_j5ybf"]
 [ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
+[ext_resource type="PackedScene" uid="uid://dv67ab15ga4xy" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
 [ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
 [ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
+[ext_resource type="PackedScene" uid="uid://cusxjldgksg5c" path="res://object/spawner/terminal.tscn" id="8_cvbo2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibg6m"]
 size = Vector2(1920, 68)
@@ -29,11 +31,11 @@ color = Color(0, 0, 0, 1)
 [node name="Walls" type="StaticBody2D" parent="."]
 
 [node name="Top" type="CollisionShape2D" parent="Walls"]
-position = Vector2(959.5, -30)
+position = Vector2(960, -32)
 shape = SubResource("RectangleShape2D_ibg6m")
 
 [node name="Bottom" type="CollisionShape2D" parent="Walls"]
-position = Vector2(960, 1116)
+position = Vector2(960, 1112)
 shape = SubResource("RectangleShape2D_ibg6m")
 
 [node name="Left" type="CollisionShape2D" parent="Walls"]
@@ -47,7 +49,10 @@ shape = SubResource("RectangleShape2D_cb2ky")
 [node name="Targets" type="Node2D" parent="."]
 
 [node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-position = Vector2(971, 551)
+position = Vector2(160, 528)
+
+[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
+position = Vector2(1928, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -88,3 +93,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 
 [node name="Menu" type="Node2D" parent="."]
+
+[node name="Terminal" parent="." instance=ExtResource("8_cvbo2")]
+position = Vector2(-160, 0)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv67ab15ga4xy"]
+
+[ext_resource type="Script" path="res://object/spawner/spawner.gd" id="1_dmjkv"]
+
+[node name="Spawner" type="Node2D"]
+script = ExtResource("1_dmjkv")
+
+[node name="Debug" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Node2D" parent="Spawns"]
+
+[node name="Spawn2" type="Node2D" parent="Spawns"]
+
+[node name="Spawn3" type="Node2D" parent="Spawns"]
+
+[node name="Spawn4" type="Node2D" parent="Spawns"]
+
+[node name="Spawn5" type="Node2D" parent="Spawns"]
+
+[node name="Timer" type="Timer" parent="."]

@@ -5,7 +5,7 @@ signal defeated(target: Area2D)
 
 var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")
 
-const DEFAULT_SPEED = 100
+const DEFAULT_SPEED = 1000
 
 @onready var fire_timer = $FireTimer
 @onready var emitter = $Emitter
@@ -14,7 +14,7 @@ const DEFAULT_SPEED = 100
 @export var radius := 100
 @export var bullseye_radius = 10
 @export var speed: float = DEFAULT_SPEED
-@export var health: float = 10
+@export var health: float = 5
 @export var is_fragment := false
 @export var number_of_fragments = 3
 @export var direction: Vector2
@@ -27,14 +27,17 @@ var sprite_forward_offset := PI / 2
 func _ready():
 	fire_timer.wait_time = fire_timeout
 	fire_timer.timeout.connect(_fire)
-	fire_timer.start()
+	#fire_timer.start()
 
 func _physics_process(delta: float):
-	if not ship:
-		return
-	var target_angle = (ship.global_position - global_position).angle() + sprite_forward_offset
-	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
-
+	#if not ship:
+	#	return
+	#var target_angle = (ship.global_position - global_position).angle() + sprite_forward_offset
+	#rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+	rotation = -PI / 2
+	var direction = Vector2.LEFT
+	global_position += direction * speed * delta
+	
 func _fire():
 	var energy = EnemyEnergyScene.instantiate()
 	energy.global_position = emitter.global_position

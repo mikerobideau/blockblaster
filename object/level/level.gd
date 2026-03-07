@@ -15,10 +15,9 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/Health
 @onready var menu = $Menu
+@onready var spawner = $Spawner
 
-const NUMBER_OF_WAVES = 3
-const WAVE_SIZE = 3
-const TARGET_DEFEATED_ULTIMATE_CHARGE = 500
+const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 
 var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
@@ -27,7 +26,7 @@ var target_factory := TargetFactory.new()
 var is_game_over := false
 
 func _ready() -> void:
-	get_tree().debug_collisions_hint = true
+	#get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
@@ -35,7 +34,7 @@ func _ready() -> void:
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
-	_spawn()
+	spawner.target_defeated.connect(_on_target_defeated)
 	
 func _on_game_over():
 	if is_game_over == true:
@@ -78,18 +77,10 @@ func _add_projectile(position: Vector2):
 	projectile.position = position
 	add_child(projectile)
 	
-func _spawn():	
-	for i in range(WAVE_SIZE):
-		var target = target_factory.create_meteor()
-		target.speed = 100
-		target.position = _random_position()
-		target.defeated.connect(_on_target_defeated)
-		targets.add_child(target)
-	
 #TODO: Will not work for meteor
 func _on_target_defeated(target: EnemyShip):
-	pass
-	#_add_crystals(target)
+	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
+	#_add_crystals(target)	
 	#_add_loot(target)
 	
 func _add_loot(target: Target):
@@ -124,7 +115,6 @@ func _clear_menu():
 		child.queue_free()
 		
 func _on_crystal_defeated(target: Target):
-	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
@@ -142,15 +132,6 @@ func _add_crystals(target: Target):
 	
 func _on_gold_collected(gold: Gold):
 	gold.queue_free()
-	
-func _on_wave_defeated():
-	waves_defeated += 1
-	if waves_defeated == NUMBER_OF_WAVES:
-		level_clear()
-	else:
-		for wave in targets.get_children():
-			wave.queue_free()
-		_spawn()
 		
 func get_current_wave() -> Wave:
 	return targets.get_child(0) as Wave

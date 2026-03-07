@@ -13,7 +13,6 @@ func _ready():
 	_update_label()
 	timer.timeout.connect(_on_timeout)
 	
-	
 func _on_timeout():
 	if current_charge < full_charge:
 		charge(charge_tick)
