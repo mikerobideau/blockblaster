@@ -62,6 +62,7 @@ func _on_blaster_fired(position: Vector2):
 	energy.damage = blaster.damage
 	energy.radius = blaster.radius
 	energy.speed = blaster.speed
+	energy.texture = blaster.data.energy_icon
 	add_child(energy)
 	
 func _on_ability1_fired(position: Vector2):

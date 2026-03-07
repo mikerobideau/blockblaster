@@ -10,11 +10,14 @@ class_name Ammo
 @export var speed := 800
 
 var direction := Vector2.ZERO
+var texture: Texture2D
 
 func _ready():
 	direction = direction.normalized()
 	hit_box.shape.radius = radius
 	
+	if texture:
+		sprite.texture = texture
 	if sprite.texture:
 		var texture_size = sprite.texture.get_size()
 		sprite.scale = Vector2(radius, radius) / texture_size
