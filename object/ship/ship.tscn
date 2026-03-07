@@ -8,11 +8,6 @@ size = Vector2(156, 125)
 
 [node name="Ship" type="Area2D"]
 script = ExtResource("1_kfrqc")
-INVULNERABILITY_TIME = null
-speed = null
-rotation_speed = null
-color = null
-invulnerable_color = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(3.8147e-06, 15)
@@ -22,9 +17,7 @@ texture = ExtResource("2_ssoch")
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(0, -29)
 
-[node name="HitBox" type="Area2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-23, -37, -12, -38, 0, -48, 12, -38, 22, -37, 23, -9, 70, 36, 79, 28, 79, 55, 58, 79, 0, 73, -58, 79, -80, 53, -79, 29, -70, 36, -23, -11)
 
 [node name="ProjectileHitBox" type="CollisionShape2D" parent="."]
@@ -36,3 +29,5 @@ shape = SubResource("RectangleShape2D_pqrpl")
 modulate = Color(1, 1, 0.14902, 1)
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

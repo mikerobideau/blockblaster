@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 class_name Target
 
 signal defeated(target: Target)
@@ -17,6 +17,7 @@ const BULLSEYE_BONUS = 3
 @export var health: float = 10
 @export var is_fragment := false
 @export var number_of_fragments = 3
+@export var direction: Vector2
 
 var freeze_timer: SceneTreeTimer
 var is_frozen := false
@@ -25,26 +26,21 @@ func _ready():
 	_start()
 	
 func _start():
-	velocity = _random_up_direction() * speed
-
-func _on_area_entered(body: Node):
-	print_debug('target area entered')
-	if body is Ship:
-		body.take_damage(1)
+	direction = _random_up_direction()
 
 func _random_up_direction():
 	var x = deg_to_rad(randf_range(0, 180))
 	return Vector2(cos(x), sin(x)).normalized()
 	
 func _physics_process(delta: float) -> void:
-	position += velocity * delta
+	position += speed * direction * delta
 	
 	var screen_rect = Rect2(Vector2.ZERO, get_viewport_rect().size)
 	if position.x < 0 or position.x > screen_rect.size.x:
-		velocity.x = -velocity.x
+		direction.x = -direction.x
 		position.x = clamp(position.x, 0, screen_rect.size.x)
 	if position.y < 0 or position.y > screen_rect.size.y:
-		velocity.y = -velocity.y
+		direction.y = -direction.y
 		position.y = clamp(position.y, 0, screen_rect.size.y)
 		
 func _on_defeated():
@@ -80,13 +76,8 @@ func freeze(amount: float):
 		speed = 0
 	else:
 		speed -= amount
-	update_velocity()
 	var timer = get_tree().create_timer(Constant.FREEZE_DURATION)
 	unfreeze_after_timeout(timer)
-	
-func update_velocity():
-	if velocity.length() != 0:
-		velocity = velocity.normalized() * speed
 	
 func unfreeze_after_timeout(timer: SceneTreeTimer):
 	freeze_timer = timer
@@ -95,5 +86,8 @@ func unfreeze_after_timeout(timer: SceneTreeTimer):
 		return
 	is_frozen = false
 	speed = DEFAULT_SPEED
-	update_velocity()
-	
+
+func _on_area_entered(area: Area2D):
+	print_debug('target area entered')
+	if area is Ship:
+		area.take_damage(1)

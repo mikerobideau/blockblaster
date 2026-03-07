@@ -1,17 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://3e22jn4bcn76"]
+[gd_scene load_steps=3 format=3 uid="uid://3e22jn4bcn76"]
 
 [ext_resource type="Script" path="res://object/target/enemy/meteor/meteor.gd" id="1_ycemt"]
 [ext_resource type="Texture2D" uid="uid://q5h66twlyid7" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_02.png" id="2_idxod"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ck1pm"]
-radius = 134.004
-
-[node name="Meteor" type="CharacterBody2D"]
+[node name="Meteor" type="Area2D"]
 script = ExtResource("1_ycemt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(10, 0)
 texture = ExtResource("2_idxod")
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ck1pm")
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(46, -80, 75, -63, 109, -74, 139, -59, 162, 5, 130, 42, 99, 101, 37, 134, 6, 118, -43, 105, -43, 105, -95, 116, -131, 77, -142, -29, -128, -95, -65, -132, 6, -131)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhwiw"]
 size = Vector2(48, 48)
 
-[node name="Target" type="CharacterBody2D"]
+[node name="Target" type="Area2D"]
 script = ExtResource("1_0vddg")
 
 [node name="FreezeTimer" type="Timer" parent="."]
@@ -41,3 +41,5 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

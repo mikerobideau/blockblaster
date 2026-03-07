@@ -27,8 +27,9 @@ var target_factory := TargetFactory.new()
 var is_game_over := false
 
 func _ready() -> void:
+	get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	ship.take_damage.connect(_on_take_ship_damage)
+	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
 	blaster.fired.connect(_on_blaster_fired)
 	blaster.ability1_fired.connect(_on_ability1_fired)
@@ -50,7 +51,7 @@ func _unpause():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().paused = false
 	
-func _on_take_ship_damage(amount: int):
+func _on_ship_damage_taken(amount: int):
 	health.take_damage(amount)
 
 func _on_blaster_fired(position: Vector2):
@@ -85,9 +86,11 @@ func _spawn():
 		target.defeated.connect(_on_target_defeated)
 		targets.add_child(target)
 	
-func _on_target_defeated(target: Target):
+#TODO: Will not work for meteor
+func _on_target_defeated(target: EnemyShip):
+	pass
 	#_add_crystals(target)
-	_add_loot(target)
+	#_add_loot(target)
 	
 func _add_loot(target: Target):
 	var loot_blaster = loot_factory.create_loot_blaster()

@@ -2,7 +2,7 @@ extends RefCounted
 class_name TargetFactory
 
 var TargetScene = preload("res://object/target/target.tscn")
-var WimpyScene = preload("res://object/target/enemy/wimpy/wimpy.tscn")
+var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 
@@ -23,5 +23,5 @@ func create_meteor_fragment() -> Target:
 	scene.is_fragment = false
 	return scene
 
-func create_wimpy() -> Wimpy:
-	return WimpyScene.instantiate()
+func create_enemy_ship() -> EnemyShip:
+	return EnemyShipScene.instantiate()
