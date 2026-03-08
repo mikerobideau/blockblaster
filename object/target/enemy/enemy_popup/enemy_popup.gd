@@ -5,7 +5,7 @@ var EnergyFireScene = preload("res://object/target/enemy/energy/energy_fire/ener
 
 @export var popup_distance := 50.0
 @export var popup_time := 0.15
-@export var wait_to_pop_down := 2.0
+@export var wait_to_pop_down := 3.0
 
 var start_pos: Vector2
 

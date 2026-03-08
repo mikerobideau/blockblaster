@@ -71,8 +71,13 @@ func _get_free_spawner(region: Array[Node]):
 	return free.pick_random()
 	
 func _spawn():
-	#_spawn_meteor()
-	_spawn_popup()
+	var random = randi() % 3
+	if random == 0:
+		_spawn_meteor()
+	if random == 1:
+		_spawn_enemy_ship()
+	if random == 2:
+		_spawn_popup()
 	
 func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
