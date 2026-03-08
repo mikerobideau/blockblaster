@@ -4,6 +4,7 @@ class_name Spawner
 signal target_defeated(enemy: EnemyShip)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
+var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
@@ -55,10 +56,20 @@ func _position_spawns():
 		left_spawns[i].position = Vector2(0, left_y)
 	
 func _spawn():
-	_spawn_meteor()
+	#_spawn_meteor()
+	_spawn_popup()
 	
 func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
+	var region = spawn_regions.pick_random()
+	var spawner = region.pick_random()
+	enemy_ship.global_position = spawner.global_position
+	enemy_ship.defeated.connect(_on_target_defeated)
+	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
+	add_child(enemy_ship)
+	
+func _spawn_popup():
+	var enemy_ship = PopupScene.instantiate()
 	var region = spawn_regions.pick_random()
 	var spawner = region.pick_random()
 	enemy_ship.global_position = spawner.global_position

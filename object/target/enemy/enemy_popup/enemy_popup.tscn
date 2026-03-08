@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://caht4nddsyb76"]
+
+[ext_resource type="Texture2D" uid="uid://ore5goxk615o" path="res://asset/space-shooter-game-kit/Pirate-spaceship-game-sprites/PNG/Ships/Ship_03.png" id="1_1csas"]
+[ext_resource type="Script" path="res://object/target/enemy/enemy_popup/enemy_popup.gd" id="1_7gyf5"]
+
+[node name="EnemyPopup" type="Area2D"]
+script = ExtResource("1_7gyf5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_1csas")
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(0, -464)
+
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-27, -48, 28, -48, 32, -16, 32, 16, 48, 40, 47, 49, 38, 49, 6, 17, -6, 17, -37, 47, -45, 50, -48, 42, -32, 16, -32, -16)
+
+[node name="FireTimer" type="Timer" parent="."]
