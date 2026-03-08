@@ -112,7 +112,7 @@ func _clear_menu():
 	for child in menu.get_children():
 		child.queue_free()
 		
-func _on_crystal_defeated(target: Area2D):
+func _on_crystal_defeated(target: Target):
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
@@ -120,7 +120,7 @@ func _on_crystal_defeated(target: Area2D):
 	gold.collected.connect(_on_gold_collected)
 	add_child(gold)
 	
-func _add_crystals(target: Area2D):
+func _add_crystals(target: Target):
 	for i in range(target.number_of_fragments):
 		var crystal = target_factory.create_crystal()
 		crystal.speed = 100

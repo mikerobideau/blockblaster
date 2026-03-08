@@ -1,4 +1,4 @@
-extends Area2D
+extends Target
 class_name Crystal
 
 func _ready():
