@@ -32,6 +32,8 @@ func _ready() -> void:
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
+	spawner.set_blaster(blaster)
+	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
 	
 func _on_game_over():
@@ -112,25 +114,6 @@ func _on_blaster_declined():
 func _clear_menu():
 	for child in menu.get_children():
 		child.queue_free()
-		
-func _on_crystal_defeated(target: Target):
-	var gold = loot_factory.create_gold()
-	gold.position = target.position
-	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
-	gold.set_ship(ship)
-	gold.collected.connect(_on_gold_collected)
-	add_child(gold)
-	
-func _add_crystals(target: Target):
-	for i in range(target.number_of_fragments):
-		var crystal = target_factory.create_crystal()
-		crystal.speed = 100
-		crystal.position = target.position
-		crystal.defeated.connect(_on_crystal_defeated)
-		targets.add_child(crystal)
-	
-func _on_gold_collected(gold: Gold):
-	gold.queue_free()
 	
 func level_clear():
 	print_debug('Level clear!')

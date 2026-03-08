@@ -5,6 +5,8 @@ signal target_defeated(enemy: EnemyShip)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
+var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
+var GoldScene = preload("res://object/loot/gold/gold.tscn")
 
 @onready var left_spawn1 = $LeftSpawns/Spawn1
 @onready var left_spawn2 = $LeftSpawns/Spawn2
@@ -16,12 +18,13 @@ var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 @onready var right_spawn3 = $RightSpawns/Spawn3
 @onready var right_spawn4 = $RightSpawns/Spawn4
 @onready var right_spawn5 = $RightSpawns/Spawn5
-
 @onready var timer = $Timer
+
+@export var blaster: Blaster
+@export var ship: Ship
 
 var left_spawns: Array[Node]
 var right_spawns: Array[Node]
-
 var spawn_regions: Array[Array]
 var wait_time = 1
 
@@ -33,6 +36,12 @@ func _ready():
 	timer.wait_time = wait_time
 	timer.timeout.connect(_spawn)
 	timer.start()
+	
+func set_blaster(b: Blaster):
+	blaster = b
+	
+func set_ship(s: Ship):
+	ship = s
 
 func _position_spawns():
 	var right_spacing = Constant.SCREEN_HEIGHT / (right_spawns.size() + 1)
@@ -68,5 +77,31 @@ func _spawn_meteor():
 	meteor.direction = Vector2(x, y).normalized()
 	add_child(meteor)
 	
-func _on_target_defeated(enemy: EnemyShip):
-	target_defeated.emit(enemy)
+func _on_target_defeated(target: Target):
+	target_defeated.emit(target)
+	if target is Meteor:
+		_spawn_crystals(target)
+	if target is Crystal:
+		_spawn_gold(target)
+		
+func _spawn_crystals(target: Target):
+	var count = randi() % 3
+	for i in range(count):
+		var crystal = CrystalScene.instantiate()
+		crystal.global_position = target.global_position
+		crystal.defeated.connect(_on_target_defeated)
+		add_child(crystal)
+		
+func _spawn_gold(target: Target):
+	var count = randi() % 10
+	for i in range(count):
+		var gold = GoldScene.instantiate()
+		gold.global_position = target.global_position
+		gold.set_blaster(blaster)
+		gold.set_ship(ship)
+		gold.collected.connect(_on_gold_collected)
+		add_child(gold)
+		
+func _on_gold_collected(gold: Gold):
+	gold.queue_free()
+	
