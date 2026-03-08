@@ -65,10 +65,11 @@ func _on_blaster_fired(position: Vector2):
 	
 func _on_ability1_fired(position: Vector2):
 	_add_projectile(position)
-	for target in targets.get_children():
-		var distance = target.position.distance_to(position)
-		if distance < blaster.ability1.damage_radius:
-			target.take_damage(blaster.ability1.damage_amount, false)
+	for target in get_children():
+		if target is Target:
+			var distance = target.position.distance_to(position)
+			if distance < blaster.ability1.damage_radius:
+				target.take_damage(blaster.ability1.damage_amount, false)
 
 func _add_projectile(position: Vector2):
 	var projectile = ProjectileScene.instantiate()

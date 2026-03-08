@@ -46,12 +46,7 @@ shape = SubResource("RectangleShape2D_cb2ky")
 position = Vector2(1952, 542.75)
 shape = SubResource("RectangleShape2D_cb2ky")
 
-[node name="Targets" type="Node2D" parent="."]
-
-[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-position = Vector2(960, 576)
-
-[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
+[node name="Menu" type="Node2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -91,7 +86,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="Menu" type="Node2D" parent="."]
-
 [node name="Terminal" parent="." instance=ExtResource("8_cvbo2")]
 position = Vector2(-160, 0)
+
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(960, 576)
+
+[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]

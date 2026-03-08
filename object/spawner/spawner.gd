@@ -4,6 +4,7 @@ class_name Spawner
 signal target_defeated(enemy: EnemyShip)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
+var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 
 @onready var left_spawn1 = $LeftSpawns/Spawn1
 @onready var left_spawn2 = $LeftSpawns/Spawn2
@@ -45,6 +46,9 @@ func _position_spawns():
 		left_spawns[i].position = Vector2(0, left_y)
 	
 func _spawn():
+	_spawn_meteor()
+	
+func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
 	var region = spawn_regions.pick_random()
 	var spawner = region.pick_random()
@@ -52,6 +56,17 @@ func _spawn():
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
 	add_child(enemy_ship)
+	
+func _spawn_meteor():
+	var meteor = MeteorScene.instantiate()
+	var region = spawn_regions.pick_random()
+	var spawner = region.pick_random()
+	meteor.global_position = spawner.global_position
+	meteor.defeated.connect(_on_target_defeated)
+	var y = randf_range(-1, 1)
+	var x = 1 if region == left_spawns else -1
+	meteor.direction = Vector2(x, y).normalized()
+	add_child(meteor)
 	
 func _on_target_defeated(enemy: EnemyShip):
 	target_defeated.emit(enemy)
