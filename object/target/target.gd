@@ -17,6 +17,8 @@ const DEFAULT_SPEED = 500
 @export var health: float = 5
 @export var radius := 100
 @export var bullseye_radius = 10
+@export var damage = 1
+@export var damage_radius := 100
 @export var speed: float = DEFAULT_SPEED
 @export var direction: Vector2
 @export var rotation_speed := 3.0
@@ -50,10 +52,14 @@ func defeat():
 	queue_free()
 
 func _fire():
+	var energy = _get_energy_scene()
+	get_tree().current_scene.add_child(energy)
+
+func _get_energy_scene() -> EnemyEnergy:
 	var energy = EnemyEnergyScene.instantiate()
 	energy.global_position = emitter.global_position
 	energy.direction = Vector2.UP.rotated(rotation)
-	get_tree().current_scene.add_child(energy)
+	return energy
 
 func _remove():
 	queue_free()

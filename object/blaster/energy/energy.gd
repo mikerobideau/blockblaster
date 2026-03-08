@@ -1,7 +1,10 @@
 extends Ammo
 class_name Energy
 
-func _init():
+@export var radius: int
+
+func _ready():
+	direction = direction.normalized()
 	body_entered.connect(_on_body_entered)
 
 func _physics_process(delta: float):

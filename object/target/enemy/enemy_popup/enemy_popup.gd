@@ -1,6 +1,8 @@
 extends Target
 class_name EnemyPopup
 
+var EnergyFireScene = preload("res://object/target/enemy/energy/energy_fire/energy_fire.tscn")
+
 @export var popup_distance := 50.0
 @export var popup_time := 0.15
 @export var wait_to_pop_down := 2.0
@@ -8,6 +10,8 @@ class_name EnemyPopup
 var start_pos: Vector2
 
 func _ready():
+	damage_radius = 100
+	damage = 1
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	_popup()
 	
@@ -28,4 +32,9 @@ func _pop_down():
 
 func _physics_process(delta: float):
 	pass
-	#global_position += direction * speed * delta
+
+func _get_energy_scene():
+	var energy = EnergyFireScene.instantiate()
+	energy.global_position = emitter.global_position
+	energy.direction = Vector2.UP.rotated(rotation)
+	return energy
