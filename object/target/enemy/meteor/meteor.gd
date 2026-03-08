@@ -1,25 +1,12 @@
-extends Area2D
-class_name Meteor
-
-signal defeated(target: Area2D)
-
-const DEFAULT_SPEED = 100
-
-@onready var sprite = $Sprite2D
-@onready var hit_box = $HitBox
-
-@export var radius := 100
-@export var bullseye_radius = 10
-@export var speed: float = DEFAULT_SPEED
-@export var health: float = 10
-@export var is_fragment := false
-@export var number_of_fragments = 3
-@export var direction: Vector2
+extends Target
 
 var size: Vector2
 var base_polygon: PackedVector2Array
 
 func _ready():
+	fire_timer.wait_time = fire_timeout
+	fire_timer.timeout.connect(_fire)
+	fire_timer.start()
 	rotation = randf() * TAU
 	base_polygon = hit_box.polygon
 	_resize()
@@ -48,16 +35,3 @@ func _resize():
 		))
 	
 	hit_box.polygon = scaled_polygon
-
-func take_damage(amount: int):
-	health = clamp(health - amount, 0, health)
-	if health <= 0:
-		defeat()
-
-func _on_area_entered(area: Area2D) -> void:
-	if area is Ship:
-		area.take_damage(1)
-
-func defeat():
-	defeated.emit(self)
-	queue_free()

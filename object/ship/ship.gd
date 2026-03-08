@@ -49,5 +49,5 @@ func set_invulnerable(value: bool):
 		sprite.self_modulate = Color(1, 1, 1, 1)
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is EnemyShip or area is Meteor:
+	if area is Target:
 		area.defeat()

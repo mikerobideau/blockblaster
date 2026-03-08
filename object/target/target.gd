@@ -9,27 +9,27 @@ const DEFAULT_SPEED = 500
 
 @onready var fire_timer = $FireTimer
 @onready var emitter = $Emitter
+@onready var sprite = $Sprite2D
+@onready var hit_box = $HitBox
 @onready var ship = get_tree().current_scene.ship
 
+@export var health: float = 5
 @export var radius := 100
 @export var bullseye_radius = 10
 @export var speed: float = DEFAULT_SPEED
-@export var health: float = 5
-@export var is_fragment := false
-@export var number_of_fragments = 3
 @export var direction: Vector2
-
 @export var rotation_speed := 3.0
 @export var fire_timeout := 2
+@export var is_fragment := false
+@export var number_of_fragments = 3
+
+var sprite_forward_offset := PI / 2
 
 func _ready():
 	fire_timer.wait_time = fire_timeout
 	fire_timer.timeout.connect(_fire)
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	fire_timer.start()
-	
-
-var sprite_forward_offset := PI / 2
 
 func _physics_process(delta: float):
 	global_position += direction * speed * delta
@@ -47,7 +47,6 @@ func defeat():
 	defeated.emit(self)
 	queue_free()
 
-	
 func _fire():
 	var energy = EnemyEnergyScene.instantiate()
 	energy.global_position = emitter.global_position

@@ -14,6 +14,6 @@ func _on_body_entered(body: Node) -> void:
 			queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is EnemyShip or area is Meteor:
+	if area is Target:
 		area.take_damage(damage)
 		queue_free()
