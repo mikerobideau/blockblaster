@@ -1,12 +1,11 @@
 extends RefCounted
 class_name TargetFactory
 
-var TargetScene = preload("res://object/target/target.tscn")
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 
-func create_crystal() -> Target:
+func create_crystal() -> Crystal:
 	return CrystalScene.instantiate()
 
 func create_meteor() -> Meteor:
@@ -18,7 +17,7 @@ func create_meteor() -> Meteor:
 	meteor.number_of_fragments = randf_range(0, 5)
 	return meteor
 
-func create_meteor_fragment() -> Target:
+func create_meteor_fragment() -> Meteor:
 	var scene = MeteorScene.instantiate()
 	scene.is_fragment = false
 	return scene

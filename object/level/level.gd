@@ -8,7 +8,7 @@ var BlasterScene = preload("res://object/blaster/blaster.tscn")
 var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
 var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
-@onready var targets = $Targets
+@onready var targets = $Area2Ds
 @onready var ship = $Ship
 @onready var blaster = $CanvasLayer/BottomBar/HBox/Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
@@ -19,9 +19,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
 const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 
-var wave_factory = WaveFactory.new()
 var loot_factory = LootFactory.new()
-var waves_defeated := 0
 var target_factory := TargetFactory.new()
 var is_game_over := false
 
@@ -83,7 +81,7 @@ func _on_target_defeated(target: EnemyShip):
 	#_add_crystals(target)	
 	#_add_loot(target)
 	
-func _add_loot(target: Target):
+func _add_loot(target: Area2D):
 	var loot_blaster = loot_factory.create_loot_blaster()
 	loot_blaster.position = target.position
 	loot_blaster.picked_up.connect(_preview_loot_blaster)
@@ -114,7 +112,7 @@ func _clear_menu():
 	for child in menu.get_children():
 		child.queue_free()
 		
-func _on_crystal_defeated(target: Target):
+func _on_crystal_defeated(target: Area2D):
 	var gold = loot_factory.create_gold()
 	gold.position = target.position
 	gold.set_blaster(blaster) #TODO: This will cause issues when switching blasters
@@ -122,7 +120,7 @@ func _on_crystal_defeated(target: Target):
 	gold.collected.connect(_on_gold_collected)
 	add_child(gold)
 	
-func _add_crystals(target: Target):
+func _add_crystals(target: Area2D):
 	for i in range(target.number_of_fragments):
 		var crystal = target_factory.create_crystal()
 		crystal.speed = 100
@@ -132,9 +130,6 @@ func _add_crystals(target: Target):
 	
 func _on_gold_collected(gold: Gold):
 	gold.queue_free()
-		
-func get_current_wave() -> Wave:
-	return targets.get_child(0) as Wave
 	
 func level_clear():
 	print_debug('Level clear!')
