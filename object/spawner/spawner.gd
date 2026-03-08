@@ -27,12 +27,14 @@ var GoldScene = preload("res://object/loot/gold/gold.tscn")
 var left_spawns: Array[Node]
 var right_spawns: Array[Node]
 var spawn_regions: Array[Array]
+var spawn_occupied := {}
 var wait_time = 1
 
 func _ready():
 	right_spawns = [right_spawn1, right_spawn2, right_spawn3, right_spawn4, right_spawn5]
 	left_spawns = [left_spawn1, left_spawn2, left_spawn3, left_spawn4, left_spawn5]
 	spawn_regions = [left_spawns, right_spawns]
+	_reset_occupied()
 	_position_spawns()
 	timer.wait_time = wait_time
 	timer.timeout.connect(_spawn)
@@ -43,6 +45,10 @@ func set_blaster(b: Blaster):
 	
 func set_ship(s: Ship):
 	ship = s
+	
+func _reset_occupied():
+	for spawn in left_spawns + right_spawns:
+		spawn_occupied[spawn] = false
 
 func _position_spawns():
 	var right_spacing = Constant.SCREEN_HEIGHT / (right_spawns.size() + 1)
@@ -55,6 +61,15 @@ func _position_spawns():
 		var left_y = left_spacing * (i + 1)
 		left_spawns[i].position = Vector2(0, left_y)
 	
+func _get_free_spawner(region: Array[Node]):
+	var free := []
+	for spawn in region:
+		if not spawn_occupied[spawn]:
+			free.append(spawn)
+	if free.is_empty():
+		return null
+	return free.pick_random()
+	
 func _spawn():
 	#_spawn_meteor()
 	_spawn_popup()
@@ -62,7 +77,7 @@ func _spawn():
 func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
 	var region = spawn_regions.pick_random()
-	var spawner = region.pick_random()
+	var spawner = _get_free_spawner(region)
 	enemy_ship.global_position = spawner.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
@@ -71,16 +86,21 @@ func _spawn_enemy_ship():
 func _spawn_popup():
 	var enemy_ship = PopupScene.instantiate()
 	var region = spawn_regions.pick_random()
-	var spawner = region.pick_random()
+	var spawner = _get_free_spawner(region)
+	if spawner == null:
+		return
+	spawn_occupied[spawner] = true
+	enemy_ship.spawner = spawner
 	enemy_ship.global_position = spawner.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
+	enemy_ship.removed.connect(_on_target_removed)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
 	add_child(enemy_ship)
 	
 func _spawn_meteor():
 	var meteor = MeteorScene.instantiate()
 	var region = spawn_regions.pick_random()
-	var spawner = region.pick_random()
+	var spawner = _get_free_spawner(region)
 	meteor.global_position = spawner.global_position
 	meteor.defeated.connect(_on_target_defeated)
 	var y = randf_range(-1, 1)
@@ -90,10 +110,16 @@ func _spawn_meteor():
 	
 func _on_target_defeated(target: Target):
 	target_defeated.emit(target)
+	if target.spawner:
+		spawn_occupied[target.spawner] = false
 	if target is Meteor:
 		_spawn_crystals(target)
 	if target is Crystal:
 		_spawn_gold(target)
+		
+func _on_target_removed(target: Target):
+	if target.spawner:
+		spawn_occupied[target.spawner] = false
 		
 func _spawn_crystals(target: Target):
 	var count = randi() % 3

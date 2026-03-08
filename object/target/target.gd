@@ -2,6 +2,7 @@ extends Area2D
 class_name Target
 
 signal defeated(target: Area2D)
+signal removed(target: Area2D)
 
 var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")
 
@@ -22,6 +23,7 @@ const DEFAULT_SPEED = 500
 @export var fire_timeout := 2
 @export var is_fragment := false
 @export var number_of_fragments = 3
+@export var spawner: Node
 
 var sprite_forward_offset := PI / 2
 
@@ -52,3 +54,7 @@ func _fire():
 	energy.global_position = emitter.global_position
 	energy.direction = Vector2.UP.rotated(rotation)
 	get_tree().current_scene.add_child(energy)
+
+func _remove():
+	queue_free()
+	removed.emit(self)
