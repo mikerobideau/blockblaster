@@ -9,6 +9,7 @@ var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
 
+@onready var wave_generator = $WaveGenerator
 @onready var left_spawn1 = $LeftSpawns/Spawn1
 @onready var left_spawn2 = $LeftSpawns/Spawn2
 @onready var left_spawn3 = $LeftSpawns/Spawn3
@@ -36,9 +37,27 @@ func _ready():
 	spawn_regions = [left_spawns, right_spawns]
 	_reset_occupied()
 	_position_spawns()
-	timer.wait_time = wait_time
-	timer.timeout.connect(_spawn)
-	timer.start()
+	_start()
+	
+func _start():
+	var wave = wave_generator.generate_calm_wave()
+	for group in wave.enemy_groups:
+		_spawn_enemy_group(group)
+		
+func _spawn_enemy_group(group: EnemyGroupData):
+	var count = randi_range(group.min_count, group.max_count)
+	for i in range(count):
+		var region = spawn_regions.pick_random()
+		var spawn = _get_free_spawner(region)
+		_spawn_enemy_at(group.enemy_type, region, spawn)
+		await get_tree().create_timer(group.wait_inverval).timeout
+	
+func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], spawn: Node):
+	match enemy_type:
+		EnemyGroupData.EnemyType.METEOR:
+			_spawn_meteor(region, spawn)
+		_:
+			pass
 	
 func set_blaster(b: Blaster):
 	blaster = b
@@ -69,26 +88,7 @@ func _get_free_spawner(region: Array[Node]):
 	if free.is_empty():
 		return null
 	return free.pick_random()
-	
-func _spawn():
-	var meteor_shower = preload("res://resource/enemy_group/meteor_shower.tres")
-	_spawn_enemy_group(meteor_shower)
-		
-func _spawn_enemy_group(group: EnemyGroupData):
-	var count = randi_range(group.min_count, group.max_count)
-	for i in range(count):
-		var region = spawn_regions.pick_random()
-		var spawn = _get_free_spawner(region)
-		_spawn_enemy_at(region, spawn)
-	
-func _spawn_enemy_at(region: Array[Node], spawn: Node):
-	_spawn_meteor(region, spawn)
-	#match enemy_type:
-	#	Meteor:
-	#		_spawn_meteor(region, spawn)
-	#	_:
-	#		pass
-	
+
 func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
 	var region = spawn_regions.pick_random()

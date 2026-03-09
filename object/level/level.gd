@@ -13,7 +13,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var blaster = $CanvasLayer/BottomBar/HBox/Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
-@onready var health = $CanvasLayer/BottomBar/Health
+@onready var health = $CanvasLayer/BottomBar/HBox/Health
 @onready var menu = $Menu
 @onready var spawner = $Spawner
 
