@@ -71,13 +71,23 @@ func _get_free_spawner(region: Array[Node]):
 	return free.pick_random()
 	
 func _spawn():
-	var random = randi() % 3
-	if random == 0:
-		_spawn_meteor()
-	if random == 1:
-		_spawn_enemy_ship()
-	if random == 2:
-		_spawn_popup()
+	var meteor_shower = preload("res://resource/enemy_group/meteor_shower.tres")
+	_spawn_enemy_group(meteor_shower)
+		
+func _spawn_enemy_group(group: EnemyGroupData):
+	var count = randi_range(group.min_count, group.max_count)
+	for i in range(count):
+		var region = spawn_regions.pick_random()
+		var spawn = _get_free_spawner(region)
+		_spawn_enemy_at(region, spawn)
+	
+func _spawn_enemy_at(region: Array[Node], spawn: Node):
+	_spawn_meteor(region, spawn)
+	#match enemy_type:
+	#	Meteor:
+	#		_spawn_meteor(region, spawn)
+	#	_:
+	#		pass
 	
 func _spawn_enemy_ship():
 	var enemy_ship = EnemyShipScene.instantiate()
@@ -102,11 +112,9 @@ func _spawn_popup():
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
 	add_child(enemy_ship)
 	
-func _spawn_meteor():
+func _spawn_meteor(region: Array[Node], spawn: Node):
 	var meteor = MeteorScene.instantiate()
-	var region = spawn_regions.pick_random()
-	var spawner = _get_free_spawner(region)
-	meteor.global_position = spawner.global_position
+	meteor.global_position = spawn.global_position
 	meteor.defeated.connect(_on_target_defeated)
 	var y = randf_range(-1, 1)
 	var x = 1 if region == left_spawns else -1

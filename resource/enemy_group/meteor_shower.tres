@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyGroupData" load_steps=2 format=3 uid="uid://dcvic3hwipwdg"]
+
+[ext_resource type="Script" path="res://object/spawner/enemy_group_data.gd" id="1_akrx0"]
+
+[resource]
+resource_name = "Meteor Shower"
+script = ExtResource("1_akrx0")
+min_count = 10
+max_count = 20
