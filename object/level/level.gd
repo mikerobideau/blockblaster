@@ -81,7 +81,6 @@ func _add_projectile(position: Vector2):
 	projectile.position = position
 	add_child(projectile)
 	
-#TODO: Will not work for meteor
 func _on_target_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 	#_add_loot(target)

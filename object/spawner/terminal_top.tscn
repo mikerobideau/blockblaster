@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://btitngoo8omn"]
+
+[ext_resource type="Script" path="res://object/spawner/terminal.gd" id="1_u7n6m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rbdj"]
+size = Vector2(3432, 74)
+
+[node name="Terminal" type="Area2D"]
+script = ExtResource("1_u7n6m")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(1716, 37)
+shape = SubResource("RectangleShape2D_0rbdj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
