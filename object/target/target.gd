@@ -33,7 +33,7 @@ func _ready():
 	fire_timer.wait_time = fire_timeout
 	fire_timer.timeout.connect(_fire)
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
-	fire_timer.start()
+	#fire_timer.start()
 
 func _physics_process(delta: float):
 	global_position += direction * speed * delta

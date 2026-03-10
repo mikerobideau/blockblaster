@@ -8,6 +8,7 @@ signal level_cleared()
 
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
+var EnemyHomingScene = preload("res://object/target/enemy/enemy_homing/enemy_homing.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
@@ -43,7 +44,7 @@ func _ready():
 	_position_spawns()
 	
 func start():
-	var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave(), wave_generator.generate_calm_wave(),  wave_generator.generate_attack_wave()]
+	var waves = [wave_generator.generate_attack_wave()]
 	for wave in waves:
 		incoming_wave_detected.emit(wave)
 		await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
@@ -72,6 +73,8 @@ func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], 
 			_spawn_meteor(region, spawn)
 		EnemyGroupData.EnemyType.ENEMY_SHIP:
 			_spawn_enemy_ship(region, spawn)
+		EnemyGroupData.EnemyType.HOMING:
+			_spawn_homing(region, spawn)
 		EnemyGroupData.EnemyType.POPUP:
 			_spawn_popup(region, spawn)
 		_:
@@ -109,6 +112,13 @@ func _get_free_spawn(region: Array[Node]):
 
 func _spawn_enemy_ship(region: Array[Node], spawn: Node):
 	var enemy_ship = EnemyShipScene.instantiate()
+	enemy_ship.global_position = spawn.global_position
+	enemy_ship.defeated.connect(_on_target_defeated)
+	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
+	add_child(enemy_ship)
+	
+func _spawn_homing(region: Array[Node], spawn: Node):
+	var enemy_ship = EnemyHomingScene.instantiate()
 	enemy_ship.global_position = spawn.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT

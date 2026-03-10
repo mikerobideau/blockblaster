@@ -4,6 +4,7 @@ class_name EnemyGroupData
 enum EnemyType {
 	METEOR,
 	ENEMY_SHIP,
+	HOMING,
 	POPUP
 }
 

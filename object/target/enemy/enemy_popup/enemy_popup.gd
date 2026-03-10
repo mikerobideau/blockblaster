@@ -14,6 +14,7 @@ func _ready():
 	damage = 1
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	_popup()
+	fire_timer.start()
 	
 func _popup():
 	start_pos = global_position
