@@ -3,6 +3,7 @@ class_name Spawner
 
 signal target_defeated(enemy: EnemyShip)
 signal incoming_wave_detected(wave: WaveData)
+signal level_cleared()
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -43,15 +44,16 @@ func start():
 	var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave(), wave_generator.generate_calm_wave(),  wave_generator.generate_attack_wave()]
 	for wave in waves:
 		incoming_wave_detected.emit(wave)
-		await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME).timeout
+		await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
 		await _spawn_wave(wave)	
+	await get_tree().create_timer(Constant.LEVEL_CLEAR_NOTICE_TIME, false).timeout
+	level_cleared.emit()
 	
 func _spawn_wave(wave: WaveData):
 	for group in wave.enemy_groups:
 		await _spawn_enemy_group(group)
 		if wave.wait_interval:
-			print_debug(str(wave.wait_interval))
-			await get_tree().create_timer(wave.wait_interval).timeout
+			await get_tree().create_timer(wave.wait_interval, false).timeout
 		
 func _spawn_enemy_group(group: EnemyGroupData):
 	var count = randi_range(group.min_count, group.max_count)
@@ -59,7 +61,7 @@ func _spawn_enemy_group(group: EnemyGroupData):
 		var region = spawn_regions.pick_random()
 		var spawn = _get_free_spawn(region)
 		_spawn_enemy_at(group.enemy_type, region, spawn)
-		await get_tree().create_timer(group.wait_interval).timeout
+		await get_tree().create_timer(group.wait_interval, false).timeout
 	
 func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], spawn: Node):
 	match enemy_type:
