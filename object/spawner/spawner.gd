@@ -40,22 +40,34 @@ func _ready():
 	_start()
 	
 func _start():
-	var wave = wave_generator.generate_calm_wave()
+	var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave()]
+	for wave in waves:
+		await _spawn_wave(wave)
+		await get_tree().create_timer(1).timeout
+	
+func _spawn_wave(wave: WaveData):
 	for group in wave.enemy_groups:
-		_spawn_enemy_group(group)
+		await _spawn_enemy_group(group)
+		if wave.wait_interval:
+			print_debug(str(wave.wait_interval))
+			await get_tree().create_timer(wave.wait_interval).timeout
 		
 func _spawn_enemy_group(group: EnemyGroupData):
 	var count = randi_range(group.min_count, group.max_count)
 	for i in range(count):
 		var region = spawn_regions.pick_random()
-		var spawn = _get_free_spawner(region)
+		var spawn = _get_free_spawn(region)
 		_spawn_enemy_at(group.enemy_type, region, spawn)
-		await get_tree().create_timer(group.wait_inverval).timeout
+		await get_tree().create_timer(group.wait_interval).timeout
 	
 func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], spawn: Node):
 	match enemy_type:
 		EnemyGroupData.EnemyType.METEOR:
 			_spawn_meteor(region, spawn)
+		EnemyGroupData.EnemyType.ENEMY_SHIP:
+			_spawn_enemy_ship(region, spawn)
+		EnemyGroupData.EnemyType.POPUP:
+			_spawn_popup(region, spawn)
 		_:
 			pass
 	
@@ -80,7 +92,7 @@ func _position_spawns():
 		var left_y = left_spacing * (i + 1)
 		left_spawns[i].position = Vector2(0, left_y)
 	
-func _get_free_spawner(region: Array[Node]):
+func _get_free_spawn(region: Array[Node]):
 	var free := []
 	for spawn in region:
 		if not spawn_occupied[spawn]:
@@ -89,24 +101,20 @@ func _get_free_spawner(region: Array[Node]):
 		return null
 	return free.pick_random()
 
-func _spawn_enemy_ship():
+func _spawn_enemy_ship(region: Array[Node], spawn: Node):
 	var enemy_ship = EnemyShipScene.instantiate()
-	var region = spawn_regions.pick_random()
-	var spawner = _get_free_spawner(region)
-	enemy_ship.global_position = spawner.global_position
+	enemy_ship.global_position = spawn.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
 	add_child(enemy_ship)
 	
-func _spawn_popup():
+func _spawn_popup(region: Array[Node], spawn: Node):
 	var enemy_ship = PopupScene.instantiate()
-	var region = spawn_regions.pick_random()
-	var spawner = _get_free_spawner(region)
-	if spawner == null:
+	if spawn == null:
 		return
-	spawn_occupied[spawner] = true
-	enemy_ship.spawner = spawner
-	enemy_ship.global_position = spawner.global_position
+	spawn_occupied[spawn] = true
+	enemy_ship.spawn = spawn
+	enemy_ship.global_position = spawn.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.removed.connect(_on_target_removed)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
@@ -123,16 +131,16 @@ func _spawn_meteor(region: Array[Node], spawn: Node):
 	
 func _on_target_defeated(target: Target):
 	target_defeated.emit(target)
-	if target.spawner:
-		spawn_occupied[target.spawner] = false
+	if target.spawn:
+		spawn_occupied[target.spawn] = false
 	if target is Meteor:
 		_spawn_crystals(target)
 	if target is Crystal:
 		_spawn_gold(target)
 		
 func _on_target_removed(target: Target):
-	if target.spawner:
-		spawn_occupied[target.spawner] = false
+	if target.spawn:
+		spawn_occupied[target.spawn] = false
 		
 func _spawn_crystals(target: Target):
 	var count = randi() % 3

@@ -25,7 +25,7 @@ const DEFAULT_SPEED = 500
 @export var fire_timeout := 2
 @export var is_fragment := false
 @export var number_of_fragments = 3
-@export var spawner: Node
+@export var spawn: Node
 
 var sprite_forward_offset := PI / 2
 
