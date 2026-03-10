@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://object/spawner/enemy_group_data.gd" id="1_ah551"]
 
 [resource]
+resource_name = "Popup Ships"
 script = ExtResource("1_ah551")
 enemy_type = 2
 min_count = 3

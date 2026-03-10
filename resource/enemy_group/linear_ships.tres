@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://object/spawner/enemy_group_data.gd" id="1_p5hav"]
 
 [resource]
+resource_name = "Linear Ships"
 script = ExtResource("1_p5hav")
 enemy_type = 1
 min_count = 3

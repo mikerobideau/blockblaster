@@ -10,6 +10,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
 @onready var targets = $Area2Ds
 @onready var ship = $Ship
+@onready var incoming_wave_label = $CanvasLayer/IncomingWave/Label
 @onready var blaster = $CanvasLayer/BottomBar/HBox/Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
@@ -35,6 +36,8 @@ func _ready() -> void:
 	spawner.set_blaster(blaster)
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
+	spawner.incoming_wave_detected.connect(_on_incoming_wave)
+	spawner.start()
 	
 func _on_game_over():
 	if is_game_over == true:
@@ -113,6 +116,14 @@ func _on_blaster_declined():
 func _clear_menu():
 	for child in menu.get_children():
 		child.queue_free()
+	
+func _on_incoming_wave(wave: WaveData):
+	incoming_wave_label.visible = true
+	for i in range(Constant.INCOMING_WAVE_NOTICE_TIME, 0, -1):
+		incoming_wave_label.visible = true
+		incoming_wave_label.text = 'Incoming ' + wave.resource_name + ' in %d ' % i
+		await get_tree().create_timer(1.0).timeout
+	incoming_wave_label.visible = false
 	
 func level_clear():
 	print_debug('Level clear!')

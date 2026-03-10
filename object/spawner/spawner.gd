@@ -2,6 +2,7 @@ extends Node2D
 class_name Spawner
 
 signal target_defeated(enemy: EnemyShip)
+signal incoming_wave_detected(wave: WaveData)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -37,13 +38,13 @@ func _ready():
 	spawn_regions = [left_spawns, right_spawns]
 	_reset_occupied()
 	_position_spawns()
-	_start()
 	
-func _start():
-	var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave()]
+func start():
+	var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave(), wave_generator.generate_calm_wave(),  wave_generator.generate_attack_wave()]
 	for wave in waves:
-		await _spawn_wave(wave)
-		await get_tree().create_timer(1).timeout
+		incoming_wave_detected.emit(wave)
+		await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME).timeout
+		await _spawn_wave(wave)	
 	
 func _spawn_wave(wave: WaveData):
 	for group in wave.enemy_groups:

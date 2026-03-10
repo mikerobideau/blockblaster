@@ -52,6 +52,24 @@ shape = SubResource("RectangleShape2D_cb2ky")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="IncomingWave" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_right = 121.0
+offset_bottom = 53.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/IncomingWave"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
 [node name="BottomBar" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 12
 anchor_top = 1.0
