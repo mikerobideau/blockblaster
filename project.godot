@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Constant="*res://global/constant_global.gd"
+Sound="*res://global/sound_global.gd"
 
 [display]
 
