@@ -19,6 +19,6 @@ func _on_body_entered(body: Node) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area is Target:
 		area.take_damage(damage)
-		Sound.play('enemy_hit')
+		Sound.play(Sound.Effect.ENEMY_HIT)
 		queue_free()
 		
