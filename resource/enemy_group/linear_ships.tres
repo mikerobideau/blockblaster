@@ -6,6 +6,6 @@
 resource_name = "Linear Ships"
 script = ExtResource("1_p5hav")
 enemy_type = 1
-min_count = 3
-max_count = 3
+min_count = 1
+max_count = 1
 wait_interval = 1.0

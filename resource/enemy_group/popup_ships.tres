@@ -6,6 +6,6 @@
 resource_name = "Popup Ships"
 script = ExtResource("1_ah551")
 enemy_type = 2
-min_count = 3
-max_count = 3
+min_count = 1
+max_count = 1
 wait_interval = 1.0

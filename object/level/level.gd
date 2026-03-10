@@ -38,6 +38,7 @@ func _ready() -> void:
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
+	spawner.level_cleared_countdown_started.connect(_on_level_cleared_countdown_started)
 	spawner.level_cleared.connect(_on_level_clear)
 	spawner.start()
 	
@@ -50,6 +51,7 @@ func _on_game_over():
 	
 func _on_level_clear():
 	_pause()
+	incoming_wave_label.visible = false
 	game_state_label.text = 'LEVEL CLEAR'
 	
 func _pause():
@@ -123,11 +125,17 @@ func _clear_menu():
 	for child in menu.get_children():
 		child.queue_free()
 	
+func _on_level_cleared_countdown_started():
+		_update_incoming_message_label('Level clear', Constant.LEVEL_CLEAR_NOTICE_TIME)
+	
 func _on_incoming_wave(wave: WaveData):
+	_update_incoming_message_label('Incoming ' + wave.resource_name, Constant.INCOMING_WAVE_NOTICE_TIME)
+
+func _update_incoming_message_label(text: String, countdown):
 	incoming_wave_label.visible = true
-	for i in range(Constant.INCOMING_WAVE_NOTICE_TIME, 0, -1):
+	for i in range(countdown, 0, -1):
 		incoming_wave_label.visible = true
-		incoming_wave_label.text = 'Incoming ' + wave.resource_name + ' in %d ' % i
+		incoming_wave_label.text = text + ' in %d... ' % i
 		await get_tree().create_timer(1.0, false).timeout
 	incoming_wave_label.visible = false
 

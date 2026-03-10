@@ -3,7 +3,9 @@ class_name Spawner
 
 signal target_defeated(enemy: EnemyShip)
 signal incoming_wave_detected(wave: WaveData)
+signal level_cleared_countdown_started()
 signal level_cleared()
+
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -46,6 +48,7 @@ func start():
 		incoming_wave_detected.emit(wave)
 		await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
 		await _spawn_wave(wave)	
+	level_cleared_countdown_started.emit()
 	await get_tree().create_timer(Constant.LEVEL_CLEAR_NOTICE_TIME, false).timeout
 	level_cleared.emit()
 	
