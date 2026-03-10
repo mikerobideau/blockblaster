@@ -19,4 +19,6 @@ func _on_body_entered(body: Node) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area is Target:
 		area.take_damage(damage)
+		get_node("/root/Level/Sound").play()
 		queue_free()
+		

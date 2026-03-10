@@ -14,7 +14,7 @@ const DEFAULT_SPEED = 500
 @onready var hit_box = $HitBox
 @onready var ship = get_tree().current_scene.ship
 
-@export var health: float = 5
+@export var health: float = 2
 @export var radius := 100
 @export var bullseye_radius = 10
 @export var damage = 1

@@ -6,6 +6,6 @@
 resource_name = "Meteor Shower"
 script = ExtResource("1_akrx0")
 enemy_type = 0
-min_count = 1
-max_count = 1
+min_count = 5
+max_count = 5
 wait_interval = 1.0
