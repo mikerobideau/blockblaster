@@ -52,6 +52,8 @@ func _spawn_event(event: TimelineEvent):
 	match event.scene:
 		EnemyGroupData.EnemyType.PATROL:
 			scene = PatrolScene.instantiate()
+		EnemyGroupData.EnemyType.POPUP:
+			scene = PopupScene.instantiate()
 		EnemyGroupData.EnemyType.METEOR:
 			scene = MeteorScene.instantiate()
 		_:

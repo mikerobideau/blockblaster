@@ -39,12 +39,10 @@ func _ready() -> void:
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
-	spawner.level_cleared_countdown_started.connect(_on_level_cleared_countdown_started)
-	spawner.level_cleared.connect(_on_level_clear)
 	_next_wave()
 	
 func _next_wave():
-	spawner.start_wave(wave_generator.generate_calm_wave())	
+	spawner.start_wave(wave_generator.generate_attack_wave())	
 
 func _on_game_over():
 	if is_game_over == true:

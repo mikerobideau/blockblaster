@@ -5,18 +5,20 @@ var EnergyFireScene = preload("res://object/target/enemy/energy/energy_fire/ener
 
 @export var popup_distance := 50.0
 @export var popup_time := 0.15
-@export var wait_to_pop_down := 3.0
+@export var wait_to_pop_down := 2.0
 
 var start_pos: Vector2
 
 func _ready():
 	damage_radius = 100
 	damage = 1
+	direction = Vector2.RIGHT if global_position.x < Constant.SCREEN_WIDTH / 2 else Vector2.LEFT
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	_popup()
 	fire_timer.start()
 	
 func _popup():
+
 	start_pos = global_position
 	var end_pos = global_position + direction * popup_distance
 	var tween = create_tween()
