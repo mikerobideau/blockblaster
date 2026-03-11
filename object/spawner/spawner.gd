@@ -15,20 +15,35 @@ var GoldScene = preload("res://object/loot/gold/gold.tscn")
 @export var blaster: Blaster
 @export var ship: Ship
 
-var timeline = preload("res://resource/timeline/level1_timeline.tres")
 var event_index := 0
+var current_wave: WaveData
+var start_time := 0.0
 
 func  _ready():
 	pass
 	
+func start_wave(wave: WaveData):
+	current_wave = wave
+	event_index = 0
+	start_time = Time.get_ticks_msec() / 1000.0
+	print_debug('Starting wave')
+	
 func _process(delta):
-	var time = Time.get_ticks_msec() / 1000.0
-	if event_index >= timeline.events.size():
+	if current_wave == null:
 		return
 
-	while event_index < timeline.events.size() and timeline.events[event_index].time <= time:
-		_spawn_event(timeline.events[event_index])
+	var time = Time.get_ticks_msec() / 1000.0
+	var events = current_wave.timeline.events
+
+	while event_index < events.size() and events[event_index].time <= time:
+		_spawn_event(events[event_index])
 		event_index += 1
+		
+	if event_index >= events.size():
+		_wave_complete()
+		
+func _wave_complete():
+	current_wave = null
 		
 func _spawn_event(event: TimelineEvent):
 	var scene: Area2D
@@ -40,7 +55,6 @@ func _spawn_event(event: TimelineEvent):
 		_:
 			return
 	scene.global_position = event.position
-	scene.direction = Vector2.RIGHT
 	if scene is Target:
 		scene.defeated.connect(_on_target_defeated)
 	add_child(scene)

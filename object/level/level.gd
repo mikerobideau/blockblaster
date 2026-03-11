@@ -24,6 +24,7 @@ const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 var loot_factory = LootFactory.new()
 var target_factory := TargetFactory.new()
 var is_game_over := false
+var wave_generator = WaveGenerator.new()
 
 func _ready() -> void:
 	#get_tree().debug_collisions_hint = true
@@ -40,7 +41,11 @@ func _ready() -> void:
 	#spawner.incoming_wave_detected.connect(_on_incoming_wave)
 	#spawner.level_cleared_countdown_started.connect(_on_level_cleared_countdown_started)
 	#spawner.level_cleared.connect(_on_level_clear)
+	_next_wave()
 	
+func _next_wave():
+	spawner.start_wave(wave_generator.generate_calm_wave())	
+
 func _on_game_over():
 	if is_game_over == true:
 		return
