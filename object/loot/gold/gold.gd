@@ -58,7 +58,6 @@ func _draw():
 	#draw_circle(Vector2.ZERO, radius, color)
 
 func _on_area_entered(area: Area2D) -> void:
-	print_debug('on area entered')
 	if area is Ship:
 		being_vacuumed = true
 		

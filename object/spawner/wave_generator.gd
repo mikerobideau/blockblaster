@@ -19,7 +19,8 @@ func generate_calm_wave():
 	var timeline = Timeline.new()
 	for i in range(num_meteors):
 		var event := TimelineEvent.new()
-		event.time = randi_range(i, i + 2)
+		#event.time = randi_range(i, i + 2)
+		event.time = i
 		event.scene = EnemyGroupData.EnemyType.METEOR
 		event.position = get_offscreen_spawn_position()
 		timeline.events.append(event)

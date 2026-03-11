@@ -3,6 +3,7 @@ class_name Spawner
 
 signal target_defeated(target: Target)
 signal incoming_wave_detected(wave: WaveData)
+signal wave_complete(wave: WaveData)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -42,9 +43,11 @@ func _process(delta):
 		event_index += 1
 		
 	if event_index >= events.size():
+		print_debug('wave complete')
 		_wave_complete()
 		
 func _wave_complete():
+	wave_complete.emit(current_wave)
 	current_wave = null
 		
 func _spawn_event(event: TimelineEvent):
