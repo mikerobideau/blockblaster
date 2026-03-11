@@ -42,11 +42,11 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	var waves = [wave_generator.generate_calm_wave()]
+	var waves = [wave_generator.generate_homing_wave()]
 	#var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave()]
 	for wave in waves:
 		spawner.start_wave(wave)
-		await spawner.wave_complete
+		#await spawner.wave_complete
 
 func _on_game_over():
 	if is_game_over == true:

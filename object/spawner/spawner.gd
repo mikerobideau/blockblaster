@@ -9,6 +9,7 @@ var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_s
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
 var PatrolScene = preload("res://object/target/enemy/enemy_patrol/enemy_patrol.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
+var HomingScene = preload("res://object/target/enemy/enemy_homing/enemy_homing.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
 
@@ -43,7 +44,6 @@ func _process(delta):
 		event_index += 1
 		
 	if event_index >= events.size():
-		print_debug('wave complete')
 		_wave_complete()
 		
 func _wave_complete():
@@ -59,6 +59,8 @@ func _spawn_event(event: TimelineEvent):
 			scene = PopupScene.instantiate()
 		EnemyGroupData.EnemyType.METEOR:
 			scene = MeteorScene.instantiate()
+		EnemyGroupData.EnemyType.HOMING:
+			scene = HomingScene.instantiate()
 		_:
 			return
 	scene.global_position = event.position

@@ -19,7 +19,6 @@ func generate_calm_wave():
 	var timeline = Timeline.new()
 	for i in range(num_meteors):
 		var event := TimelineEvent.new()
-		#event.time = randi_range(i, i + 2)
 		event.time = i
 		event.scene = EnemyGroupData.EnemyType.METEOR
 		event.position = get_offscreen_spawn_position()
@@ -37,6 +36,21 @@ func generate_attack_wave():
 		event.time = 1
 		event.scene = EnemyGroupData.EnemyType.POPUP
 		event.position = pos
+		timeline.events.append(event)
+	wave.timeline = timeline
+	return wave
+	
+func generate_homing_wave():
+	var count = 10
+	var interval = 5
+	var wave = WaveData.new()
+	wave.resource_name = 'homing'
+	var timeline = Timeline.new()
+	for i in range(count):
+		var event := TimelineEvent.new()
+		event.time = (i+1) * interval
+		event.scene = EnemyGroupData.EnemyType.HOMING
+		event.position = get_offscreen_spawn_position()
 		timeline.events.append(event)
 	wave.timeline = timeline
 	return wave
