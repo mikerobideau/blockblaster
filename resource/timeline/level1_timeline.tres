@@ -35,7 +35,7 @@ position = Vector2(0, 300)
 
 [sub_resource type="Resource" id="Resource_k2rp7"]
 script = ExtResource("1_s3ogn")
-time = 8.0
+time = 7.0
 scene = 1
 position = Vector2(0, 1080)
 
