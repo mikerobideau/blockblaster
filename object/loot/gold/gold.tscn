@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://yc17wvqc47yh"]
+[gd_scene load_steps=3 format=3 uid="uid://yc17wvqc47yh"]
 
 [ext_resource type="Script" path="res://object/loot/gold/gold.gd" id="1_qw4du"]
+[ext_resource type="Texture2D" uid="uid://dkavj0n24pc8q" path="res://asset/img/coin-1.png" id="2_4hshb"]
 
 [node name="Gold" type="Area2D"]
 script = ExtResource("1_qw4du")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("2_4hshb")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

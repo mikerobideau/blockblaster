@@ -25,6 +25,7 @@ func _process(delta):
 		if dist < blaster.vacuum_radius:
 			global_position = destination
 			velocity = Vector2.ZERO
+			Sound.play(Sound.Effect.COIN)
 			collected.emit(self)
 			return
 			
@@ -54,4 +55,8 @@ func _random_up_direction():
 	return Vector2(cos(x), sin(x)).normalized()
 
 func _draw():
-	draw_circle(Vector2.ZERO, radius, color)
+	pass
+	#draw_circle(Vector2.ZERO, radius, color)
+
+func _on_area_entered(area: Area2D) -> void:
+	pass

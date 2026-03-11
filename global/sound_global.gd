@@ -2,11 +2,13 @@ extends Node
 class_name SoundGlobal
 
 enum Effect {
-	ENEMY_HIT
+	ENEMY_HIT,
+	COIN
 }
 
 var sounds = {
-	Effect.ENEMY_HIT: preload('res://asset/sound/effect/319200__18hiltc__pixel-game-beep.wav')
+	Effect.ENEMY_HIT: preload('res://asset/sound/effect/319200__18hiltc__pixel-game-beep.wav'),
+	Effect.COIN: preload("res://asset/sound/effect/coin.wav")
 }
 
 var player := AudioStreamPlayer.new()

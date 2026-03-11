@@ -16,6 +16,6 @@ func generate_calm_wave():
 func generate_attack_wave():
 	var wave = WaveData.new()
 	wave.resource_name = 'attack'
-	wave.enemy_groups.append(patrol)
+	wave.enemy_groups.append(meteor_shower)
 	wave.wait_interval = 1
 	return wave
