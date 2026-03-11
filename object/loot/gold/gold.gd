@@ -25,8 +25,7 @@ func _process(delta):
 		if dist < blaster.vacuum_radius:
 			global_position = destination
 			velocity = Vector2.ZERO
-			Sound.play(Sound.Effect.COIN)
-			collected.emit(self)
+			_collect()
 			return
 			
 		velocity = velocity.move_toward(
@@ -59,4 +58,11 @@ func _draw():
 	#draw_circle(Vector2.ZERO, radius, color)
 
 func _on_area_entered(area: Area2D) -> void:
-	pass
+	print_debug('on area entered')
+	if area is Ship:
+		being_vacuumed = true
+		
+func _collect():
+	Sound.play(Sound.Effect.COIN)
+	collected.emit(self)
+	queue_free()

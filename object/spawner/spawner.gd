@@ -70,6 +70,8 @@ func _spawn_enemy_group(group: EnemyGroupData):
 	
 func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], spawn: Node):
 	match enemy_type:
+		EnemyGroupData.EnemyType.COIN:
+			_spawn_coin()
 		EnemyGroupData.EnemyType.METEOR:
 			_spawn_meteor(region, spawn)
 		EnemyGroupData.EnemyType.ENEMY_SHIP:
@@ -112,6 +114,20 @@ func _get_free_spawn(region: Array[Node]):
 	if free.is_empty():
 		return null
 	return free.pick_random()
+	
+func _spawn_coin():
+	var pad = 50
+	var x = randf_range(pad, Constant.SCREEN_WIDTH - pad)
+	var y = randf_range(pad, Constant.SCREEN_HEIGHT - pad)
+	var coin = GoldScene.instantiate()
+	coin.global_position = Vector2(x, y)
+	coin.collected.connect(_on_coin_collected)
+	coin.ship = ship
+	coin.blaster = blaster
+	add_child(coin)
+	
+func _on_coin_collected():
+	pass
 
 func _spawn_enemy_ship(region: Array[Node], spawn: Node):
 	var enemy_ship = EnemyShipScene.instantiate()

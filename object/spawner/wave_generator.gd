@@ -1,6 +1,7 @@
 extends Node
 class_name WaveGenerator
 
+var coins = preload("res://resource/enemy_group/coins.tres")
 var meteor_shower = preload("res://resource/enemy_group/meteor_shower.tres")
 var linear_ships = preload("res://resource/enemy_group/linear_ships.tres")
 var triple_homing = preload("res://resource/enemy_group/triple_homing.tres")
@@ -16,6 +17,10 @@ func generate_calm_wave():
 func generate_attack_wave():
 	var wave = WaveData.new()
 	wave.resource_name = 'attack'
-	wave.enemy_groups.append(meteor_shower)
+	wave.enemy_groups.append(coins)
 	wave.wait_interval = 1
+	return wave
+	
+func generate_coin_wave():
+	var wave = WaveData.new()
 	return wave

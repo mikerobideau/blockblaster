@@ -2,6 +2,7 @@ extends Resource
 class_name EnemyGroupData
 
 enum EnemyType {
+	COIN,
 	METEOR,
 	ENEMY_SHIP,
 	HOMING,
