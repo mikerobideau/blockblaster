@@ -2,6 +2,7 @@ extends Node2D
 class_name Spawner
 
 signal target_defeated(target: Target)
+signal incoming_wave_detected(wave: WaveData)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -23,10 +24,11 @@ func  _ready():
 	pass
 	
 func start_wave(wave: WaveData):
+	incoming_wave_detected.emit(wave)
+	await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
 	current_wave = wave
 	event_index = 0
 	start_time = Time.get_ticks_msec() / 1000.0
-	print_debug('Starting wave')
 	
 func _process(delta):
 	if current_wave == null:
