@@ -37,10 +37,9 @@ func _ready() -> void:
 	spawner.set_blaster(blaster)
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
-	spawner.incoming_wave_detected.connect(_on_incoming_wave)
-	spawner.level_cleared_countdown_started.connect(_on_level_cleared_countdown_started)
-	spawner.level_cleared.connect(_on_level_clear)
-	spawner.start()
+	#spawner.incoming_wave_detected.connect(_on_incoming_wave)
+	#spawner.level_cleared_countdown_started.connect(_on_level_cleared_countdown_started)
+	#spawner.level_cleared.connect(_on_level_clear)
 	
 func _on_game_over():
 	if is_game_over == true:

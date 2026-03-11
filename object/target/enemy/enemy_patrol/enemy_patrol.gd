@@ -18,7 +18,6 @@ func _physics_process(delta):
 	if !orbiting:
 		var to_center = orbit_center - global_position
 		var distance = to_center.length()
-		print_debug(str(distance))
 		
 		if distance < orbit_radius:
 			orbiting = true
