@@ -5,6 +5,7 @@ enum EnemyType {
 	METEOR,
 	ENEMY_SHIP,
 	HOMING,
+	PATROL,
 	POPUP
 }
 

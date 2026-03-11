@@ -10,6 +10,7 @@ signal level_cleared()
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var EnemyHomingScene = preload("res://object/target/enemy/enemy_homing/enemy_homing.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
+var PatrolScene = preload("res://object/target/enemy/enemy_patrol/enemy_patrol.tscn")
 var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
@@ -77,6 +78,8 @@ func _spawn_enemy_at(enemy_type: EnemyGroupData.EnemyType, region: Array[Node], 
 			_spawn_homing(region, spawn)
 		EnemyGroupData.EnemyType.POPUP:
 			_spawn_popup(region, spawn)
+		EnemyGroupData.EnemyType.PATROL:
+			_spawn_patrol(region, spawn)
 		_:
 			pass
 	
@@ -119,6 +122,13 @@ func _spawn_enemy_ship(region: Array[Node], spawn: Node):
 	
 func _spawn_homing(region: Array[Node], spawn: Node):
 	var enemy_ship = EnemyHomingScene.instantiate()
+	enemy_ship.global_position = spawn.global_position
+	enemy_ship.defeated.connect(_on_target_defeated)
+	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT
+	add_child(enemy_ship)
+	
+func _spawn_patrol(region: Array[Node], spawn: Node):
+	var enemy_ship = PatrolScene.instantiate()
 	enemy_ship.global_position = spawn.global_position
 	enemy_ship.defeated.connect(_on_target_defeated)
 	enemy_ship.direction = Vector2.RIGHT if region == left_spawns else Vector2.LEFT

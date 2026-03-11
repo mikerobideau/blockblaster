@@ -16,3 +16,5 @@ texture = ExtResource("2_508oy")
 polygon = PackedVector2Array(0, -48, 16, -40, 24, -40, 24, 48, -24, 48, -24, 31.3694, -24, -40, -16, -40)
 
 [node name="FireTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
