@@ -24,7 +24,7 @@ const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 var loot_factory = LootFactory.new()
 var target_factory := TargetFactory.new()
 var is_game_over := false
-var wave_generator = WaveGenerator.new()
+var wave_gen = WaveGenerator.new()
 
 func _ready() -> void:
 	#get_tree().debug_collisions_hint = true
@@ -42,12 +42,13 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	var waves = [wave_generator.generate_homing_wave()]
-	#var waves = [wave_generator.generate_calm_wave(), wave_generator.generate_attack_wave()]
+	var waves = [wave_gen.create(), wave_gen.create()]
 	for wave in waves:
 		spawner.start_wave(wave)
-		#await spawner.wave_complete
-
+		await spawner.wave_complete
+	await _on_level_cleared_countdown_started()
+	_on_level_clear()
+	
 func _on_game_over():
 	if is_game_over == true:
 		return
@@ -132,7 +133,7 @@ func _clear_menu():
 		child.queue_free()
 	
 func _on_level_cleared_countdown_started():
-		_update_incoming_message_label('Level clear', Constant.LEVEL_CLEAR_NOTICE_TIME)
+		await _update_incoming_message_label('Level clear', Constant.LEVEL_CLEAR_NOTICE_TIME)
 	
 func _on_incoming_wave(wave: WaveData):
 	_update_incoming_message_label('Incoming ' + wave.resource_name, Constant.INCOMING_WAVE_NOTICE_TIME)

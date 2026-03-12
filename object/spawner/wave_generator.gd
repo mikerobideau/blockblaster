@@ -11,22 +11,35 @@ var patrol = preload("res://resource/enemy_group/patrol.tres")
 var popup_ships = preload("res://resource/enemy_group/popup_ships.tres")
 
 var padding := 100
-
-func generate_calm_wave():
-	var num_meteors = 10
+	
+func create() -> WaveData:
 	var wave = WaveData.new()
-	wave.resource_name = 'meteor shower'
-	var timeline = Timeline.new()
-	for i in range(num_meteors):
-		var event := TimelineEvent.new()
-		event.time = i
-		event.scene = EnemyGroupData.EnemyType.METEOR
-		event.position = get_offscreen_spawn_position()
-		timeline.events.append(event)
-	wave.timeline = timeline
+	wave.resource_name = 'wave'
+	wave.timeline = Timeline.new()
+	var t = 0.0
+	t = add_perimeter(wave.timeline, EnemyGroupData.EnemyType.HOMING, t, 2, 10)
+	t = add_stream(wave.timeline, EnemyGroupData.EnemyType.METEOR, t, 2, 5)
 	return wave
 	
-func generate_attack_wave():
+func add_stream(timeline: Timeline, type: EnemyGroupData.EnemyType, start_time: float, count: int, interval: int):
+	for i in range(count):
+		var event := TimelineEvent.new()
+		event.time = start_time + i * interval
+		event.scene = type
+		event.position = get_offscreen_spawn_position()
+		timeline.events.append(event)
+	return start_time + count * interval
+
+func add_perimeter(timeline: Timeline, type: EnemyGroupData.EnemyType, start_time: float, count: int, interval: int):
+	for i in range(count):
+		var event := TimelineEvent.new()
+		event.time = start_time
+		event.scene = type
+		event.position = get_offscreen_spawn_position()
+		timeline.events.append(event)
+	return start_time + interval
+	
+func generate_popup_wave():
 	var wave = WaveData.new()
 	wave.resource_name = 'popup'
 	var timeline = Timeline.new()
@@ -36,21 +49,6 @@ func generate_attack_wave():
 		event.time = 1
 		event.scene = EnemyGroupData.EnemyType.POPUP
 		event.position = pos
-		timeline.events.append(event)
-	wave.timeline = timeline
-	return wave
-	
-func generate_homing_wave():
-	var count = 10
-	var interval = 5
-	var wave = WaveData.new()
-	wave.resource_name = 'homing'
-	var timeline = Timeline.new()
-	for i in range(count):
-		var event := TimelineEvent.new()
-		event.time = (i+1) * interval
-		event.scene = EnemyGroupData.EnemyType.HOMING
-		event.position = get_offscreen_spawn_position()
 		timeline.events.append(event)
 	wave.timeline = timeline
 	return wave

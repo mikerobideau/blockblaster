@@ -36,7 +36,7 @@ func _process(delta):
 	if current_wave == null:
 		return
 
-	var time = Time.get_ticks_msec() / 1000.0
+	var time = Time.get_ticks_msec() / 1000.0 - start_time
 	var events = current_wave.timeline.events
 
 	while event_index < events.size() and events[event_index].time <= time:

@@ -5,7 +5,7 @@ signal game_over()
 
 @onready var label = $Label
 
-var health := 3
+var health := 10
 
 func _ready():
 	_update_label()
