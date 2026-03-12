@@ -4,6 +4,14 @@ class_name Target
 signal defeated(target: Area2D)
 signal removed(target: Area2D)
 
+enum TargetType {
+	METEOR,
+	ENEMY_SHIP,
+	HOMING,
+	PATROL,
+	POPUP
+}
+
 var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")
 
 const DEFAULT_SPEED = 500
@@ -64,3 +72,18 @@ func _get_energy_scene() -> EnemyEnergy:
 func _remove():
 	queue_free()
 	removed.emit(self)
+
+func _to_center() -> int:
+	var viewport = get_viewport_rect().size
+	return (viewport / 2) - global_position
+	
+func _is_in_left_hemisphere() -> bool:
+	var center_x = get_viewport_rect().size.x / 2
+	return global_position.x < center_x
+	
+func _is_in_right_hemisphere() -> bool:
+	var center_x = get_viewport_rect().size.x / 2
+	return global_position.x > center_x
+	
+func _flip_horizontal(direction: Vector2):
+	return -PI / 2 if direction == Vector2.LEFT else PI / 2

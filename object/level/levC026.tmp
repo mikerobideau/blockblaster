@@ -1,0 +1,117 @@
+[gd_scene load_steps=11 format=3 uid="uid://b5ewwlnp5ljqy"]
+
+[ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
+[ext_resource type="PackedScene" uid="uid://dow2arcl6qfyk" path="res://object/ship/ship.tscn" id="2_j5ybf"]
+[ext_resource type="PackedScene" uid="uid://c7qkuy4g4kk72" path="res://object/blaster/blaster.tscn" id="2_w61g8"]
+[ext_resource type="Texture2D" uid="uid://37hwhqgwk8sx" path="res://asset/0101_void_spaceStuff-stars-02_v001-gridless-SCREEN.jpg" id="2_xtglg"]
+[ext_resource type="PackedScene" uid="uid://dj58su1f2i1ef" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
+[ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
+[ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
+[ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
+[ext_resource type="PackedScene" uid="uid://cusxjldgksg5c" path="res://object/spawner/terminal_side.tscn" id="8_cvbo2"]
+[ext_resource type="PackedScene" uid="uid://btitngoo8omn" path="res://object/spawner/terminal_top.tscn" id="9_bsvvw"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_cga3n")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(963, 543)
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 6720.0
+offset_bottom = 5040.0
+scale = Vector2(0.3, 0.3)
+mouse_filter = 2
+texture = ExtResource("2_xtglg")
+
+[node name="Menu" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="IncomingWave" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_right = 121.0
+offset_bottom = 53.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/IncomingWave"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="GameState" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+
+[node name="BottomBar" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/BottomBar"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Blaster" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("2_w61g8")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Ultimate" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("3_bvvwg")]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Health" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("6_c5xln")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(964, 543)
+
+[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
+
+[node name="Terminals" type="Node2D" parent="."]
+
+[node name="Top Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
+position = Vector2(-709, -371)
+
+[node name="Bottom Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
+position = Vector2(-711, 1750)
+
+[node name="Left Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
+position = Vector2(-455, -496)
+
+[node name="Right Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
+position = Vector2(2384, -490)

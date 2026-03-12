@@ -53,13 +53,15 @@ func _wave_complete():
 func _spawn_event(event: TimelineEvent):
 	var scene: Area2D
 	match event.scene:
-		EnemyGroupData.EnemyType.PATROL:
+		Target.TargetType.ENEMY_SHIP:
+			scene = EnemyShipScene.instantiate()
+		Target.TargetType.PATROL:
 			scene = PatrolScene.instantiate()
-		EnemyGroupData.EnemyType.POPUP:
+		Target.TargetType.POPUP:
 			scene = PopupScene.instantiate()
-		EnemyGroupData.EnemyType.METEOR:
+		Target.TargetType.METEOR:
 			scene = MeteorScene.instantiate()
-		EnemyGroupData.EnemyType.HOMING:
+		Target.TargetType.HOMING:
 			scene = HomingScene.instantiate()
 		_:
 			return
