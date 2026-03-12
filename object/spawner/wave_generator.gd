@@ -17,7 +17,7 @@ func create() -> WaveData:
 	wave.resource_name = 'wave'
 	wave.timeline = Timeline.new()
 	var t = 0.0
-	t = add_perimeter(wave.timeline, EnemyGroupData.EnemyType.HOMING, t, 2, 10)
+	t = add_perimeter(wave.timeline, EnemyGroupData.EnemyType.PATROL, t, 10, 2)
 	t = add_stream(wave.timeline, EnemyGroupData.EnemyType.METEOR, t, 2, 5)
 	return wave
 	
