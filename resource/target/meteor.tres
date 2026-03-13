@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource("1_wcutp")
 supported_patterns = Array[int]([0])
+difficulty = 1

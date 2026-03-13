@@ -44,7 +44,9 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	var waves = [wave_gen.create()]
+	var budget = 50
+	var time = 20
+	var waves = [wave_gen.create(budget, time)]
 	for wave in waves:
 		spawner.start_wave(wave)
 		await spawner.wave_complete

@@ -58,8 +58,8 @@ func _spawn_event(event: TimelineEvent):
 			scene = EnemyShipScene.instantiate()
 		Target.TargetType.PATROL:
 			scene = PatrolScene.instantiate()
-		Target.TargetType.POPUP:
-			scene = PopupScene.instantiate()
+		#Target.TargetType.POPUP:
+		#	scene = PopupScene.instantiate()
 		Target.TargetType.METEOR:
 			scene = MeteorScene.instantiate()
 		Target.TargetType.HOMING:

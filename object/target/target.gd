@@ -9,7 +9,7 @@ enum TargetType {
 	ENEMY_SHIP,
 	HOMING,
 	PATROL,
-	POPUP
+	#POPUP
 }
 
 var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")

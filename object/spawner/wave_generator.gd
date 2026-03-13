@@ -12,25 +12,40 @@ var popup_ships = preload("res://resource/enemy_group/popup_ships.tres")
 var padding := 100
 var target_db := TargetDatabase.new()
 	
-func create() -> WaveData:
-	var count = 4
-	var interval = 4
-	var wave = WaveData.new()
+func create(budget: int, total_time: int) -> WaveData:
 	var t = 0.0
+	var wave = WaveData.new()
 	wave.resource_name = 'wave'
-	wave.timeline = Timeline.new()
-	var target = Target.TargetType.values().pick_random()
-	var data = target_db.find(target)
-	var pattern = data.supported_patterns.pick_random()
-	match pattern:
-		Pattern.Type.STREAM:
-			t = add_stream(wave.timeline, target, t, count, interval)
-		Pattern.Type.LEFT_RIGHT_STREAM:
-			t = add_left_right_stream(wave.timeline, target, t, count, interval)
-		Pattern.Type.PERIMETER:
-			t = add_perimeter(wave.timeline, Target.TargetType.ENEMY_SHIP, t, count, interval)
-		Pattern.Type.FOUR_CORNERS:
-			t = add_four_corners(wave.timeline, Target.TargetType.POPUP, t, interval)
+	wave.timeline 	= Timeline.new()
+	
+	while budget > 0:
+		var count = randi_range(1, 3)
+		var interval = 0
+		var candidates = Target.TargetType.values().filter(func(d): 
+			return target_db.find(d).difficulty * count <= budget
+		)
+		if candidates.size() == 0:
+			break
+		var target = candidates.pick_random()
+		var data = target_db.find(target)
+		var pattern = data.supported_patterns.pick_random()
+		match pattern:
+			Pattern.Type.STREAM:
+				t = add_stream(wave.timeline, target, t, count, interval)
+			Pattern.Type.LEFT_RIGHT_STREAM:
+				t = add_left_right_stream(wave.timeline, target, t, count, interval)
+			Pattern.Type.PERIMETER:
+				t = add_perimeter(wave.timeline, target, t, count, interval)
+			Pattern.Type.FOUR_CORNERS:
+				t = add_four_corners(wave.timeline, target, t, interval)
+		budget -= data.difficulty * count
+		
+		if budget > 0:
+			var remaining_time = total_time - t
+			var remaining_budget = max(budget, 1)
+			var average_interval = remaining_time / remaining_budget
+			t += average_interval * randf_range(0.8, 1.2)
+			
 	return wave
 	
 func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):
