@@ -4,6 +4,7 @@ class_name Spawner
 signal target_defeated(target: Target)
 signal incoming_wave_detected(wave: WaveData)
 signal wave_complete(wave: WaveData)
+signal gold_collected(gold: Gold)
 
 var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
 var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
@@ -86,7 +87,12 @@ func _spawn_crystals(target: Target):
 		add_child(crystal)
 		
 func _spawn_gold(target: Target):
-	var count = randi() % 10
+	var bonus = randi_range(1, 6)
+	var count : int
+	if bonus == 6:
+		count = 100
+	else:	
+		count = randi_range(0, 5)
 	for i in range(count):
 		var gold = GoldScene.instantiate()
 		gold.global_position = target.global_position
@@ -96,6 +102,7 @@ func _spawn_gold(target: Target):
 		add_child(gold)
 	
 func _on_gold_collected(gold: Gold):
+	gold_collected.emit(gold)
 	gold.queue_free()
 	
 func set_blaster(b: Blaster):

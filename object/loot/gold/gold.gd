@@ -9,6 +9,7 @@ signal collected(gold: Gold)
 @export var velocity: Vector2
 @export var vacuum_accel := 600
 @export var max_speed := 400
+@export var value = 1
 
 var being_vacuumed := false
 var blaster: Blaster

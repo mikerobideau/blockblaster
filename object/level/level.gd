@@ -16,6 +16,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/HBox/Health
+@onready var money = $CanvasLayer/BottomBar/HBox/Money
 @onready var menu = $Menu
 @onready var spawner = $Spawner
 
@@ -39,6 +40,7 @@ func _ready() -> void:
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
+	spawner.gold_collected.connect(_on_gold_collected)
 	_start()
 	
 func _start():
@@ -69,6 +71,10 @@ func _unpause():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().paused = false
 	
+func _on_gold_collected(gold: Gold):
+	print_debug('adding 1 gold worth ' + str(gold.value))
+	money.add(gold.value)	
+
 func _on_ship_damage_taken(amount: int):
 	health.take_damage(amount)
 

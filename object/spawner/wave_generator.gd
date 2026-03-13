@@ -18,7 +18,7 @@ func create() -> WaveData:
 	wave.timeline = Timeline.new()
 	var t = 0.0
 	#t = add_perimeter(wave.timeline, Target.TargetType.ENEMY_SHIP, t, 10, 2)
-	t = add_stream(wave.timeline, Target.TargetType.ENEMY_SHIP, t, 5, 1)
+	t = add_stream(wave.timeline, Target.TargetType.METEOR, t, 100, 7)
 	return wave
 	
 func choose_random_enemy_type():

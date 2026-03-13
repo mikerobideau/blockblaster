@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtfr7um1stgxv"]
+
+[ext_resource type="Script" path="res://object/money/money.gd" id="1_nhwxd"]
+
+[node name="Money" type="Control"]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 28.0
+offset_bottom = 23.0
+script = ExtResource("1_nhwxd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_right = 28.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
+text = "$0"
