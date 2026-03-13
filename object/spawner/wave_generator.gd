@@ -9,22 +9,40 @@ var linear_ships = preload("res://resource/enemy_group/linear_ships.tres")
 var triple_homing = preload("res://resource/enemy_group/triple_homing.tres")
 var patrol = preload("res://resource/enemy_group/patrol.tres")
 var popup_ships = preload("res://resource/enemy_group/popup_ships.tres")
-
 var padding := 100
+var target_db := TargetDatabase.new()
 	
 func create() -> WaveData:
+	var count = 4
+	var interval = 4
 	var wave = WaveData.new()
+	var t = 0.0
 	wave.resource_name = 'wave'
 	wave.timeline = Timeline.new()
-	var t = 0.0
-	#t = add_perimeter(wave.timeline, Target.TargetType.ENEMY_SHIP, t, 10, 2)
-	t = add_stream(wave.timeline, Target.TargetType.METEOR, t, 100, 7)
+	var target = Target.TargetType.values().pick_random()
+	var data = target_db.find(target)
+	var pattern = data.supported_patterns.pick_random()
+	match pattern:
+		Pattern.Type.STREAM:
+			t = add_stream(wave.timeline, target, t, count, interval)
+		Pattern.Type.LEFT_RIGHT_STREAM:
+			t = add_left_right_stream(wave.timeline, target, t, count, interval)
+		Pattern.Type.PERIMETER:
+			t = add_perimeter(wave.timeline, Target.TargetType.ENEMY_SHIP, t, count, interval)
+		Pattern.Type.FOUR_CORNERS:
+			t = add_four_corners(wave.timeline, Target.TargetType.POPUP, t, interval)
 	return wave
 	
-func choose_random_enemy_type():
-	pass
-	
 func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):
+	for i in range(count):
+		var event := TimelineEvent.new()
+		event.time = start_time + i * interval
+		event.scene = type
+		event.position = get_offscreen_spawn_position()
+		timeline.events.append(event)
+	return start_time + count * interval
+
+func add_left_right_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):
 	for i in range(count):
 		var event := TimelineEvent.new()
 		event.time = start_time + i * interval
@@ -42,19 +60,15 @@ func add_perimeter(timeline: Timeline, type: Target.TargetType, start_time: floa
 		timeline.events.append(event)
 	return start_time + interval
 	
-func generate_popup_wave():
-	var wave = WaveData.new()
-	wave.resource_name = 'popup'
-	var timeline = Timeline.new()
+func add_four_corners(timeline: Timeline, type: Target.TargetType, start_time: float, interval: int):
 	var positions = [get_top_left_position(), get_top_right_position(), get_bottom_left_position(), get_bottom_right_position()]
 	for pos in positions:
 		var event = TimelineEvent.new()
-		event.time = 1
-		event.scene = Target.TargetType.POPUP
+		event.time = start_time
+		event.scene = type
 		event.position = pos
 		timeline.events.append(event)
-	wave.timeline = timeline
-	return wave
+	return start_time + interval
 
 func get_offscreen_spawn_position() -> Vector2:
 	var side = randi() % 4

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=2 format=3 uid="uid://rho5hkf85683"]
+
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_wcutp"]
+
+[resource]
+script = ExtResource("1_wcutp")
+supported_patterns = Array[int]([0])

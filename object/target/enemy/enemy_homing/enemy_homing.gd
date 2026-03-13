@@ -1,6 +1,8 @@
 extends Target
 class_name EnemyHoming
 
+var data = preload("res://resource/target/homing.tres")
+
 func _ready():
 	super()
 	speed = 100

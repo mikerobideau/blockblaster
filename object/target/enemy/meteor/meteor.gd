@@ -1,6 +1,7 @@
 extends Target
 class_name Meteor
 
+var data = preload("res://resource/target/meteor.tres")
 var center_offset = 500
 
 func _ready():

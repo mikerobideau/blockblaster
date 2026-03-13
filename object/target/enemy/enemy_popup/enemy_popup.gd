@@ -2,6 +2,7 @@ extends Target
 class_name EnemyPopup
 
 var EnergyFireScene = preload("res://object/target/enemy/energy/energy_fire/energy_fire.tscn")
+var data = preload("res://resource/target/popup.tres")
 
 @export var popup_distance := 50.0
 @export var popup_time := 0.15
