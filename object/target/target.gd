@@ -14,8 +14,6 @@ enum TargetType {
 
 var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")
 
-const DEFAULT_SPEED = 500
-
 @onready var sprite = $Sprite2D
 @onready var emitter = $Emitter
 @onready var hit_box = $HitBox
@@ -23,19 +21,17 @@ const DEFAULT_SPEED = 500
 @onready var ship = get_tree().current_scene.ship
 
 @export var data: TargetData
-@export var health: float = 3
-@export var radius := 100
-@export var bullseye_radius = 10
 @export var damage = 1
 @export var damage_radius := 100
-@export var speed: float = DEFAULT_SPEED
 @export var direction: Vector2
-@export var rotation_speed := 3.0
 @export var fire_timeout := 2
-@export var is_fragment := false
-@export var number_of_fragments = 3
+
+var health: int
+var speed: int
 
 func _ready():
+	health = data.health
+	speed = data.speed
 	fire_timer.wait_time = fire_timeout
 	fire_timer.timeout.connect(_fire)
 	direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT

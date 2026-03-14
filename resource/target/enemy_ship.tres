@@ -7,5 +7,7 @@
 resource_name = "Enemy Ship"
 script = ExtResource("1_n0dov")
 scene = ExtResource("1_54dhx")
-supported_patterns = Array[int]([1])
+health = 5
 difficulty = 1
+speed = 250
+supported_patterns = Array[int]([1])
