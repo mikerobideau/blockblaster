@@ -29,22 +29,32 @@ var damage: int
 var fire_timeout: int
 var direction: Vector2
 var burst_shots_remaining: int
+var rotation_speed := 50
+var sprite_forward_offset = PI / 2
 
 func _ready():
 	health = data.health
-	speed = data.speed
+	speed = data.movement.speed
 	burst_shots_remaining = data.energy_burst_size
 	fire_timer.wait_time = data.fire_timeout
 	fire_timer.timeout.connect(_fire)
 	burst_timer.wait_time = data.energy_burst_delay
 	burst_timer.timeout.connect(_burst_fire)
-	direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT
+	#direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	if data.has_energy:
 		fire_timer.start()
 
 func _physics_process(delta: float):
-	global_position += direction * speed * delta
+	if data.movement is TrackPlayerMovement:
+		_track_player_movement(delta)
+		
+func _track_player_movement(delta: float):
+	var direction = (ship.global_position - global_position).normalized()
+	var target_angle = direction.angle() + sprite_forward_offset
+	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
+		global_position += direction * speed * delta
 
 func take_damage(amount: int):
 	health = clamp(health - amount, 0, health)
@@ -83,7 +93,7 @@ func _get_energy_scene() -> EnemyEnergy:
 	energy.direction = Vector2.UP.rotated(rotation)
 	energy.damage = data.energy_damage
 	energy.speed = data.energy_speed
-	energy.rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
+	energy.rotation = energy.direction.angle() + sprite_forward_offset
 	return energy
 
 func _remove():

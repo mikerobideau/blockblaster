@@ -4,7 +4,7 @@ class_name TargetData
 @export var scene: PackedScene
 @export var health: int
 @export var difficulty: int
-@export var speed := 500
+@export var movement: MovementData
 @export var has_energy := false
 @export var energy_scene: PackedScene
 @export var energy_damage := 1
