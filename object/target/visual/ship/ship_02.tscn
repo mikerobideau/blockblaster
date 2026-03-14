@@ -8,15 +8,16 @@ scale = Vector2(0.1, 0.1)
 script = ExtResource("1_mcp45")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_a83f0")
 
 [node name="HitBox" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-8, -40, 8, -40, 16, -16, 32, 16, 24, 40, -24, 40, -32, 16, -16, -16)
+polygon = PackedVector2Array(-80, -400, 80, -400, 160, -160, 320, 160, 240, 400, -240, 400, -320, 160, -160, -160)
 
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(0, -48)
 
 [node name="FireTimer" type="Timer" parent="."]
+
+[node name="BurstTimer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -14,8 +14,11 @@ texture = ExtResource("1_0ayyq")
 position = Vector2(0, -48)
 
 [node name="HitBox" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(-88, -384, 88, -384, 384, -96, 400, -32, 264, -64, 160, 200, 64, 384, -64, 384, -160, 200, -256, -56, -400, -32, -376, -104)
 
 [node name="FireTimer" type="Timer" parent="."]
+
+[node name="BurstTimer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,13 +1,21 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=3 format=3 uid="uid://cas7vjiimc8v0"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=4 format=3 uid="uid://cas7vjiimc8v0"]
 
-[ext_resource type="PackedScene" uid="uid://co7ajkydrmj5r" path="res://object/target/visual/ship/ship_01.tscn" id="1_54dhx"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_n0dov"]
+[ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_yyexw"]
+[ext_resource type="PackedScene" uid="uid://wv4r78wlbhhc" path="res://object/target/visual/ship/ship_02.tscn" id="2_e8ekt"]
 
 [resource]
 resource_name = "Enemy Ship"
 script = ExtResource("1_n0dov")
-scene = ExtResource("1_54dhx")
+scene = ExtResource("2_e8ekt")
 health = 5
 difficulty = 1
 speed = 250
+has_energy = true
+energy_scene = ExtResource("1_yyexw")
+energy_damage = 1
+energy_speed = 1000
+energy_burst_size = 3
+energy_burst_delay = 0.2
+fire_timeout = 3
 supported_patterns = Array[int]([1])

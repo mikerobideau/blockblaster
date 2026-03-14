@@ -1,2 +1,0 @@
-extends EnemyEnergy
-class_name EnergyFire

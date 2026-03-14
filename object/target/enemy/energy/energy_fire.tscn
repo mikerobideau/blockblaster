@@ -1,17 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbao4v8s7duhh"]
 
-[ext_resource type="Script" path="res://object/target/enemy/energy/energy_fire/energy_fire.gd" id="1_j4idc"]
-[ext_resource type="Texture2D" uid="uid://pv5xu8vh4jwc" path="res://asset/space-shooter-game-kit/Pirate-spaceship-game-sprites/PNG/Ship_Effects_Sprites/Fire_Shot_005.png" id="2_51762"]
+[ext_resource type="Texture2D" uid="uid://pv5xu8vh4jwc" path="res://asset/space-shooter-game-kit/Pirate-spaceship-game-sprites/PNG/Ship_Effects_Sprites/Fire_Shot_005.png" id="1_f42yi"]
+[ext_resource type="Script" path="res://object/target/enemy/enemy_energy.gd" id="1_t34hf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_753m2"]
 radius = 48.0
 
 [node name="EnergyFire" type="Area2D"]
-script = ExtResource("1_j4idc")
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_t34hf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 72)
-texture = ExtResource("2_51762")
+texture = ExtResource("1_f42yi")
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_753m2")

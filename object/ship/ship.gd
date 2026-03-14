@@ -34,7 +34,7 @@ func _physics_process(delta: float):
 
 func take_damage(amount: int):
 	if !invulnerable:
-		damage_taken.emit(SHIP_COLLISION_DAMAGE)
+		damage_taken.emit(amount)
 		set_invulnerable(true)
 		
 func _on_invulnerability_timeout():
