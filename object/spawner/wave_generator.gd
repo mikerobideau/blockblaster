@@ -19,7 +19,9 @@ func create(budget: int, total_time: int) -> WaveData:
 	wave.timeline 	= Timeline.new()
 	
 	while budget > 0:
-		var count = randi_range(1, 3)
+		print_debug('==========')
+		print_debug('Budget is ' + str(budget) + ' and time is ' + str(t))
+		var count = randi_range(1, 2)
 		var interval = 0
 		var candidates = Target.TargetType.values().filter(func(d): 
 			return target_db.find(d).difficulty * count <= budget
@@ -31,21 +33,28 @@ func create(budget: int, total_time: int) -> WaveData:
 		var pattern = data.supported_patterns.pick_random()
 		match pattern:
 			Pattern.Type.STREAM:
+				print_debug('Adding stream of ' + str(count))
 				t = add_stream(wave.timeline, target, t, count, interval)
 			Pattern.Type.LEFT_RIGHT_STREAM:
+				print_debug('Adding left-right stream of ' + str(count))
 				t = add_left_right_stream(wave.timeline, target, t, count, interval)
 			Pattern.Type.PERIMETER:
+				print_debug('Adding perimeter of ' + str(count))
 				t = add_perimeter(wave.timeline, target, t, count, interval)
 			Pattern.Type.FOUR_CORNERS:
+				print_debug('Adding four corners of ' + str(count))
 				t = add_four_corners(wave.timeline, target, t, interval)
-		budget -= data.difficulty * count
+		
+		var cost = data.difficulty * count
+		print_debug('cost is ' + str(data.difficulty) + ' * ' + str(count) + ' = ' + str(cost))
+		budget -= cost
 		
 		if budget > 0:
-			var remaining_time = total_time - t
-			var remaining_budget = max(budget, 1)
-			var average_interval = remaining_time / remaining_budget
-			t += average_interval * randf_range(0.8, 1.2)
-			
+			var avg_cost = 2 #TODO: Improve this logic to consider actual average
+			var ships_remaining_estimate = max(1, budget / avg_cost)
+			var avg_interval_per_ship = (total_time - t) / ships_remaining_estimate
+			var batch_interval = avg_interval_per_ship * count
+			t += batch_interval * randf_range(0.85, 1.15)
 	return wave
 	
 func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):

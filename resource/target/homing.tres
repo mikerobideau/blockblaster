@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_uvsnu")
-supported_patterns = Array[int]([0, 2, 3, 1])
+supported_patterns = Array[int]([0])
 difficulty = 2

@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_j40gw")
-supported_patterns = Array[int]([1, 3])
+supported_patterns = Array[int]([1])
 difficulty = 1
