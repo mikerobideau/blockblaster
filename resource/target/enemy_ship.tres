@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=2 format=3 uid="uid://cas7vjiimc8v0"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=3 format=3 uid="uid://cas7vjiimc8v0"]
 
+[ext_resource type="PackedScene" uid="uid://co7ajkydrmj5r" path="res://object/target/visual/ship/ship_01.tscn" id="1_54dhx"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_n0dov"]
 
 [resource]
+resource_name = "Enemy Ship"
 script = ExtResource("1_n0dov")
+scene = ExtResource("1_54dhx")
 supported_patterns = Array[int]([1])
 difficulty = 1

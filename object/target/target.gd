@@ -5,10 +5,10 @@ signal defeated(target: Area2D)
 signal removed(target: Area2D)
 
 enum TargetType {
-	METEOR,
+	#METEOR,
 	ENEMY_SHIP,
-	HOMING,
-	PATROL,
+	#HOMING,
+	#PATROL,
 	#POPUP
 }
 
@@ -16,12 +16,13 @@ var EnemyEnergyScene = preload("res://object/target/enemy/enemy_energy.tscn")
 
 const DEFAULT_SPEED = 500
 
-@onready var fire_timer = $FireTimer
-@onready var emitter = $Emitter
 @onready var sprite = $Sprite2D
+@onready var emitter = $Emitter
 @onready var hit_box = $HitBox
+@onready var fire_timer = $FireTimer
 @onready var ship = get_tree().current_scene.ship
 
+@export var data: TargetData
 @export var health: float = 3
 @export var radius := 100
 @export var bullseye_radius = 10
@@ -34,11 +35,11 @@ const DEFAULT_SPEED = 500
 @export var is_fragment := false
 @export var number_of_fragments = 3
 
-var sprite_forward_offset := PI / 2
-
 func _ready():
 	fire_timer.wait_time = fire_timeout
 	fire_timer.timeout.connect(_fire)
+	direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT
+	rotation = _flip_horizontal(direction)
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	#fire_timer.start()
 

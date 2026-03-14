@@ -1,8 +1,6 @@
 extends Target
 class_name EnemyPatrol
 
-var data = preload("res://resource/target/popup.tres")
-
 var orbit_radius := 400
 var orbit_speed := 1
 var orbit_angle := 0.0

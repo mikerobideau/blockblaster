@@ -6,13 +6,10 @@ signal incoming_wave_detected(wave: WaveData)
 signal wave_complete(wave: WaveData)
 signal gold_collected(gold: Gold)
 
-var EnemyShipScene = preload("res://object/target/enemy/enemy/enemy_ship/enemy_ship.tscn")
-var PopupScene = preload("res://object/target/enemy/enemy_popup/enemy_popup.tscn")
-var PatrolScene = preload("res://object/target/enemy/enemy_patrol/enemy_patrol.tscn")
-var MeteorScene = preload("res://object/target/enemy/meteor/meteor.tscn")
-var HomingScene = preload("res://object/target/enemy/enemy_homing/enemy_homing.tscn")
+var TargetScene = preload('res://object/target/target.tscn')
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
+var enemy_ship_data = preload("res://resource/target/enemy_ship.tres")
 
 @onready var music_player = $MusicPlayer
 
@@ -52,20 +49,23 @@ func _wave_complete():
 	current_wave = null
 		
 func _spawn_event(event: TimelineEvent):
-	var scene: Area2D
+	var scene: Target
+	var data: TargetData
 	match event.scene:
 		Target.TargetType.ENEMY_SHIP:
-			scene = EnemyShipScene.instantiate()
-		Target.TargetType.PATROL:
-			scene = PatrolScene.instantiate()
+			data = enemy_ship_data
+		#Target.TargetType.PATROL:
+		#	scene = PatrolScene.instantiate()
 		#Target.TargetType.POPUP:
 		#	scene = PopupScene.instantiate()
-		Target.TargetType.METEOR:
-			scene = MeteorScene.instantiate()
-		Target.TargetType.HOMING:
-			scene = HomingScene.instantiate()
+		#Target.TargetType.METEOR:
+		#	scene = MeteorScene.instantiate()
+		#Target.TargetType.HOMING:
+		#	scene = HomingScene.instantiate()
 		_:
 			return
+	scene = data.scene.instantiate()
+	scene.data = data
 	scene.global_position = event.position
 	if scene is Target:
 		scene.defeated.connect(_on_target_defeated)

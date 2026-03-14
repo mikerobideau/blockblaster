@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://co7ajkydrmj5r"]
+
+[ext_resource type="Texture2D" uid="uid://bypdfp8ouiu4t" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_01.png" id="1_0ayyq"]
+[ext_resource type="Script" path="res://object/target/target.gd" id="1_v043c"]
+
+[node name="Ship01" type="Area2D"]
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_v043c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0ayyq")
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(0, -48)
+
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-88, -384, 88, -384, 384, -96, 400, -32, 264, -64, 160, 200, 64, 384, -64, 384, -160, 200, -256, -56, -400, -32, -376, -104)
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
