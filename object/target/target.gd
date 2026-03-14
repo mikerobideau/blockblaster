@@ -35,14 +35,14 @@ var sprite_forward_offset = PI / 2
 func _ready():
 	health = data.health
 	speed = data.movement.speed
-	burst_shots_remaining = data.energy_burst_size
-	fire_timer.wait_time = data.fire_timeout
-	fire_timer.timeout.connect(_fire)
-	burst_timer.wait_time = data.energy_burst_delay
-	burst_timer.timeout.connect(_burst_fire)
 	#direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
-	if data.has_energy:
+	if data.blaster != null:
+		burst_shots_remaining = data.blaster.burst_size
+		fire_timer.wait_time = data.blaster.fire_timeout
+		fire_timer.timeout.connect(_fire)
+		burst_timer.wait_time = data.blaster.burst_delay
+		burst_timer.timeout.connect(_burst_fire)
 		fire_timer.start()
 
 func _physics_process(delta: float):
@@ -70,8 +70,8 @@ func defeat():
 	queue_free()
 
 func _fire():
-	if data.energy_burst_size > 1:
-		burst_shots_remaining = data.energy_burst_size
+	if data.blaster.burst_size > 1:
+		burst_shots_remaining = data.blaster.burst_size
 		_burst_fire()
 		burst_timer.start()
 	else:
@@ -88,11 +88,11 @@ func _burst_fire():
 		burst_timer.start()
 
 func _get_energy_scene() -> EnemyEnergy:
-	var energy = data.energy_scene.instantiate()
+	var energy = data.blaster.scene.instantiate()
 	energy.global_position = emitter.global_position
 	energy.direction = Vector2.UP.rotated(rotation)
-	energy.damage = data.energy_damage
-	energy.speed = data.energy_speed
+	energy.damage = data.blaster.damage
+	energy.speed = data.blaster.speed
 	energy.rotation = energy.direction.angle() + sprite_forward_offset
 	return energy
 
