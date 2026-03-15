@@ -44,8 +44,9 @@ func _ready():
 		fire_timer.timeout.connect(_fire)
 		burst_timer.wait_time = data.blaster.burst_delay
 		burst_timer.timeout.connect(_burst_fire)
-		fire_timer.start()
-	if data.movement is PathMovement:
+		if data.blaster.autostart:
+			fire_timer.start()
+	if data.movement is PathMovement or data.movement is TravelToPointMovement:
 		var center = get_viewport_rect().size / 2
 		direction = data.movement.get_direction(global_position, center)
 	if data.randomize_rotation:
@@ -58,11 +59,12 @@ func _physics_process(delta: float):
 		_track_parent_target_movement(delta)
 	if data.movement is PathMovement:
 		_path_movement(delta)
+	if data.movement is TravelToPointMovement:
+		_travel_to_point_movement(delta)
 		
 func _track_player_movement(delta: float):
 	var direction = (ship.global_position - global_position).normalized()
-	var target_angle = direction.angle() + sprite_forward_offset
-	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+	rotation = _rotate_towards_direction(delta)
 	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
 		global_position += direction * speed * delta
 		
@@ -103,6 +105,34 @@ func _s_across_movement(delta: float):
 	var offset = sin(distance_traveled * frequency * 0.01) * amplitude
 	global_position.y = spawn_position.y + offset
 
+func _travel_to_point_movement(delta):
+	var movement: TravelToPointMovement = data.movement
+	
+	match movement.travel_state:
+		TravelToPointMovement.TravelState.APPROACH:
+			direction = (movement.waypoint - global_position).normalized()
+			rotation = lerp_angle(
+				rotation,
+				direction.angle() + sprite_forward_offset,
+				rotation_speed * delta
+			)
+			_move(delta)
+			
+			if global_position.distance_to(movement.waypoint) < 100:
+				movement.travel_state = TravelToPointMovement.TravelState.FIRE
+				fire_timer.start()
+
+		TravelToPointMovement.TravelState.FIRE:
+			direction = (ship.global_position - global_position).normalized()
+			rotation = _rotate_towards_direction(delta)
+
+		TravelToPointMovement.TravelState.EXIT:
+			fire_timer.stop()
+			await get_tree().create_timer(data.movement.wait_to_exit).timeout
+			direction = (spawn_position - global_position).normalized()
+			rotation = lerp_angle(rotation, direction.angle() + sprite_forward_offset, rotation_speed * delta)
+			_move(delta)
+
 func take_damage(amount: int):
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
@@ -124,6 +154,9 @@ func _fire():
 	else:
 		var energy = _get_energy_scene()
 		get_tree().current_scene.add_child(energy)
+	
+	if data.movement is TravelToPointMovement:
+		data.movement.travel_state = TravelToPointMovement.TravelState.EXIT
 
 func _burst_fire():
 	var energy = _get_energy_scene()

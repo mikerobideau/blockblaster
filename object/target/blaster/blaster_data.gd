@@ -7,3 +7,4 @@ class_name EnemyBlasterData
 @export var burst_size := 1
 @export var burst_delay := 0.2
 @export var fire_timeout := 5
+@export var autostart := false

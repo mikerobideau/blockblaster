@@ -52,15 +52,22 @@ func _wave_complete():
 	
 func _spawn_event(event: TimelineEvent) -> Target:
 	var data = target_db.find(event.scene)
-	var instance = _spawn_single_enemy(data, event.position)
+	var instance_data = data.duplicate()
+	if instance_data.movement:
+		instance_data.movement = instance_data.movement.duplicate()
+		if instance_data.movement is TravelToPointMovement:
+			instance_data.movement.waypoint = event.waypoint
+
+	var instance = _spawn_single_enemy(instance_data, event.position)
+	instance.data = instance_data
+
 	if event.follow_leader and leader_ref != null:
-		print_debug('spawning child that follows leader')
 		instance.parent_target = leader_ref
 	if event.follow_leader and leader_ref == null:
 		push_warning('Spawner attempted to spawn a follower with no leader defined')
 	if event.is_leader:
-		print_debug('spawning leader')
 		leader_ref = instance
+
 	return instance
 		
 func _spawn_single_enemy(data: TargetData, position: Vector2) -> Target:

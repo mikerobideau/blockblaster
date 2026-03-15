@@ -15,6 +15,7 @@ func create(budget: int, total_time: int) -> WaveData:
 	
 	while budget > 0:
 		var count = randi_range(1, 2)
+		#var count = 1
 		var interval = 0
 		#var candidates = Target.TargetType.values().filter(func(d): 
 		#	return target_db.find(d).difficulty * count <= budget
@@ -23,7 +24,7 @@ func create(budget: int, total_time: int) -> WaveData:
 		#	break
 		#var target = candidates.pick_random()
 		var target = Target.TargetType.ENEMY_SHIP
-		var data = target_db.find(target)
+		var data = target_db.find(target)		
 		var pattern = data.supported_patterns.pick_random()
 		if data.is_leader:
 			t = add_leader_group(wave.timeline, target, t, 5)
@@ -54,6 +55,8 @@ func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, 
 		event.time = start_time + i * interval
 		event.scene = type
 		event.position = get_spawn_position(data.spawn_behavior)
+		if data.movement is TravelToPointMovement:
+			event.waypoint = _random_waypoint()
 		timeline.events.append(event)
 	return start_time + count * interval
 
@@ -61,7 +64,6 @@ func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: f
 	var data = target_db.find(type)
 	var leader_pos = get_spawn_position(data.spawn_behavior)
 	var follower_count = randi_range(3, 5)
-
 
 	#print_debug('Adding leader at ' + str(start_time))
 	var leader_event := TimelineEvent.new()
@@ -145,3 +147,9 @@ func get_bottom_left_position():
 
 func get_bottom_right_position():
 	return Vector2(Constant.SCREEN_WIDTH, Constant.SCREEN_HEIGHT - padding)
+	
+func _random_waypoint():
+	return Vector2(
+		randf_range(Constant.SCREEN_WIDTH * 0.25, Constant.SCREEN_WIDTH * 0.75),
+		randf_range(Constant.SCREEN_HEIGHT * 0.25, Constant.SCREEN_HEIGHT * 0.6)
+	)
