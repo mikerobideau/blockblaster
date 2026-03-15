@@ -35,7 +35,6 @@ var sprite_forward_offset = PI / 2
 func _ready():
 	health = data.health
 	speed = data.movement.speed
-	#direction = Vector2.RIGHT if _is_in_left_hemisphere() else Vector2.LEFT
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	if data.blaster != null:
 		burst_shots_remaining = data.blaster.burst_size
@@ -44,10 +43,15 @@ func _ready():
 		burst_timer.wait_time = data.blaster.burst_delay
 		burst_timer.timeout.connect(_burst_fire)
 		fire_timer.start()
+	if data.movement is PathMovement:
+		var center_x = get_viewport_rect().size.x / 2
+		direction = data.movement.get_direction(global_position, center_x)
 
 func _physics_process(delta: float):
 	if data.movement is TrackPlayerMovement:
 		_track_player_movement(delta)
+	if data.movement is PathMovement:
+		_path_movement(delta)
 		
 func _track_player_movement(delta: float):
 	var direction = (ship.global_position - global_position).normalized()
@@ -55,6 +59,13 @@ func _track_player_movement(delta: float):
 	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
 	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
 		global_position += direction * speed * delta
+
+func _path_movement(delta):
+	match data.movement.type:
+		PathMovement.Type.STRAIGHT_ACROSS:
+			global_position += speed * direction * delta
+			var target_angle = direction.angle() + sprite_forward_offset
+			rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
 
 func take_damage(amount: int):
 	health = clamp(health - amount, 0, health)
@@ -103,14 +114,6 @@ func _remove():
 func _to_center() -> int:
 	var viewport = get_viewport_rect().size
 	return (viewport / 2) - global_position
-	
-func _is_in_left_hemisphere() -> bool:
-	var center_x = get_viewport_rect().size.x / 2
-	return global_position.x < center_x
-	
-func _is_in_right_hemisphere() -> bool:
-	var center_x = get_viewport_rect().size.x / 2
-	return global_position.x > center_x
 	
 func _flip_horizontal(direction: Vector2):
 	return -PI / 2 if direction == Vector2.LEFT else PI / 2
