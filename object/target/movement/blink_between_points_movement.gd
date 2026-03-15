@@ -1,0 +1,2 @@
+extends MovementData
+class_name BlinkBetweenPointsMovement

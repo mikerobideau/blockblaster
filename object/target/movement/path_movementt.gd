@@ -3,6 +3,12 @@ class_name PathMovement
 
 enum Type {
 	STRAIGHT_ACROSS
+	#Straight down
+	#Drift
+	#Circle
+	#Spiral
+	#Ski,
+	#lawnmower
 }
 
 @export var type: Type
