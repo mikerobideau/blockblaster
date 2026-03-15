@@ -30,8 +30,11 @@ var burst_shots_remaining: int
 var rotation_speed := 50
 var sprite_forward_offset = PI / 2
 var parent_target: Target
+var spawn_position: Vector2
+var distance_traveled := 0.0
 
 func _ready():
+	spawn_position = global_position
 	health = data.health
 	speed = data.movement.speed
 	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
@@ -75,16 +78,30 @@ func _track_parent_target_movement(delta: float):
 func _path_movement(delta):
 	match data.movement.type:
 		PathMovement.Type.STRAIGHT_ACROSS:
-			var target_angle = direction.angle() + sprite_forward_offset
-			rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+			rotation = _rotate_towards_direction(delta)
 		PathMovement.Type.STRAIGHT_DOWN:
 			pass
 		PathMovement.Type.DRIFT:
 			pass
+		PathMovement.Type.S_ACROSS:
+			_s_across_movement(delta)
 	_move(delta)
+	
+func _rotate_towards_direction(delta: float) -> float:
+	var target_angle = direction.angle() + sprite_forward_offset
+	return lerp_angle(rotation, target_angle, rotation_speed * delta)
 			
 func _move(delta: float):
 	global_position += speed * direction * delta
+
+func _s_across_movement(delta: float):
+	var amplitude := 80.0
+	var frequency := 2.0
+	rotation = _rotate_towards_direction(delta)
+	global_position.x += direction.x * speed * delta
+	distance_traveled += speed * delta
+	var offset = sin(distance_traveled * frequency * 0.01) * amplitude
+	global_position.y = spawn_position.y + offset
 
 func take_damage(amount: int):
 	health = clamp(health - amount, 0, health)

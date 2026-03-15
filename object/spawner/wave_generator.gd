@@ -44,7 +44,7 @@ func create(budget: int, total_time: int) -> WaveData:
 			var batch_interval = avg_interval_per_ship * count
 			t += batch_interval * randf_range(0.85, 1.15)
 			
-	print_debug('no budget left')
+	#print_debug('no budget left')
 	return wave
 	
 func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):
@@ -63,7 +63,7 @@ func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: f
 	var follower_count = randi_range(3, 5)
 
 
-	print_debug('Adding leader at ' + str(start_time))
+	#print_debug('Adding leader at ' + str(start_time))
 	var leader_event := TimelineEvent.new()
 	leader_event.is_leader = true
 	leader_event.time = start_time
@@ -74,7 +74,7 @@ func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: f
 	var follower_type = target_db.random_follower()
 	for i in range(follower_count):
 		var follower_event_time = start_time + 1
-		print_debug('adding follower event at ' + str(follower_event_time))
+		#print_debug('adding follower event at ' + str(follower_event_time))
 		var event := TimelineEvent.new()
 		event.time = follower_event_time 
 		event.scene = follower_type

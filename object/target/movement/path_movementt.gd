@@ -4,9 +4,8 @@ class_name PathMovement
 enum Type {
 	STRAIGHT_ACROSS,
 	STRAIGHT_DOWN,
-	DRIFT
-	#Straight down
-	#Drift
+	DRIFT,
+	S_ACROSS
 	#Circle
 	#Spiral
 	#Ski,
@@ -31,6 +30,8 @@ func get_direction(pos: Vector2, center: Vector2) -> Vector2:
 			var to_dest = dest - pos
 			var direction = to_dest.normalized()
 			return direction
+		Type.S_ACROSS:
+			return Vector2.RIGHT if _is_in_left_hemisphere(pos, center.x) else Vector2.LEFT
 		_:
 			print_debug('movement path not found')
 			return Vector2.ZERO
