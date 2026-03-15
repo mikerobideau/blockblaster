@@ -3,6 +3,7 @@ class_name PathMovement
 
 enum Type {
 	STRAIGHT_ACROSS,
+	STRAIGHT_DOWN,
 	DRIFT
 	#Straight down
 	#Drift
@@ -18,6 +19,8 @@ func get_direction(pos: Vector2, center: Vector2) -> Vector2:
 	match type:
 		Type.STRAIGHT_ACROSS:
 			return Vector2.RIGHT if _is_in_left_hemisphere(pos, center.x) else Vector2.LEFT
+		Type.STRAIGHT_DOWN:
+			return Vector2.DOWN
 		Type.DRIFT:
 			var center_offset = 500
 			var offset = Vector2(

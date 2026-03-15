@@ -62,11 +62,13 @@ func _track_player_movement(delta: float):
 func _path_movement(delta):
 	match data.movement.type:
 		PathMovement.Type.STRAIGHT_ACROSS:
-			_move(delta)
 			var target_angle = direction.angle() + sprite_forward_offset
 			rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+		PathMovement.Type.STRAIGHT_DOWN:
+			pass
 		PathMovement.Type.DRIFT:
-			_move(delta)
+			pass
+	_move(delta)
 			
 func _move(delta: float):
 	global_position += speed * direction * delta
