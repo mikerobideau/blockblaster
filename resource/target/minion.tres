@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=8 format=3 uid="uid://o7kunesm5uj5"]
+
+[ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_h5c2c"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_ltb0e"]
+[ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_qnhr8"]
+[ext_resource type="Script" path="res://object/target/movement/track_enemy_movement.gd" id="3_ogt0o"]
+[ext_resource type="PackedScene" uid="uid://70yllkd4io8w" path="res://object/target/visual/ship/ship_03.tscn" id="4_78p7c"]
+
+[sub_resource type="Resource" id="Resource_qsxs2"]
+script = ExtResource("2_qnhr8")
+scene = ExtResource("1_h5c2c")
+damage = 1
+speed = 750
+burst_size = 1
+burst_delay = 0.2
+fire_timeout = 5
+
+[sub_resource type="Resource" id="Resource_wxp6j"]
+script = ExtResource("3_ogt0o")
+min_distance = 100
+speed = 500
+
+[resource]
+resource_name = "Minion"
+script = ExtResource("1_ltb0e")
+scene = ExtResource("4_78p7c")
+health = 2
+difficulty = 1
+randomize_rotation = false
+movement = SubResource("Resource_wxp6j")
+blaster = SubResource("Resource_qsxs2")
+supported_patterns = Array[int]([])

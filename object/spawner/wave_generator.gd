@@ -8,7 +8,6 @@ var padding := 100
 var target_db := TargetDatabase.new()
 	
 func create(budget: int, total_time: int) -> WaveData:
-	print_debug('creating')
 	var t = 0.0
 	var wave = WaveData.new()
 	wave.resource_name = 'wave'
@@ -25,10 +24,13 @@ func create(budget: int, total_time: int) -> WaveData:
 		var target = candidates.pick_random()
 		var data = target_db.find(target)
 		var pattern = data.supported_patterns.pick_random()
-		match pattern:
-			Pattern.Type.STREAM:
-				#print_debug('Adding stream of ' + str(count))
-				t = add_stream(wave.timeline, target, t, count, interval)
+		if data.is_leader:
+			t = add_leader_group(wave.timeline, target, t, 5)
+		else:
+			match pattern:
+				Pattern.Type.STREAM:
+					#print_debug('Adding stream of ' + str(count))
+					t = add_stream(wave.timeline, target, t, count, interval)
 		
 		var cost = data.difficulty * count
 		#print_debug('cost is ' + str(data.difficulty) + ' * ' + str(count) + ' = ' + str(cost))
@@ -54,8 +56,37 @@ func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, 
 		timeline.events.append(event)
 	return start_time + count * interval
 
+func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
+	var data = target_db.find(type)
+	var leader_pos = get_spawn_position(data.spawn_behavior)
+	var follower_count = randi_range(3, 5)
+
+
+	print_debug('Adding leader at ' + str(start_time))
+	var leader_event := TimelineEvent.new()
+	leader_event.is_leader = true
+	leader_event.time = start_time
+	leader_event.scene = type
+	leader_event.position = leader_pos
+	timeline.events.append(leader_event)
+
+	var follower_type = target_db.random_follower()
+	for i in range(follower_count):
+		var follower_event_time = start_time + 1
+		print_debug('adding follower event at ' + str(follower_event_time))
+		var event := TimelineEvent.new()
+		event.time = follower_event_time 
+		event.scene = follower_type
+		event.follow_leader = true
+		event.position = leader_pos + Vector2(
+			randf_range(-40, 40),
+			randf_range(-40, 40)
+		)
+		timeline.events.append(event)
+
+	return start_time + interval
+
 func get_spawn_position(behavior: SpawnBehaviorData) -> Vector2:
-	print_debug('getting spawn position')
 	match behavior.location:
 		SpawnBehaviorData.Location.ANY_EDGE:
 			return get_offscreen_spawn_position()

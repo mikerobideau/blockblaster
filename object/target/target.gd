@@ -8,7 +8,8 @@ const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
 	METEOR,
-	ENEMY_SHIP
+	ENEMY_SHIP,
+	MINION
 }
 
 @onready var sprite = $Sprite2D
@@ -28,6 +29,7 @@ var direction: Vector2
 var burst_shots_remaining: int
 var rotation_speed := 50
 var sprite_forward_offset = PI / 2
+var parent_target: Target
 
 func _ready():
 	health = data.health
@@ -49,6 +51,8 @@ func _ready():
 func _physics_process(delta: float):
 	if data.movement is TrackPlayerMovement:
 		_track_player_movement(delta)
+	if data.movement is TrackEnemyMovement:
+		_track_parent_target_movement(delta)
 	if data.movement is PathMovement:
 		_path_movement(delta)
 		
@@ -57,6 +61,14 @@ func _track_player_movement(delta: float):
 	var target_angle = direction.angle() + sprite_forward_offset
 	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
 	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
+		global_position += direction * speed * delta
+		
+func _track_parent_target_movement(delta: float):
+	print_debug('tracking parent target movement')
+	var direction = (parent_target.global_position - global_position).normalized()
+	var target_angle = direction.angle() + sprite_forward_offset
+	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+	if global_position.distance_to(parent_target.global_position) > data.movement.min_distance:
 		global_position += direction * speed * delta
 
 func _path_movement(delta):

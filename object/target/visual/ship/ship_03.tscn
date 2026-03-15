@@ -8,11 +8,10 @@ scale = Vector2(0.1, 0.1)
 script = ExtResource("1_triqi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_7ivyr")
 
 [node name="HitBox" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-8, -32, 8, -32, 48, 32, 16, 24, 0, 32, -16, 24, -48, 32)
+polygon = PackedVector2Array(-80, -320, 80, -320, 160, -160, 400, 320, 160, 240, 0, 320, -160, 240, -400, 320)
 
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(0, -40)

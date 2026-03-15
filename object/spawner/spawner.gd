@@ -20,6 +20,7 @@ var event_index := 0
 var current_wave: WaveData
 var start_time := 0.0
 var target_db := TargetDatabase.new()
+var leader_ref: Target
 
 func  _ready():
 	pass
@@ -48,15 +49,27 @@ func _process(delta):
 func _wave_complete():
 	wave_complete.emit(current_wave)
 	current_wave = null
-		
-func _spawn_event(event: TimelineEvent):
+	
+func _spawn_event(event: TimelineEvent) -> Target:
 	var data = target_db.find(event.scene)
-	var scene = data.scene.instantiate()
-	scene.data = data
-	scene.global_position = event.position
-	if scene is Target:
-		scene.defeated.connect(_on_target_defeated)
-	add_child(scene)
+	var instance = _spawn_single_enemy(data, event.position)
+	if event.follow_leader and leader_ref != null:
+		print_debug('spawning child that follows leader')
+		instance.parent_target = leader_ref
+	if event.follow_leader and leader_ref == null:
+		push_warning('Spawner attempted to spawn a follower with no leader defined')
+	if event.is_leader:
+		leader_ref = instance
+	return instance
+		
+func _spawn_single_enemy(data: TargetData, position: Vector2) -> Target:
+	var instance = data.scene.instantiate()
+	instance.data = data
+	instance.global_position = position
+	if instance is Target:
+		instance.defeated.connect(_on_target_defeated)
+	add_child(instance)
+	return instance
 
 func _on_target_defeated(target: Target):
 	target_defeated.emit(target)

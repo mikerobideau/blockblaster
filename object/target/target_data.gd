@@ -4,6 +4,7 @@ class_name TargetData
 @export var scene: PackedScene
 @export var health: int
 @export var difficulty: int
+@export var is_leader := false
 
 @export var randomize_rotation := false
 @export var spawn_behavior: SpawnBehaviorData
