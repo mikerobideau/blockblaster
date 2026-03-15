@@ -19,6 +19,7 @@ var enemy_ship_data = preload("res://resource/target/enemy_ship.tres")
 var event_index := 0
 var current_wave: WaveData
 var start_time := 0.0
+var target_db := TargetDatabase.new()
 
 func  _ready():
 	pass
@@ -49,22 +50,8 @@ func _wave_complete():
 	current_wave = null
 		
 func _spawn_event(event: TimelineEvent):
-	var scene: Target
-	var data: TargetData
-	match event.scene:
-		Target.TargetType.ENEMY_SHIP:
-			data = enemy_ship_data
-		#Target.TargetType.PATROL:
-		#	scene = PatrolScene.instantiate()
-		#Target.TargetType.POPUP:
-		#	scene = PopupScene.instantiate()
-		#Target.TargetType.METEOR:
-		#	scene = MeteorScene.instantiate()
-		#Target.TargetType.HOMING:
-		#	scene = HomingScene.instantiate()
-		_:
-			return
-	scene = data.scene.instantiate()
+	var data = target_db.find(event.scene)
+	var scene = data.scene.instantiate()
 	scene.data = data
 	scene.global_position = event.position
 	if scene is Target:

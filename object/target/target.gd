@@ -7,11 +7,8 @@ signal removed(target: Area2D)
 const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
-	#METEOR,
-	ENEMY_SHIP,
-	#HOMING,
-	#PATROL,
-	#POPUP
+	METEOR,
+	ENEMY_SHIP
 }
 
 @onready var sprite = $Sprite2D
@@ -44,8 +41,10 @@ func _ready():
 		burst_timer.timeout.connect(_burst_fire)
 		fire_timer.start()
 	if data.movement is PathMovement:
-		var center_x = get_viewport_rect().size.x / 2
-		direction = data.movement.get_direction(global_position, center_x)
+		var center = get_viewport_rect().size / 2
+		direction = data.movement.get_direction(global_position, center)
+	if data.randomize_rotation:
+		rotation = randf() * TAU
 
 func _physics_process(delta: float):
 	if data.movement is TrackPlayerMovement:
@@ -63,9 +62,14 @@ func _track_player_movement(delta: float):
 func _path_movement(delta):
 	match data.movement.type:
 		PathMovement.Type.STRAIGHT_ACROSS:
-			global_position += speed * direction * delta
+			_move(delta)
 			var target_angle = direction.angle() + sprite_forward_offset
 			rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
+		PathMovement.Type.DRIFT:
+			_move(delta)
+			
+func _move(delta: float):
+	global_position += speed * direction * delta
 
 func take_damage(amount: int):
 	health = clamp(health - amount, 0, health)
