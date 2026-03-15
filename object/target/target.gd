@@ -64,7 +64,8 @@ func _track_player_movement(delta: float):
 		global_position += direction * speed * delta
 		
 func _track_parent_target_movement(delta: float):
-	print_debug('tracking parent target movement')
+	if !parent_target:
+		return
 	var direction = (parent_target.global_position - global_position).normalized()
 	var target_angle = direction.angle() + sprite_forward_offset
 	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)

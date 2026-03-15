@@ -20,6 +20,7 @@ script = ExtResource("1_wcutp")
 scene = ExtResource("2_mc1cq")
 health = 3
 difficulty = 1
+is_leader = false
 randomize_rotation = true
 spawn_behavior = SubResource("Resource_tnwfl")
 movement = SubResource("Resource_rnidn")

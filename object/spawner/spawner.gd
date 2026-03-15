@@ -59,6 +59,7 @@ func _spawn_event(event: TimelineEvent) -> Target:
 	if event.follow_leader and leader_ref == null:
 		push_warning('Spawner attempted to spawn a follower with no leader defined')
 	if event.is_leader:
+		print_debug('spawning leader')
 		leader_ref = instance
 	return instance
 		

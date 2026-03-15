@@ -16,12 +16,13 @@ func create(budget: int, total_time: int) -> WaveData:
 	while budget > 0:
 		var count = randi_range(1, 2)
 		var interval = 0
-		var candidates = Target.TargetType.values().filter(func(d): 
-			return target_db.find(d).difficulty * count <= budget
-		)
-		if candidates.size() == 0:
-			break
-		var target = candidates.pick_random()
+		#var candidates = Target.TargetType.values().filter(func(d): 
+		#	return target_db.find(d).difficulty * count <= budget
+		#)
+		#if candidates.size() == 0:
+		#	break
+		#var target = candidates.pick_random()
+		var target = Target.TargetType.ENEMY_SHIP
 		var data = target_db.find(target)
 		var pattern = data.supported_patterns.pick_random()
 		if data.is_leader:

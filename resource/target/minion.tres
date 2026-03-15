@@ -26,6 +26,7 @@ script = ExtResource("1_ltb0e")
 scene = ExtResource("4_78p7c")
 health = 2
 difficulty = 1
+is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_wxp6j")
 blaster = SubResource("Resource_qsxs2")
