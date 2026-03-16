@@ -66,8 +66,15 @@ func _track_player_movement(delta: float):
 	var direction = (ship.global_position - global_position).normalized()
 	var target_angle = direction.angle() + sprite_forward_offset
 	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
-	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
-		global_position += direction * speed * delta
+
+	#slow down near min distance
+	var distance = global_position.distance_to(ship.global_position)
+	var stop_radius = data.movement.min_distance
+	var slow_radius = stop_radius + 150
+	var t = clamp((distance - stop_radius) / (slow_radius - stop_radius), 0, 1)
+	var smooth_t = t * t * (3 - 2 * t)
+
+	global_position += direction * speed * smooth_t * delta
 		
 func _track_parent_target_movement(delta: float):
 	if !parent_target:

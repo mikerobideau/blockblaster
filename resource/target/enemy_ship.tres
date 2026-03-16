@@ -19,7 +19,7 @@ burst_size = 2
 burst_delay = 1.0
 fire_timeout = 2
 
-[sub_resource type="Resource" id="Resource_dxgr8"]
+[sub_resource type="Resource" id="Resource_6j4q2"]
 script = ExtResource("3_xd5dd")
 min_distance = 500
 speed = 250
@@ -37,6 +37,6 @@ difficulty = 1
 is_leader = false
 randomize_rotation = false
 spawn_behavior = SubResource("Resource_ccu5n")
-movement = SubResource("Resource_dxgr8")
+movement = SubResource("Resource_6j4q2")
 blaster = SubResource("Resource_igylh")
 supported_patterns = Array[int]([0])
