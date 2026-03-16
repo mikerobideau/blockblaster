@@ -4,25 +4,24 @@
 [ext_resource type="PackedScene" uid="uid://b4a8kyg8fbni3" path="res://object/target/enemy/energy/energy_blue_line.tscn" id="1_srqdv"]
 [ext_resource type="PackedScene" uid="uid://wv4r78wlbhhc" path="res://object/target/visual/ship/ship_02.tscn" id="2_e8ekt"]
 [ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_idaox"]
-[ext_resource type="Script" path="res://object/target/movement/travel_to_point_movement.gd" id="3_cqokw"]
+[ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_xd5dd"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="6_bnk2f"]
 
 [sub_resource type="Resource" id="Resource_igylh"]
 script = ExtResource("2_idaox")
 scene = ExtResource("1_srqdv")
+pattern = 0
 damage = 1
 speed = 700
-burst_size = 1
-burst_delay = 0.2
+burst_size = 2
+burst_delay = 0.5
 fire_timeout = 3
-autostart = false
+autostart = true
 
-[sub_resource type="Resource" id="Resource_8vstx"]
-resource_local_to_scene = true
-script = ExtResource("3_cqokw")
-waypoint = Vector2(0, 0)
-wait_to_exit = 1.0
-speed = 500
+[sub_resource type="Resource" id="Resource_dxgr8"]
+script = ExtResource("3_xd5dd")
+min_distance = 500
+speed = 250
 
 [sub_resource type="Resource" id="Resource_ccu5n"]
 script = ExtResource("6_bnk2f")
@@ -37,6 +36,6 @@ difficulty = 1
 is_leader = false
 randomize_rotation = false
 spawn_behavior = SubResource("Resource_ccu5n")
-movement = SubResource("Resource_8vstx")
+movement = SubResource("Resource_dxgr8")
 blaster = SubResource("Resource_igylh")
 supported_patterns = Array[int]([0])

@@ -14,7 +14,7 @@ func create(budget: int, total_time: int) -> WaveData:
 	wave.timeline 	= Timeline.new()
 	
 	while budget > 0:
-		var count = randi_range(1, 2)
+		var count = randi_range(1, 1)
 		#var count = 1
 		var interval = 0
 		#var candidates = Target.TargetType.values().filter(func(d): 

@@ -64,7 +64,8 @@ func _physics_process(delta: float):
 		
 func _track_player_movement(delta: float):
 	var direction = (ship.global_position - global_position).normalized()
-	rotation = _rotate_towards_direction(delta)
+	var target_angle = direction.angle() + sprite_forward_offset
+	rotation = lerp_angle(rotation, target_angle, rotation_speed * delta)
 	if global_position.distance_to(ship.global_position) > data.movement.min_distance:
 		global_position += direction * speed * delta
 		
@@ -146,21 +147,44 @@ func defeat():
 	defeated.emit(self)
 	queue_free()
 
+#TODO: Update burst to work with any pattern
 func _fire():
 	if data.blaster.burst_size > 1:
+		print_debug('starting burst timer')
 		burst_shots_remaining = data.blaster.burst_size
 		_burst_fire()
 		burst_timer.start()
 	else:
-		var energy = _get_energy_scene()
-		get_tree().current_scene.add_child(energy)
-	
+		_fire_pattern()
 	if data.movement is TravelToPointMovement:
 		data.movement.travel_state = TravelToPointMovement.TravelState.EXIT
 
-func _burst_fire():
+func _fire_pattern():
+	match data.blaster.pattern:
+		EnemyBlasterData.Pattern.LINE:
+			print_debug('line pattern detected')
+			_fire_line()
+		EnemyBlasterData.Pattern.RING:
+			_fire_ring()
+		_:
+			_fire_line()
+
+func _fire_line():
 	var energy = _get_energy_scene()
 	get_tree().current_scene.add_child(energy)
+
+func _fire_ring():
+	var count = 8
+	var angle_step = TAU / count
+	for i in range(count):
+		var energy = _get_energy_scene()
+		var dir = Vector2.UP.rotated(rotation + i * angle_step)
+		energy.direction = dir
+		energy.rotation = dir.angle() + sprite_forward_offset
+		get_tree().current_scene.add_child(energy)
+
+func _burst_fire():
+	_fire_pattern()
 	burst_shots_remaining -= 1
 	if burst_shots_remaining <= 0:
 		burst_timer.stop()
