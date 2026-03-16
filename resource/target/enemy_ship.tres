@@ -11,12 +11,13 @@
 script = ExtResource("2_idaox")
 scene = ExtResource("1_srqdv")
 autostart = true
-pattern = 2
+pattern = 1
 damage = 1
 speed = 700
+projectile_count = 12
 burst_size = 2
-burst_delay = 0.5
-fire_timeout = 3
+burst_delay = 1.0
+fire_timeout = 2
 
 [sub_resource type="Resource" id="Resource_dxgr8"]
 script = ExtResource("3_xd5dd")

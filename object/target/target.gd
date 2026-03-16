@@ -168,6 +168,8 @@ func _fire_pattern():
 			_fire_ring()
 		EnemyBlasterData.Pattern.SPREAD:
 			_fire_spread()
+		EnemyBlasterData.Pattern.PARALLEL_SPREAD:
+			_fire_parallel_spread()
 		_:
 			_fire_line()
 
@@ -176,7 +178,7 @@ func _fire_line():
 	get_tree().current_scene.add_child(energy)
 
 func _fire_ring():
-	var count = 8
+	var count = data.blaster.projectile_count
 	var angle_step = TAU / count
 	for i in range(count):
 		var energy = _get_energy_scene()
@@ -186,7 +188,7 @@ func _fire_ring():
 		get_tree().current_scene.add_child(energy)
 
 func _fire_spread():
-	var count = 3
+	var count = data.blaster.projectile_count
 	var spread = deg_to_rad(90) # width of the semicircle arc
 	var step = spread / (count - 1)
 	for i in range(count):
@@ -195,6 +197,20 @@ func _fire_spread():
 		var energy = _get_energy_scene()
 		energy.direction = dir
 		energy.rotation = dir.angle() + sprite_forward_offset
+		get_tree().current_scene.add_child(energy)
+
+func _fire_parallel_spread():
+	var count = data.blaster.projectile_count
+	var spacing = 50.0
+	var forward = Vector2.UP.rotated(rotation)
+	var right = forward.orthogonal()  # perpendicular vector
+	for i in range(count):
+		var offset_index = i - (count - 1) / 2.0
+		var spawn_pos = emitter.global_position + right * offset_index * spacing
+		var energy = _get_energy_scene()
+		energy.global_position = spawn_pos
+		energy.direction = forward
+		energy.rotation = forward.angle() + sprite_forward_offset
 		get_tree().current_scene.add_child(energy)
 
 func _burst_fire():
