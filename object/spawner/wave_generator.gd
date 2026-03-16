@@ -7,58 +7,38 @@ var coins = preload("res://resource/enemy_group/coins.tres")
 var padding := 100
 var target_db := TargetDatabase.new()
 	
-func create(budget: int, total_time: int) -> WaveData:
+func create(budget: int, total_time: float, ) -> WaveData:
+	var budget_variation_min = 0.1
+	var budget_variation_max = 0.3
+	var base_interval := 5.0
+	var interval_variation := 0
 	var t = 0.0
 	var wave = WaveData.new()
 	wave.resource_name = 'wave'
 	wave.timeline 	= Timeline.new()
 	
-	while budget > 0:
-		var count = randi_range(1, 1)
-		#var count = 1
-		var interval = 0
-		#var candidates = Target.TargetType.values().filter(func(d): 
-		#	return target_db.find(d).difficulty * count <= budget
-		#)
-		#if candidates.size() == 0:
-		#	break
-		#var target = candidates.pick_random()
-		var target = Target.TargetType.ENEMY_SHIP
-		var data = target_db.find(target)		
-		var pattern = data.supported_patterns.pick_random()
-		if data.is_leader:
-			t = add_leader_group(wave.timeline, target, t, 5)
-		else:
-			match pattern:
-				Pattern.Type.STREAM:
-					#print_debug('Adding stream of ' + str(count))
-					t = add_stream(wave.timeline, target, t, count, interval)
+	while t < total_time and budget > 0:
+		var interval = base_interval + randf_range(-interval_variation, interval_variation)
+		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
+		var candidates = target_db.within_budget(budget)
+		if candidates.size() == 0:
+			break
+		var type = candidates.pick_random()
+		var data = target_db.find(type)
+		add_timeline_event(wave.timeline, t, type, data)
+		budget -= data.difficulty
+		t += interval
 		
-		var cost = data.difficulty * count
-		#print_debug('cost is ' + str(data.difficulty) + ' * ' + str(count) + ' = ' + str(cost))
-		budget -= cost
-		
-		if budget > 0:
-			var avg_cost = 2 #TODO: Improve this logic to consider actual average
-			var ships_remaining_estimate = max(1, budget / avg_cost)
-			var avg_interval_per_ship = (total_time - t) / ships_remaining_estimate
-			var batch_interval = avg_interval_per_ship * count
-			t += batch_interval * randf_range(0.85, 1.15)
-			
-	#print_debug('no budget left')
 	return wave
-	
-func add_stream(timeline: Timeline, type: Target.TargetType, start_time: float, count: int, interval: int):
-	var data = target_db.find(type)
-	for i in range(count):
-		var event := TimelineEvent.new()
-		event.time = start_time + i * interval
-		event.scene = type
-		event.position = get_spawn_position(data.spawn_behavior)
-		if data.movement is TravelToPointMovement:
-			event.waypoint = _random_waypoint()
-		timeline.events.append(event)
-	return start_time + count * interval
+
+func add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData):
+	var event := TimelineEvent.new()
+	event.time = t
+	event.scene = type
+	event.position = get_spawn_position(data.spawn_behavior)
+	if data.movement is TravelToPointMovement:
+		event.waypoint = _random_waypoint()
+	timeline.events.append(event)
 
 func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
 	var data = target_db.find(type)

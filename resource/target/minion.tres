@@ -9,8 +9,11 @@
 [sub_resource type="Resource" id="Resource_qsxs2"]
 script = ExtResource("2_qnhr8")
 scene = ExtResource("1_h5c2c")
+autostart = true
+pattern = 0
 damage = 1
 speed = 750
+projectile_count = 1
 burst_size = 1
 burst_delay = 0.2
 fire_timeout = 5

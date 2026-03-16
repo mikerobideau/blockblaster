@@ -31,6 +31,7 @@ location = 0
 [resource]
 resource_name = "Enemy Ship"
 script = ExtResource("1_n0dov")
+type = 1
 scene = ExtResource("2_e8ekt")
 health = 5
 difficulty = 1

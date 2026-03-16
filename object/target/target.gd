@@ -9,7 +9,7 @@ const SHIP_COLLISION_DAMAGE = 1
 enum TargetType {
 	METEOR,
 	ENEMY_SHIP,
-	MINION
+	#MINION
 }
 
 @onready var sprite = $Sprite2D

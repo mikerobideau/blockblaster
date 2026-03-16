@@ -4,7 +4,7 @@ class_name TargetDatabase
 static var data := {
 	Target.TargetType.METEOR: preload("res://resource/target/meteor.tres"),
 	Target.TargetType.ENEMY_SHIP: preload("res://resource/target/enemy_ship.tres"),
-	Target.TargetType.MINION: preload("res://resource/target/minion.tres")
+	#Target.TargetType.MINION: preload("res://resource/target/minion.tres")
 }
 
 static func find(type: Target.TargetType) -> TargetData:
@@ -17,3 +17,10 @@ static func random_follower() -> int:
 		if d.movement is TrackEnemyMovement:
 			candidates.append(key)
 	return candidates.pick_random() if candidates.size() > 0 else -1
+
+static func within_budget(budget: int) -> Array:
+	return Target.TargetType.values().filter(func(t):
+		var data = find(t)
+		return data.difficulty <= budget
+	)
+	
