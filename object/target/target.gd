@@ -166,6 +166,8 @@ func _fire_pattern():
 			_fire_line()
 		EnemyBlasterData.Pattern.RING:
 			_fire_ring()
+		EnemyBlasterData.Pattern.SPREAD:
+			_fire_spread()
 		_:
 			_fire_line()
 
@@ -179,6 +181,18 @@ func _fire_ring():
 	for i in range(count):
 		var energy = _get_energy_scene()
 		var dir = Vector2.UP.rotated(rotation + i * angle_step)
+		energy.direction = dir
+		energy.rotation = dir.angle() + sprite_forward_offset
+		get_tree().current_scene.add_child(energy)
+
+func _fire_spread():
+	var count = 3
+	var spread = deg_to_rad(90) # width of the semicircle arc
+	var step = spread / (count - 1)
+	for i in range(count):
+		var angle_offset = -spread/2 + i * step
+		var dir = Vector2.UP.rotated(rotation + angle_offset)
+		var energy = _get_energy_scene()
 		energy.direction = dir
 		energy.rotation = dir.angle() + sprite_forward_offset
 		get_tree().current_scene.add_child(energy)
