@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://14sws1mvflbr"]
+
+[sub_resource type="GDScript" id="GDScript_jaw5m"]
+script/source = "extends RefCounted
+class_name SpawnGroupGenerator
+"
+
+[node name="SpawnGroupGenerator" type="Node2D"]
+script = SubResource("GDScript_jaw5m")

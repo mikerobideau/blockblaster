@@ -3,9 +3,10 @@ class_name WaveGenerator
 
 var Timeline = preload("res://object/spawner/timeline.gd")
 var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
-var coins = preload("res://resource/enemy_group/coins.tres")
+
 var padding := 100
 var target_db := TargetDatabase.new()
+var spawn_group_db := FormationDatabase.new()
 	
 func create(budget: int, total_time: float, ) -> WaveData:
 	var budget_variation_min = 0.1
@@ -20,18 +21,18 @@ func create(budget: int, total_time: float, ) -> WaveData:
 	while t < total_time and budget > 0:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
-		var candidates = target_db.within_budget(budget)
-		if candidates.size() == 0:
-			break
-		var type = candidates.pick_random()
-		var data = target_db.find(type)
-		add_timeline_event(wave.timeline, t, type, data)
-		budget -= data.difficulty
-		t += interval
+		var group: Formation = spawn_group_db.find_random()
 		
+		var type = group.targets.pick_random()
+		var data = target_db.find(type)
+		for i in range(group.count):
+			_add_timeline_event(wave.timeline, t, type, data, group)
+		budget -= data.difficulty * group.count * group.cost_multiplier
+		t += interval
+	
 	return wave
 
-func add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData):
+func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, group: Formation):
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
@@ -40,7 +41,7 @@ func add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, dat
 		event.waypoint = _random_waypoint()
 	timeline.events.append(event)
 
-func add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
+func _add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
 	var data = target_db.find(type)
 	var leader_pos = get_spawn_position(data.spawn_behavior)
 	var follower_count = randi_range(3, 5)

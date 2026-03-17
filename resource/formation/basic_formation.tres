@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Formation" load_steps=2 format=3 uid="uid://ytd72sb4ix73"]
+
+[ext_resource type="Script" path="res://object/target/spawn/formation.gd" id="1_aine0"]
+
+[resource]
+script = ExtResource("1_aine0")
+targets = Array[int]([0, 1])
+pattern = 0
+count = 1
+cost_multiplier = 1

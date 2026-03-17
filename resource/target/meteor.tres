@@ -17,6 +17,7 @@ location = 2
 [resource]
 resource_name = "Meteor"
 script = ExtResource("1_wcutp")
+type = 0
 scene = ExtResource("2_mc1cq")
 health = 3
 difficulty = 1

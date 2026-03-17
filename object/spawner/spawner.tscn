@@ -4,5 +4,3 @@
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_dmjkv")
-
-[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
