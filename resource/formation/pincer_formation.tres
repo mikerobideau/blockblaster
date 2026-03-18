@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Formation" load_steps=2 format=3 uid="uid://e1jjgosus8bd"]
+
+[ext_resource type="Script" path="res://object/target/spawn/formation.gd" id="1_euiuh"]
+
+[resource]
+resource_name = "Pincer"
+script = ExtResource("1_euiuh")
+targets = Array[int]([1])
+pattern = 1
+count = 2
+cost_multiplier = 1.5

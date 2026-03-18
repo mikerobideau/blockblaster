@@ -3,8 +3,9 @@
 [ext_resource type="Script" path="res://object/target/spawn/formation.gd" id="1_aine0"]
 
 [resource]
+resource_name = "Basic"
 script = ExtResource("1_aine0")
 targets = Array[int]([0, 1])
 pattern = 0
 count = 1
-cost_multiplier = 1
+cost_multiplier = 1.0

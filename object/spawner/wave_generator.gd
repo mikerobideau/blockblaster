@@ -33,14 +33,14 @@ func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, da
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
-	event.position = get_spawn_position(data.spawn_behavior) #TODO: Spawn behavior should move to formation
+	event.position = get_spawn_position(formation)
 	if data.movement is TravelToPointMovement:
 		event.waypoint = _random_waypoint()
 	timeline.events.append(event)
 
-func _add_leader_formation(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
+func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float):
 	var data = Database.target.find_by_type(type)
-	var leader_pos = get_spawn_position(data.spawn_behavior)
+	var leader_pos = get_spawn_position(formation)
 	var follower_count = randi_range(3, 5)
 
 	#print_debug('Adding leader at ' + str(start_time))
@@ -68,14 +68,12 @@ func _add_leader_formation(timeline: Timeline, type: Target.TargetType, start_ti
 
 	return start_time + interval
 
-func get_spawn_position(behavior: SpawnBehaviorData) -> Vector2:
-	match behavior.location:
-		SpawnBehaviorData.Location.ANY_EDGE:
+func get_spawn_position(formation: Formation) -> Vector2:
+	match formation.pattern:
+		Formation.SpawnPattern.RANDOM:
 			return get_offscreen_spawn_position()
-		SpawnBehaviorData.Location.LEFT_OR_RIGHT_EDGE:
-			return get_left_right_spawn_position()
-		SpawnBehaviorData.Location.TOP_EDGE:
-			return get_random_top_position()
+		Formation.SpawnPattern.RIGHT:
+			return get_random_right_position()
 		_:
 			return Vector2.ZERO
 
