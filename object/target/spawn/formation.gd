@@ -3,6 +3,9 @@ class_name Formation
 
 enum SpawnPattern {
 	RANDOM,
+	TOP,
+	BOTTOM,
+	LEFT,
 	RIGHT
 }
 

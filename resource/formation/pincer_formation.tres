@@ -6,6 +6,6 @@
 resource_name = "Pincer"
 script = ExtResource("1_euiuh")
 targets = Array[int]([1])
-pattern = 1
+pattern = 4
 count = 2
 cost_multiplier = 1.5

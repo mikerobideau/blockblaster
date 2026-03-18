@@ -72,6 +72,12 @@ func get_spawn_position(formation: Formation) -> Vector2:
 	match formation.pattern:
 		Formation.SpawnPattern.RANDOM:
 			return get_offscreen_spawn_position()
+		Formation.SpawnPattern.TOP:
+			return get_random_top_position()
+		Formation.SpawnPattern.BOTTOM:
+			return get_random_bottom_position()
+		Formation.SpawnPattern.LEFT:
+			return get_random_left_position()
 		Formation.SpawnPattern.RIGHT:
 			return get_random_right_position()
 		_:

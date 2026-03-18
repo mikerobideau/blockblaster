@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TargetData" load_steps=10 format=3 uid="uid://cas7vjiimc8v0"]
 
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_n0dov"]
-[ext_resource type="PackedScene" uid="uid://b4a8kyg8fbni3" path="res://object/target/enemy/energy/energy_blue_line.tscn" id="1_srqdv"]
+[ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_xs5bj"]
 [ext_resource type="PackedScene" uid="uid://wv4r78wlbhhc" path="res://object/target/visual/ship/ship_02.tscn" id="2_e8ekt"]
 [ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_idaox"]
 [ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_xd5dd"]
@@ -9,13 +9,13 @@
 
 [sub_resource type="Resource" id="Resource_igylh"]
 script = ExtResource("2_idaox")
-scene = ExtResource("1_srqdv")
+scene = ExtResource("1_xs5bj")
 autostart = true
-pattern = 1
+pattern = 0
 damage = 1
-speed = 700
-projectile_count = 12
-burst_size = 2
+speed = 500
+projectile_count = 1
+burst_size = 1
 burst_delay = 1.0
 fire_timeout = 2
 
