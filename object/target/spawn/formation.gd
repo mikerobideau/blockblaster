@@ -8,15 +8,15 @@ enum SpawnPattern {
 	LEFT,
 	RIGHT,
 	PINCER,
-	#STREAM_LINE, #e.g., s line
-	#STAGGERED_EDGE #i.e., popup
+	TOP_MARCH
 	#APPEAR_INSIDE #e.g., spawns in play area
 }
 
 @export var targets: Array[Target.TargetType]
+@export var count: int = 1
 @export var pattern: SpawnPattern
 @export var has_shared_position := false
-@export var count: int = 1
+
 #@export var min_count: int = 1
 #@export var max_count: int = 1
 @export var cost_multiplier: float

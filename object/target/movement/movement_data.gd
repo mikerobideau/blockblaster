@@ -1,7 +1,7 @@
 extends Resource
 class_name MovementData
 
-@export var speed := 500
+@export var speed := 250
 
 func get_direction(pos: Vector2, center: Vector2) -> Vector2:
 	return Vector2.ZERO

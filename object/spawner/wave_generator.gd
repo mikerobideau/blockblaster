@@ -38,7 +38,7 @@ func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, 
 	event.scene = type
 	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i)
 	if data.movement is TravelToPointMovement:
-		event.waypoint = _random_waypoint()
+		event.waypoint = get_waypoint(formation, event.position)
 	timeline.events.append(event)
 
 func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float, index: int):
@@ -71,6 +71,14 @@ func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formatio
 
 	return start_time + interval
 
+func get_waypoint(formation: Formation, spawn_pos: Vector2) -> Vector2:
+	match formation.pattern:
+		Formation.SpawnPattern.TOP_MARCH:
+			return Vector2(spawn_pos.x, Constant.SCREEN_HEIGHT + padding)
+		_:
+			push_warning('Unable to determine waypoint because there was no matching formation pattern')
+			return _random_waypoint()
+
 func get_spawn_position(formation: Formation, i: int) -> Vector2:
 	match formation.pattern:
 		Formation.SpawnPattern.RANDOM:
@@ -85,6 +93,8 @@ func get_spawn_position(formation: Formation, i: int) -> Vector2:
 			return get_random_right_position()
 		Formation.SpawnPattern.PINCER:
 			return get_pincer_position(i)
+		Formation.SpawnPattern.TOP_MARCH:
+			return get_top_march_position(i, formation.count)
 		_:
 			return Vector2.ZERO
 
@@ -138,6 +148,10 @@ func get_bottom_right_position():
 	
 func get_pincer_position(i: int):
 	return get_random_right_position() if i % 2 == 0 else get_random_left_position()
+
+func get_top_march_position(i: int, count: int) -> Vector2:
+	var spacing = Constant.SCREEN_WIDTH / (count + 1.0)
+	return Vector2(spacing * (i + 1), -padding)
 	
 func _random_waypoint():
 	return Vector2(

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TargetData" load_steps=7 format=3 uid="uid://rho5hkf85683"]
 
-[ext_resource type="Script" path="res://object/target/movement/path_movementt.gd" id="1_5ntt8"]
+[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_5ntt8"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_wcutp"]
 [ext_resource type="PackedScene" uid="uid://03s7bcryd7x8" path="res://object/target/visual/environmental/meteor.tscn" id="2_mc1cq"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_4vje5"]

@@ -15,5 +15,4 @@ func _on_body_entered(body: Node) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is Ship:
-		print_debug('Taking energy damage ' + str(damage))
 		area.take_damage(damage)
