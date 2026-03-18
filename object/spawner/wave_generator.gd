@@ -23,24 +23,24 @@ func create(budget: int, total_time: float, ) -> WaveData:
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
 		for i in range(formation.count):
-			_add_timeline_event(wave.timeline, t, type, data, formation)
+			_add_timeline_event(wave.timeline, t, type, data, formation, i)
 		budget -= data.difficulty * formation.count * formation.cost_multiplier
 		t += interval
 	
 	return wave
 
-func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, formation: Formation):
+func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, formation: Formation, i: int):
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
-	event.position = get_spawn_position(formation)
+	event.position = get_spawn_position(formation, i)
 	if data.movement is TravelToPointMovement:
 		event.waypoint = _random_waypoint()
 	timeline.events.append(event)
 
-func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float):
+func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float, index: int):
 	var data = Database.target.find_by_type(type)
-	var leader_pos = get_spawn_position(formation)
+	var leader_pos = get_spawn_position(formation, index)
 	var follower_count = randi_range(3, 5)
 
 	#print_debug('Adding leader at ' + str(start_time))
@@ -68,7 +68,7 @@ func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formatio
 
 	return start_time + interval
 
-func get_spawn_position(formation: Formation) -> Vector2:
+func get_spawn_position(formation: Formation, i: int) -> Vector2:
 	match formation.pattern:
 		Formation.SpawnPattern.RANDOM:
 			return get_offscreen_spawn_position()
@@ -80,6 +80,8 @@ func get_spawn_position(formation: Formation) -> Vector2:
 			return get_random_left_position()
 		Formation.SpawnPattern.RIGHT:
 			return get_random_right_position()
+		Formation.SpawnPattern.PINCER:
+			return get_pincer_position(i)
 		_:
 			return Vector2.ZERO
 
@@ -130,6 +132,9 @@ func get_bottom_left_position():
 
 func get_bottom_right_position():
 	return Vector2(Constant.SCREEN_WIDTH, Constant.SCREEN_HEIGHT - padding)
+	
+func get_pincer_position(i: int):
+	return get_random_right_position() if i % 2 == 0 else get_random_left_position()
 	
 func _random_waypoint():
 	return Vector2(

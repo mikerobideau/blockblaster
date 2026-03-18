@@ -157,7 +157,6 @@ func defeat():
 #TODO: Update burst to work with any pattern
 func _fire():
 	if data.blaster.burst_size > 1:
-		print_debug('starting burst timer')
 		burst_shots_remaining = data.blaster.burst_size
 		_burst_fire()
 		burst_timer.start()
@@ -169,7 +168,6 @@ func _fire():
 func _fire_pattern():
 	match data.blaster.pattern:
 		EnemyBlasterData.Pattern.LINE:
-			print_debug('line pattern detected')
 			_fire_line()
 		EnemyBlasterData.Pattern.RING:
 			_fire_ring()

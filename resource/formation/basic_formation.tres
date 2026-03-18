@@ -6,6 +6,6 @@
 resource_name = "Basic"
 script = ExtResource("1_aine0")
 targets = Array[int]([0, 1])
-pattern = 4
+pattern = 0
 count = 1
 cost_multiplier = 1.0
