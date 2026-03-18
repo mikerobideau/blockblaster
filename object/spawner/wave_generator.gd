@@ -19,26 +19,26 @@ func create(budget: int, total_time: float, ) -> WaveData:
 	while t < total_time and budget > 0:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
-		var group = Database.formation.find_random()
-		var type = group.targets.pick_random()
+		var formation = Database.formation.find_random()
+		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
-		for i in range(group.count):
-			_add_timeline_event(wave.timeline, t, type, data, group)
-		budget -= data.difficulty * group.count * group.cost_multiplier
+		for i in range(formation.count):
+			_add_timeline_event(wave.timeline, t, type, data, formation)
+		budget -= data.difficulty * formation.count * formation.cost_multiplier
 		t += interval
 	
 	return wave
 
-func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, group: Formation):
+func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, formation: Formation):
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
-	event.position = get_spawn_position(data.spawn_behavior)
+	event.position = get_spawn_position(data.spawn_behavior) #TODO: Spawn behavior should move to formation
 	if data.movement is TravelToPointMovement:
 		event.waypoint = _random_waypoint()
 	timeline.events.append(event)
 
-func _add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
+func _add_leader_formation(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
 	var data = Database.target.find_by_type(type)
 	var leader_pos = get_spawn_position(data.spawn_behavior)
 	var follower_count = randi_range(3, 5)
