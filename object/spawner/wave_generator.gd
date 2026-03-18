@@ -6,7 +6,6 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 
 var padding := 100
 var target_db := TargetDatabase.new()
-var spawn_group_db := FormationDatabase.new()
 	
 func create(budget: int, total_time: float, ) -> WaveData:
 	var budget_variation_min = 0.1
@@ -21,8 +20,7 @@ func create(budget: int, total_time: float, ) -> WaveData:
 	while t < total_time and budget > 0:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
-		var group: Formation = spawn_group_db.find_random()
-		
+		var group = Database.formation.find_random()
 		var type = group.targets.pick_random()
 		var data = target_db.find(type)
 		for i in range(group.count):

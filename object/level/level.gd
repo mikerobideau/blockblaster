@@ -27,7 +27,7 @@ var target_factory := TargetFactory.new()
 var is_game_over := false
 var wave_gen = WaveGenerator.new()
 
-func _ready() -> void:
+func _ready() -> void:	
 	#get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ship.damage_taken.connect(_on_ship_damage_taken)
