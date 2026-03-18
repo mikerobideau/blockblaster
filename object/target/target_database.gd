@@ -1,5 +1,5 @@
 extends RefCounted
-class_name TargetDatabase
+class_name TargetDatabaseOld
 
 static var data := {
 	Target.TargetType.METEOR: preload("res://resource/target/meteor.tres"),

@@ -20,20 +20,23 @@ func create(budget: int, total_time: float, ) -> WaveData:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
 		var formation = Database.formation.find_random()
+		print_debug('Spawning ' + formation.resource_name + ' formation')
+		var shared_pos := get_spawn_position(formation, 0) if formation.has_shared_position else Vector2.INF
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
 		for i in range(formation.count):
-			_add_timeline_event(wave.timeline, t, type, data, formation, i)
+			var spawn_time: float = t + i * formation.stream_interval
+			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
 		budget -= data.difficulty * formation.count * formation.cost_multiplier
 		t += interval
 	
 	return wave
 
-func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, data: TargetData, formation: Formation, i: int):
+func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, data: TargetData, formation: Formation, i: int, shared_pos: Vector2):
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
-	event.position = get_spawn_position(formation, i)
+	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i)
 	if data.movement is TravelToPointMovement:
 		event.waypoint = _random_waypoint()
 	timeline.events.append(event)
