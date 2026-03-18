@@ -7,7 +7,11 @@ enum SpawnPattern {
 	BOTTOM,
 	LEFT,
 	RIGHT,
-	PINCER
+	PINCER,
+	#STREAM_RANDOM #in quick succession from any edge
+	#STREAM_LINE, #e.g., s line
+	#STAGGERED_EDGE #i.e., popup
+	#APPEAR_INSIDE #e.g., spawns in play area
 }
 
 @export var targets: Array[Target.TargetType]
