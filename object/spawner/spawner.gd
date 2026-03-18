@@ -51,7 +51,7 @@ func _wave_complete():
 	current_wave = null
 	
 func _spawn_event(event: TimelineEvent) -> Target:
-	var data = target_db.find(event.scene)
+	var data = Database.target.find_by_type(event.scene)
 	var instance_data = data.duplicate()
 	if instance_data.movement:
 		instance_data.movement = instance_data.movement.duplicate()

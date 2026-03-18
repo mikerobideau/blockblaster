@@ -26,6 +26,7 @@ speed = 500
 [resource]
 resource_name = "Minion"
 script = ExtResource("1_ltb0e")
+type = 0
 scene = ExtResource("4_78p7c")
 health = 2
 difficulty = 1

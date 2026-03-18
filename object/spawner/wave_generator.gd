@@ -5,8 +5,7 @@ var Timeline = preload("res://object/spawner/timeline.gd")
 var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 
 var padding := 100
-var target_db := TargetDatabase.new()
-	
+
 func create(budget: int, total_time: float, ) -> WaveData:
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
@@ -22,7 +21,7 @@ func create(budget: int, total_time: float, ) -> WaveData:
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
 		var group = Database.formation.find_random()
 		var type = group.targets.pick_random()
-		var data = target_db.find(type)
+		var data = Database.target.find_by_type(type)
 		for i in range(group.count):
 			_add_timeline_event(wave.timeline, t, type, data, group)
 		budget -= data.difficulty * group.count * group.cost_multiplier
@@ -40,7 +39,7 @@ func _add_timeline_event(timeline: Timeline, t: int, type: Target.TargetType, da
 	timeline.events.append(event)
 
 func _add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: float, interval: float):
-	var data = target_db.find(type)
+	var data = Database.target.find_by_type(type)
 	var leader_pos = get_spawn_position(data.spawn_behavior)
 	var follower_count = randi_range(3, 5)
 
@@ -52,13 +51,14 @@ func _add_leader_group(timeline: Timeline, type: Target.TargetType, start_time: 
 	leader_event.position = leader_pos
 	timeline.events.append(leader_event)
 
-	var follower_type = target_db.random_follower()
+	#TODO: Refactor random follower with new approach involving formations
+	#var follower_type = target_db.random_follower()
 	for i in range(follower_count):
 		var follower_event_time = start_time + 1
 		#print_debug('adding follower event at ' + str(follower_event_time))
 		var event := TimelineEvent.new()
 		event.time = follower_event_time 
-		event.scene = follower_type
+		#event.scene = follower_type
 		event.follow_leader = true
 		event.position = leader_pos + Vector2(
 			randf_range(-40, 40),
