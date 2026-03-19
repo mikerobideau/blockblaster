@@ -7,3 +7,4 @@ class_name TimelineEvent
 @export var is_leader := false
 @export var follow_leader := false
 @export var waypoint: Vector2
+@export var telegraph := false

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjw1572lh7j4m"]
+
+[ext_resource type="Script" path="res://object/target/target.gd" id="1_eou1m"]
+[ext_resource type="Texture2D" uid="uid://d20bqws85vho8" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Props/Bomb_01.png" id="2_7sfhb"]
+
+[node name="Bomb" type="Area2D"]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_eou1m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7sfhb")
+
+[node name="Emitter" type="Node2D" parent="."]
+visible = false
+
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-70, -90, -70, -110, -60, -130, -30, -140, 0, -150, 30, -140, 60, -130, 70, -110, 70, -90, 70, 91.5257, 70, 100, 60, 130, 30, 140, 0, 150, -30, 140, -60, 130, -70, 100)
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[node name="BurstTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

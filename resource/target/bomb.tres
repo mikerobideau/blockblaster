@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=3 format=3 uid="uid://b8rqjn7vvkoop"]
+
+[ext_resource type="PackedScene" uid="uid://cjw1572lh7j4m" path="res://object/target/visual/environmental/bomb.tscn" id="1_40kqd"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_lka7r"]
+
+[resource]
+resource_name = "Bomb"
+script = ExtResource("1_lka7r")
+type = 2
+scene = ExtResource("1_40kqd")
+health = 1
+difficulty = 1
+is_leader = false
+randomize_rotation = false
+supported_patterns = Array[int]([])

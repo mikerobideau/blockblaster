@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Formation" load_steps=2 format=3 uid="uid://by3neqmufnfy7"]
+
+[ext_resource type="Script" path="res://object/target/spawn/formation.gd" id="1_fm03f"]
+
+[resource]
+resource_name = "Appear Formation"
+script = ExtResource("1_fm03f")
+targets = Array[int]([2])
+count = 1
+pattern = 7
+has_shared_position = false
+cost_multiplier = 1
+stream_interval = 0.0

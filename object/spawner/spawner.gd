@@ -9,6 +9,7 @@ signal gold_collected(gold: Gold)
 var TargetScene = preload('res://object/target/target.tscn')
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
+var TelegraphScene = preload("res://object/target/visual/telegraph/telegraph.tscn")
 var enemy_ship_data = preload("res://resource/target/enemy_ship.tres")
 
 @onready var music_player = $MusicPlayer
@@ -50,7 +51,13 @@ func _wave_complete():
 	wave_complete.emit(current_wave)
 	current_wave = null
 	
-func _spawn_event(event: TimelineEvent) -> Target:
+func _spawn_event(event: TimelineEvent) -> void:
+	if event.telegraph:
+		_telegraph_then_spawn(event)
+	else:
+		_do_spawn(event)
+	
+func _do_spawn(event: TimelineEvent) -> Target:
 	var data = Database.target.find_by_type(event.scene)
 	var instance_data = data.duplicate()
 	if instance_data.movement:
@@ -69,6 +76,14 @@ func _spawn_event(event: TimelineEvent) -> Target:
 		leader_ref = instance
 
 	return instance
+
+func _telegraph_then_spawn(event: TimelineEvent):
+	var telegraph = TelegraphScene.instantiate()
+	telegraph.global_position = event.position
+	add_child(telegraph)
+	await get_tree().create_timer(Constant.TELEGRAPH_DURATION, false).timeout
+	telegraph.queue_free()
+	_do_spawn(event)
 		
 func _spawn_single_enemy(data: TargetData, position: Vector2) -> Target:
 	var instance = data.scene.instantiate()

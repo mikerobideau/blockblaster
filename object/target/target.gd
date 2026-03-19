@@ -9,7 +9,8 @@ const SHIP_COLLISION_DAMAGE = 1
 enum TargetType {
 	METEOR,
 	ENEMY_SHIP,
-	#MINION
+	#MINION,
+	BOMB
 }
 
 @onready var sprite = $Sprite2D
@@ -36,8 +37,9 @@ var distance_traveled := 0.0
 func _ready():
 	spawn_position = global_position
 	health = data.health
-	speed = data.movement.speed
-	rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
+	if data.movement:
+		speed = data.movement.speed
+		rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	if data.blaster != null:
 		burst_shots_remaining = data.blaster.burst_size
 		fire_timer.wait_time = data.blaster.fire_timeout
@@ -53,6 +55,8 @@ func _ready():
 		rotation = randf() * TAU
 
 func _physics_process(delta: float):
+	if !data.movement:
+		return
 	if data.movement is TrackPlayerMovement:
 		_track_player_movement(delta)
 	if data.movement is TrackEnemyMovement:
