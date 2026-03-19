@@ -26,7 +26,8 @@ func create(budget: int, total_time: float, ) -> WaveData:
 		var data = Database.target.find_by_type(type)
 		for i in range(formation.count):
 			var spawn_time: float = t + i * formation.stream_interval
-			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
+			#_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
+			_add_gold_event(wave.timeline, spawn_time, 1)
 		budget -= data.difficulty * formation.count * formation.cost_multiplier
 		t += interval
 	
@@ -41,6 +42,14 @@ func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, 
 		event.waypoint = get_waypoint(formation, event.position)
 	if formation.SpawnPattern.APPEAR:
 		event.telegraph = true
+	timeline.events.append(event)
+
+func _add_gold_event(timeline: Timeline, t: float, count: int):
+	var event := TimelineEvent.new()
+	event.time = t
+	event.position = get_onscreen_position()
+	event.is_gold = true
+	event.gold_count = count
 	timeline.events.append(event)
 
 func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float, index: int):
