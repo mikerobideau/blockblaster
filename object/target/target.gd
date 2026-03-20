@@ -21,6 +21,7 @@ enum TargetType {
 @onready var burst_timer = $BurstTimer
 @onready var animation_player = $AnimationPlayer
 @onready var explosion = $Explosion
+@onready var debris = $DebrisParticles
 @onready var ship = get_tree().current_scene.ship
 
 @export var data: TargetData
@@ -36,6 +37,7 @@ var sprite_forward_offset = PI / 2
 var parent_target: Target
 var spawn_position: Vector2
 var distance_traveled := 0.0
+var is_defeated := false
 
 func _ready():
 	sprite.play('default')
@@ -162,11 +164,16 @@ func _on_area_entered(area: Area2D) -> void:
 		ship.take_damage(SHIP_COLLISION_DAMAGE)
 
 func defeat():
+	if is_defeated:
+		return
+	is_defeated = true
 	sprite.visible = false
+	debris.emitting = true
 	explosion.visible = true
 	explosion.play('default')
 	await explosion.animation_finished
-	explosion.visible = false
+	explosion.queue_free()
+	await debris.finished
 	defeated.emit(self)
 	queue_free()
 
