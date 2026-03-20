@@ -19,6 +19,7 @@ enum TargetType {
 @onready var hit_box = $HitBox
 @onready var fire_timer = $FireTimer
 @onready var burst_timer = $BurstTimer
+@onready var explosion = $Explosion
 @onready var ship = get_tree().current_scene.ship
 
 @export var data: TargetData
@@ -36,6 +37,7 @@ var spawn_position: Vector2
 var distance_traveled := 0.0
 
 func _ready():
+	sprite.play('default')
 	spawn_position = global_position
 	health = data.health
 	if data.movement:
@@ -147,15 +149,23 @@ func _travel_to_point_movement(delta):
 			_move(delta)
 
 func take_damage(amount: int):
+	
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
 		defeat()
+	else:
+		sprite.play('damaged')
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is Ship:
 		ship.take_damage(SHIP_COLLISION_DAMAGE)
 
 func defeat():
+	sprite.visible = false
+	explosion.visible = true
+	explosion.play('default')
+	await explosion.animation_finished
+	explosion.visible = false
 	defeated.emit(self)
 	queue_free()
 

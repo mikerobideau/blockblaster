@@ -3,7 +3,7 @@ class_name TargetData
 
 @export var type: Target.TargetType
 @export var scene: PackedScene
-@export var health: int
+@export var health: int = 3
 @export var difficulty: int
 @export var is_leader := false
 
