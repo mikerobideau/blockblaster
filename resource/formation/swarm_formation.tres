@@ -5,7 +5,7 @@
 [resource]
 resource_name = "Right Formation"
 script = ExtResource("1_t0q2h")
-targets = Array[int]([1])
+targets = Array[int]([2])
 count = 3
 pattern = 0
 has_shared_position = false

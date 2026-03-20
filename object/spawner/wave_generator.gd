@@ -9,7 +9,7 @@ var padding := 100
 func create(budget: int, total_time: float) -> WaveData:
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
-	var base_interval := 4.0
+	var base_interval := 5.0
 	var interval_variation := 0
 	var t = 0.0
 	var wave = WaveData.new()

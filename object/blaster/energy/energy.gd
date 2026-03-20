@@ -20,6 +20,5 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is Target:
 		if !area.is_defeated:
 			area.take_damage(damage)
-			Sound.play(Sound.Effect.ENEMY_HIT)
 			queue_free()
 		

@@ -42,7 +42,6 @@ var is_defeated := false
 var all_debris: Array[CPUParticles2D]
 
 func _ready():
-	
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health
@@ -160,8 +159,10 @@ func take_damage(amount: int):
 	animation_player.play('shake')
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
+		Sound.play(Sound.Effect.ENEMY_DEFEATED)
 		defeat()
 	else:
+		Sound.play(Sound.Effect.ENEMY_HIT)
 		sprite.play('damaged')
 
 func _on_area_entered(area: Area2D) -> void:
@@ -259,6 +260,7 @@ func _fire_parallel_spread():
 		get_tree().current_scene.add_child(energy)
 
 func _burst_fire():
+	Sound.play(Sound.Effect.BLASTER_FIRED)
 	_fire_pattern()
 	burst_shots_remaining -= 1
 	if burst_shots_remaining <= 0:
