@@ -21,7 +21,7 @@ enum TargetType {
 @onready var burst_timer = $BurstTimer
 @onready var animation_player = $AnimationPlayer
 @onready var explosion = $Explosion
-@onready var debris = $DebrisParticles
+@onready var debris1 = $DebrisParticles
 @onready var debris2 = $DebrisParticles2
 @onready var ship = get_tree().current_scene.ship
 
@@ -39,11 +39,14 @@ var parent_target: Target
 var spawn_position: Vector2
 var distance_traveled := 0.0
 var is_defeated := false
+var all_debris: Array[CPUParticles2D]
 
 func _ready():
+	
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health
+	all_debris = [debris1, debris2]
 	if data.movement:
 		speed = data.movement.speed
 		rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
@@ -153,6 +156,7 @@ func _travel_to_point_movement(delta):
 			_move(delta)
 
 func take_damage(amount: int):
+	animation_player.stop()
 	animation_player.play('shake')
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
@@ -171,20 +175,26 @@ func defeat():
 		return
 	is_defeated = true
 	sprite.visible = false
-	debris.emitting = true
-	debris2.emitting = true
+	_start_debris()
 	explosion.visible = true
 	explosion.play('default')
 	await explosion.animation_finished
 	explosion.queue_free()
-	await debris.finished
-	await debris2.finished
+	await _await_all_debris()
 	defeated.emit(self)
 	queue_free()
+	
+func _start_debris():
+	for d in all_debris:
+		d.emitting = true
+
+func _await_all_debris():
+	for d in all_debris:
+		return d.finished
 
 #TODO: Update burst to work with any pattern
 func _fire():
-	if defeated:
+	if is_defeated:
 		return
 	if data.blaster.burst_size > 1:
 		burst_shots_remaining = data.blaster.burst_size

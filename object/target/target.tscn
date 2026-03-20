@@ -95,7 +95,6 @@ sprite_frames = SubResource("SpriteFrames_fykao")
 
 [node name="DebrisParticles" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 4
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
@@ -106,15 +105,14 @@ emission_sphere_radius = 128.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 500.0
+initial_velocity_min = 800.0
 initial_velocity_max = 1000.0
 scale_amount_min = 0.05
-scale_amount_max = 0.25
+scale_amount_max = 0.15
 scale_amount_curve = SubResource("Curve_glhpc")
 
 [node name="DebrisParticles2" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 4
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
@@ -125,8 +123,8 @@ emission_sphere_radius = 128.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 500.0
+initial_velocity_min = 800.0
 initial_velocity_max = 1000.0
 scale_amount_min = 0.05
-scale_amount_max = 0.25
+scale_amount_max = 0.15
 scale_amount_curve = SubResource("Curve_glhpc")
