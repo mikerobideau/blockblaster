@@ -3,8 +3,16 @@
 [ext_resource type="Script" path="res://object/target/target.gd" id="1_0vddg"]
 
 [node name="Target" type="Area2D"]
+scale = Vector2(0.1, 0.1)
 script = ExtResource("1_0vddg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(0, -48)
 
 [node name="FireTimer" type="Timer" parent="."]
 
-[node name="Visual" type="Node2D" parent="."]
+[node name="BurstTimer" type="Timer" parent="."]
