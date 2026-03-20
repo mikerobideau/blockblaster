@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyake3hnlhbkj"]
+
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_7p3xu"]
+[ext_resource type="Texture2D" uid="uid://clpx7nhw3ntmu" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_06.png" id="2_xnncd"]
+
+[node name="Target" instance=ExtResource("1_7p3xu")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_xnncd")
+
+[node name="HitBox" parent="." index="1"]
+position = Vector2(-5360, 550)
+polygon = PackedVector2Array(5360, -960, 5480, -560, 5510, -560, 5540, -810, 5580, -570, 5640, -300, 5540, -160, 5180, -160, 5070, -310, 5140, -550, 5180, -810, 5220, -560, 5240, -550)
+
+[node name="Emitter" parent="." index="2"]
+position = Vector2(0, -460)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

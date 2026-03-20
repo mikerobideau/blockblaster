@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://object/target/target.gd" id="1_0vddg"]
 
 [node name="Target" type="Area2D"]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.2, 0.2)
 script = ExtResource("1_0vddg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
