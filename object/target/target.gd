@@ -184,6 +184,8 @@ func defeat():
 
 #TODO: Update burst to work with any pattern
 func _fire():
+	if defeated:
+		return
 	if data.blaster.burst_size > 1:
 		burst_shots_remaining = data.blaster.burst_size
 		_burst_fire()
