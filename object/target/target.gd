@@ -19,6 +19,7 @@ enum TargetType {
 @onready var hit_box = $HitBox
 @onready var fire_timer = $FireTimer
 @onready var burst_timer = $BurstTimer
+@onready var animation_player = $AnimationPlayer
 @onready var explosion = $Explosion
 @onready var ship = get_tree().current_scene.ship
 
@@ -149,7 +150,7 @@ func _travel_to_point_movement(delta):
 			_move(delta)
 
 func take_damage(amount: int):
-	
+	animation_player.play('shake')
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
 		defeat()
