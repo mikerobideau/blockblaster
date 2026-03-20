@@ -6,10 +6,10 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 
 var padding := 100
 
-func create(budget: int, total_time: float, ) -> WaveData:
+func create(budget: int, total_time: float) -> WaveData:
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
-	var base_interval := 5.0
+	var base_interval := 2.0
 	var interval_variation := 0
 	var t = 0.0
 	var wave = WaveData.new()
@@ -26,8 +26,8 @@ func create(budget: int, total_time: float, ) -> WaveData:
 		var data = Database.target.find_by_type(type)
 		for i in range(formation.count):
 			var spawn_time: float = t + i * formation.stream_interval
-			#_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
-			_add_gold_event(wave.timeline, spawn_time, 1)
+			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
+			#_add_gold_event(wave.timeline, spawn_time, 1)
 		budget -= data.difficulty * formation.count * formation.cost_multiplier
 		t += interval
 	
@@ -38,9 +38,12 @@ func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, 
 	event.time = t
 	event.scene = type
 	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i)
-	if data.movement is TravelToPointMovement:
-		event.waypoint = get_waypoint(formation, event.position)
-	if formation.SpawnPattern.APPEAR:
+	if data.movement == null:
+		if data.movement is TravelToPointMovement:
+			event.waypoint = get_waypoint(formation, event.position)
+	else:
+		push_warning('Attempted to add timeline event with no movement')
+	if formation.pattern == formation.SpawnPattern.APPEAR:
 		event.telegraph = true
 	timeline.events.append(event)
 

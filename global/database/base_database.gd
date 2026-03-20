@@ -38,7 +38,6 @@ func find_random() -> Resource:
 	return values[randi() % values.size()]
 	
 func find_by_type(type: int):
-	print_debug('finding by type ' + str(type))
 	return find_by('type', type)
 
 func find_by(property: String, value: Variant) -> Resource:

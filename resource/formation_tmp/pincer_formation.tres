@@ -5,7 +5,9 @@
 [resource]
 resource_name = "Pincer"
 script = ExtResource("1_euiuh")
-targets = Array[int]([1])
-pattern = 5
+targets = Array[int]([2])
 count = 2
+pattern = 5
+has_shared_position = false
 cost_multiplier = 1.5
+stream_interval = 0.0

@@ -6,7 +6,7 @@
 [resource]
 resource_name = "Bomb"
 script = ExtResource("1_lka7r")
-type = 2
+type = 3
 scene = ExtResource("1_40kqd")
 health = 1
 difficulty = 1

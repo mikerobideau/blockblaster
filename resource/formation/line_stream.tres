@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="Formation" load_steps=2 format=3 uid="uid://s8twwlydrgea"]
+[gd_resource type="Resource" script_class="Formation" load_steps=2 format=3 uid="uid://b8dgryqx78ljs"]
 
 [ext_resource type="Script" path="res://object/target/spawn/formation.gd" id="1_rt3tl"]
 
 [resource]
 resource_name = "Line Stream"
 script = ExtResource("1_rt3tl")
-targets = Array[int]([1])
+targets = Array[int]([2])
+count = 20
 pattern = 3
 has_shared_position = true
-count = 20
 cost_multiplier = 0.0
 stream_interval = 0.1
