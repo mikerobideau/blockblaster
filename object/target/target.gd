@@ -22,6 +22,7 @@ enum TargetType {
 @onready var animation_player = $AnimationPlayer
 @onready var explosion = $Explosion
 @onready var debris = $DebrisParticles
+@onready var debris2 = $DebrisParticles2
 @onready var ship = get_tree().current_scene.ship
 
 @export var data: TargetData
@@ -160,6 +161,8 @@ func take_damage(amount: int):
 		sprite.play('damaged')
 
 func _on_area_entered(area: Area2D) -> void:
+	if defeated:
+		return
 	if area is Ship:
 		ship.take_damage(SHIP_COLLISION_DAMAGE)
 
@@ -169,11 +172,13 @@ func defeat():
 	is_defeated = true
 	sprite.visible = false
 	debris.emitting = true
+	debris2.emitting = true
 	explosion.visible = true
 	explosion.play('default')
 	await explosion.animation_finished
 	explosion.queue_free()
 	await debris.finished
+	await debris2.finished
 	defeated.emit(self)
 	queue_free()
 
