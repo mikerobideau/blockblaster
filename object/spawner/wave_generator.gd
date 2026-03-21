@@ -6,10 +6,10 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 
 var padding := 100
 
-func create(budget: int, total_time: float) -> WaveData:
+func create(budget: int) -> WaveData:
 	print_debug('-----------------------')
 	print_debug('Creating wave')
-	print_debug('Spending $' + str(budget) + ' over ' + str(total_time) + ' seconds')
+	print_debug('Spending $' + str(budget))
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
 	var base_interval := 5.0
@@ -19,7 +19,7 @@ func create(budget: int, total_time: float) -> WaveData:
 	wave.resource_name = 'wave'
 	wave.timeline 	= Timeline.new()
 	
-	while t < total_time and budget > 0:
+	while budget > 0:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
 		var formation = Database.formation.find_random()
@@ -27,26 +27,32 @@ func create(budget: int, total_time: float) -> WaveData:
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
 		
+		#Determine count
 		var count = randi_range(formation.min_count, formation.max_count)
-		#cap count so we don't overspend
 		var max_affordable = int(budget / (data.difficulty * formation.cost_multiplier))
 		count = min(count, max_affordable)
 		if count <= 0:
 			break
 		
+		#Positioning
 		var shared_pos := get_spawn_position(formation, 0, count) if formation.has_shared_position else Vector2.INF
+		
+		#Spawn each
 		for i in range(count):
 			var spawn_time: float = t + i * formation.stream_interval
 			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos, count)
 			#_add_gold_event(wave.timeline, spawn_time, 1)
+		
+		#Adjust remaining budget
 		var cost = data.difficulty * count * formation.cost_multiplier
 		budget -= cost
 		print_debug('Spent $' + str(cost) + ' on ' + str(count) + ' targets with ' 
 			+ str(data.difficulty) + ' difficulty' + ' and ' + str(formation.cost_multiplier) 
 			+ ' formation mult')
 		t += interval
+		
+	#Check that all of budget was spent
 	print_debug('Budget remaining ' + str(budget))
-	print_debug('Time remaining ' + str(total_time - t))
 	return wave
 
 func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, data: TargetData, formation: Formation, i: int, shared_pos: Vector2, count: int):

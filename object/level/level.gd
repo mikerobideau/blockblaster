@@ -44,14 +44,16 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	var waves = [
-		wave_gen.create(7, 10),
-		wave_gen.create(7, 10),
-		wave_gen.create(15, 20),
-		wave_gen.create(15, 20),
-		wave_gen.create(15, 15),
-		wave_gen.create(20, 15),
-		]
+	var waves = []
+	var min_difficulty = 1
+	var max_difficulty = 50
+	var a = min_difficulty
+	var b = min_difficulty * 2
+	while a <= max_difficulty:
+		waves.append(wave_gen.create(a))
+		var next = a + b
+		a = b
+		b = next
 	for wave in waves:
 		spawner.start_wave(wave)
 		
