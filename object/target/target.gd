@@ -156,7 +156,6 @@ func _travel_to_point_movement(delta):
 	match movement.travel_state:
 		TravelToPointMovement.TravelState.APPROACH:
 			direction = (movement.waypoint - global_position).normalized()
-			print_debug('In TravelState.APPROACH and setting direction to ' + str(direction))
 			rotation = lerp_angle(
 				rotation,
 				direction.angle() + sprite_forward_offset,
@@ -170,7 +169,6 @@ func _travel_to_point_movement(delta):
 
 		TravelToPointMovement.TravelState.FIRE:
 			direction = (ship.global_position - global_position).normalized()
-			print_debug('In TravelState.FIRE and setting direction to ' + str(direction))
 			rotation = _rotate_towards_direction(delta)
 
 		TravelToPointMovement.TravelState.EXIT:
@@ -308,7 +306,7 @@ func _get_energy_scene() -> EnemyEnergy:
 	energy.scale = data.blaster.scale
 	return energy
 
-func _remove():
+func remove():
 	queue_free()
 	removed.emit(self)
 

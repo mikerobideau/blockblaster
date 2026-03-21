@@ -6,7 +6,8 @@
 resource_name = "Basic"
 script = ExtResource("1_aine0")
 targets = Array[int]([5, 4, 1, 2])
-count = 1
+min_count = 1
+max_count = 1
 pattern = 3
 has_shared_position = false
 cost_multiplier = 1

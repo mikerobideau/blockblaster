@@ -7,6 +7,9 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 var padding := 100
 
 func create(budget: int, total_time: float) -> WaveData:
+	print_debug('-----------------------')
+	print_debug('Creating wave')
+	print_debug('Spending $' + str(budget) + ' over ' + str(total_time) + ' seconds')
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
 	var base_interval := 5.0
@@ -21,23 +24,36 @@ func create(budget: int, total_time: float) -> WaveData:
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
 		var formation = Database.formation.find_random()
 		#print_debug('Spawning ' + formation.resource_name + ' formation')
-		var shared_pos := get_spawn_position(formation, 0) if formation.has_shared_position else Vector2.INF
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
-		for i in range(formation.count):
+		
+		var count = randi_range(formation.min_count, formation.max_count)
+		#cap count so we don't overspend
+		var max_affordable = int(budget / (data.difficulty * formation.cost_multiplier))
+		count = min(count, max_affordable)
+		if count <= 0:
+			break
+		
+		var shared_pos := get_spawn_position(formation, 0, count) if formation.has_shared_position else Vector2.INF
+		for i in range(count):
 			var spawn_time: float = t + i * formation.stream_interval
-			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos)
+			_add_timeline_event(wave.timeline, spawn_time, type, data, formation, i, shared_pos, count)
 			#_add_gold_event(wave.timeline, spawn_time, 1)
-		budget -= data.difficulty * formation.count * formation.cost_multiplier
+		var cost = data.difficulty * count * formation.cost_multiplier
+		budget -= cost
+		print_debug('Spent $' + str(cost) + ' on ' + str(count) + ' targets with ' 
+			+ str(data.difficulty) + ' difficulty' + ' and ' + str(formation.cost_multiplier) 
+			+ ' formation mult')
 		t += interval
-	
+	print_debug('Budget remaining ' + str(budget))
+	print_debug('Time remaining ' + str(total_time - t))
 	return wave
 
-func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, data: TargetData, formation: Formation, i: int, shared_pos: Vector2):
+func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, data: TargetData, formation: Formation, i: int, shared_pos: Vector2, count: int):
 	var event := TimelineEvent.new()
 	event.time = t
 	event.scene = type
-	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i)
+	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i, count)
 	if data.movement != null:
 		if data.movement is TravelToPointMovement:
 			event.waypoint = get_waypoint(formation, event.position)
@@ -55,9 +71,9 @@ func _add_gold_event(timeline: Timeline, t: float, count: int):
 	event.gold_count = count
 	timeline.events.append(event)
 
-func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float, index: int):
+func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formation: Formation, start_time: float, interval: float, index: int, count: int):
 	var data = Database.target.find_by_type(type)
-	var leader_pos = get_spawn_position(formation, index)
+	var leader_pos = get_spawn_position(formation, index, count)
 	var follower_count = randi_range(3, 5)
 
 	#print_debug('Adding leader at ' + str(start_time))
@@ -85,7 +101,7 @@ func _add_leader_formation(timeline: Timeline, type: Target.TargetType, formatio
 
 	return start_time + interval
 
-func get_spawn_position(formation: Formation, i: int) -> Vector2:
+func get_spawn_position(formation: Formation, i: int, count: int) -> Vector2:
 	match formation.pattern:
 		Formation.SpawnPattern.RANDOM:
 			return get_offscreen_spawn_position()
@@ -100,7 +116,7 @@ func get_spawn_position(formation: Formation, i: int) -> Vector2:
 		Formation.SpawnPattern.PINCER:
 			return get_pincer_position(i)
 		Formation.SpawnPattern.TOP_MARCH:
-			return get_top_march_position(i, formation.count)
+			return get_top_march_position(i, count)
 		Formation.SpawnPattern.APPEAR:
 			return get_onscreen_position()
 		_:
