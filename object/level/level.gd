@@ -19,6 +19,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var money = $CanvasLayer/BottomBar/HBox/Money
 @onready var menu = $Menu
 @onready var spawner = $Spawner
+@onready var environment_spawner = $EnvironmentSpawner
 
 const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 
@@ -44,6 +45,7 @@ func _ready() -> void:
 	_start()
 	
 func _start():
+	environment_spawner.start()
 	var waves = []
 	var min_difficulty = 1
 	var max_difficulty = 75

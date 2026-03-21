@@ -49,7 +49,11 @@ var all_debris: Array[CPUParticles2D]
 var is_exiting := false
 
 func _ready():
-	scale = data.scale
+	if data.is_variable_scale:
+		var scale_mult = randf_range(0.1, 0.5)
+		scale = Vector2(scale_mult, scale_mult)
+	else:
+		scale = data.scale
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health

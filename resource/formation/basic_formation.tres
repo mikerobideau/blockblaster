@@ -5,7 +5,7 @@
 [resource]
 resource_name = "Basic"
 script = ExtResource("1_aine0")
-targets = Array[int]([5, 4, 1, 2])
+targets = Array[int]([5, 1, 2])
 min_count = 1
 max_count = 1
 pattern = 3

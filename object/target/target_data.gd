@@ -4,6 +4,7 @@ class_name TargetData
 @export var type: Target.TargetType
 @export var scene: PackedScene
 @export var scale := Vector2(1, 1)
+@export var is_variable_scale := false #ignore scale and let spawner determine scale
 @export var health: int = 3
 @export var difficulty: int
 @export var min_wave := 1
