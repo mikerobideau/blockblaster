@@ -65,6 +65,7 @@ func set_ability1(ability: Cooldown):
 func _blast():
 	if not firing:
 		return
+	#Sound.play(Sound.Effect.BLASTER4)
 	fired.emit(get_global_mouse_position())
 	
 func _ultimate():

@@ -13,7 +13,7 @@ enum Effect {
 }
 
 var sounds = {
-	Effect.ENEMY_HIT: preload("res://asset/sound/effect/jsfxr/hitHurt (2).wav"),
+	Effect.ENEMY_HIT: preload("res://asset/sound/effect/jsfxr/explosion (10).wav"),
 	Effect.ENEMY_DEFEATED: preload("res://asset/sound/effect/jsfxr/explosion (4).wav"),
 	Effect.BLASTER1: preload("res://asset/sound/effect/jsfxr/laserShoot (1).wav"),
 	Effect.BLASTER2: preload("res://asset/sound/effect/jsfxr/laserShoot (2).wav"),
