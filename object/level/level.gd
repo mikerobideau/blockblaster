@@ -44,16 +44,20 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	var budget = 5
-	var time = 20
 	var waves = [
-		wave_gen.create(10, 20),
-		wave_gen.create(12, 20),
-		wave_gen.create(15, 20)
+		wave_gen.create(7, 10),
+		wave_gen.create(7, 10),
+		wave_gen.create(15, 20),
+		wave_gen.create(15, 20),
+		wave_gen.create(15, 15),
+		wave_gen.create(20, 15),
 		]
 	for wave in waves:
 		spawner.start_wave(wave)
+		
 		await spawner.wave_complete
+		#await get_tree().create_timer(2, false).timeout
+		
 	await _on_level_cleared_countdown_started()
 	_on_level_clear()
 	

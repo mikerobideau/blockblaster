@@ -26,7 +26,7 @@ var sounds = {
 var player := AudioStreamPlayer.new()
 
 func _ready():
-	player.volume_db = -20
+	player.volume_db = -10
 	add_child(player)
 
 func play(id: Effect):
