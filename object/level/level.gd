@@ -46,17 +46,19 @@ func _ready() -> void:
 func _start():
 	var waves = []
 	var min_difficulty = 1
-	var max_difficulty = 50
+	var max_difficulty = 75
 	var a = min_difficulty
 	var b = min_difficulty * 2
+	var wave_number = 1
 	while a <= max_difficulty:
-		waves.append(wave_gen.create(a))
+		waves.append(wave_gen.create(a, wave_number))
 		var next = a + b
 		a = b
 		b = next
+		wave_number += 1
+		
 	for wave in waves:
 		spawner.start_wave(wave)
-		
 		await spawner.wave_complete
 		#await get_tree().create_timer(2, false).timeout
 		

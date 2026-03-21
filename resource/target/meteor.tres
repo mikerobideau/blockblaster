@@ -24,6 +24,7 @@ scene = ExtResource("2_r70t5")
 scale = Vector2(1, 1)
 health = 3
 difficulty = 1
+min_wave = 1
 is_leader = false
 randomize_rotation = true
 spawn_behavior = SubResource("Resource_tnwfl")

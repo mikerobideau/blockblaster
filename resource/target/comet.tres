@@ -19,6 +19,7 @@ scene = ExtResource("2_mx7b8")
 scale = Vector2(0.4, 0.4)
 health = 2
 difficulty = 1
+min_wave = 3
 is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_6bryf")

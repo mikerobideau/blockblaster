@@ -6,7 +6,7 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 
 var padding := 100
 
-func create(budget: int) -> WaveData:
+func create(budget: int, wave_number: int) -> WaveData:
 	print_debug('-----------------------')
 	print_debug('Creating wave')
 	print_debug('Spending $' + str(budget))
@@ -26,6 +26,8 @@ func create(budget: int) -> WaveData:
 		#print_debug('Spawning ' + formation.resource_name + ' formation')
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)
+		if data.min_wave > wave_number:
+			continue #reroll
 		
 		#Determine count
 		var count = randi_range(formation.min_count, formation.max_count)

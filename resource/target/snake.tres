@@ -17,6 +17,7 @@ scene = ExtResource("2_mva64")
 scale = Vector2(0.1, 0.1)
 health = 1
 difficulty = 1
+min_wave = 4
 is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_rwcbx")

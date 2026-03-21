@@ -34,6 +34,7 @@ scene = ExtResource("2_rweub")
 scale = Vector2(0.2, 0.2)
 health = 2
 difficulty = 1
+min_wave = 1
 is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_ciqm8")

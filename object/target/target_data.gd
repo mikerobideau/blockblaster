@@ -6,6 +6,7 @@ class_name TargetData
 @export var scale := Vector2(1, 1)
 @export var health: int = 3
 @export var difficulty: int
+@export var min_wave := 1
 @export var is_leader := false
 @export var randomize_rotation := false
 @export var spawn_behavior: SpawnBehaviorData
