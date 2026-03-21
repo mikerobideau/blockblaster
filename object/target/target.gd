@@ -7,10 +7,8 @@ signal removed(target: Area2D)
 const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
-	NONE,
+	SNAKE,
 	METEOR,
-	ENEMY_SHIP,
-	#MINION,
 	BOMB
 }
 
@@ -42,6 +40,7 @@ var is_defeated := false
 var all_debris: Array[CPUParticles2D]
 
 func _ready():
+	scale = data.scale
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=5 format=3 uid="uid://qrnon3vj2a02"]
+
+[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_3wl6t"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_xr2si"]
+[ext_resource type="PackedScene" uid="uid://cyake3hnlhbkj" path="res://object/target/visual/ship/ship_06.tscn" id="2_mva64"]
+
+[sub_resource type="Resource" id="Resource_rwcbx"]
+script = ExtResource("1_3wl6t")
+type = 3
+speed = 250
+
+[resource]
+resource_name = "Snake"
+script = ExtResource("1_xr2si")
+type = 0
+scene = ExtResource("2_mva64")
+scale = Vector2(0.1, 0.1)
+health = 1
+difficulty = 1
+is_leader = false
+randomize_rotation = false
+movement = SubResource("Resource_rwcbx")
+supported_patterns = Array[int]([])
