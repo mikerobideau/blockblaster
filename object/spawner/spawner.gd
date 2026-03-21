@@ -6,6 +6,13 @@ signal incoming_wave_detected(wave: WaveData)
 signal wave_complete(wave: WaveData)
 signal gold_collected(gold: Gold)
 
+enum WaveState {
+	IDLE,
+	SPAWNING,    #timeline still has events to process
+	CLEARING,    #timeline exhausted, waiting for targets to despawn
+	COMPLETE
+}
+
 var TargetScene = preload('res://object/target/target.tscn')
 var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
@@ -16,39 +23,59 @@ var TelegraphScene = preload("res://object/target/visual/telegraph/telegraph.tsc
 @export var blaster: Blaster
 @export var ship: Ship
 
-var event_index := 0
+var wave_state := WaveState.IDLE
 var current_wave: WaveData
+var event_index := 0
 var start_time := 0.0
 var target_db := TargetDatabase.new()
 var leader_ref: Target
+var active_targets: Array[Target] = []
 
 func  _ready():
 	pass
 	
 func start_wave(wave: WaveData):
+	print_debug('start wave')
 	incoming_wave_detected.emit(wave)
 	await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
+	print_debug('wave wait timeout complete')
 	current_wave = wave
 	event_index = 0
 	start_time = Time.get_ticks_msec() / 1000.0
+	wave_state = WaveState.SPAWNING
 	
 func _process(delta):
-	if current_wave == null:
-		return
-
+	match wave_state:
+		WaveState.IDLE:
+			return
+		WaveState.SPAWNING:
+			_process_timeline(delta)
+		WaveState.CLEARING:
+			if active_targets.is_empty():
+				_on_wave_cleared()
+		WaveState.COMPLETE:
+			return
+		_:
+			return
+	
+func _process_timeline(delta):
 	var time = Time.get_ticks_msec() / 1000.0 - start_time
 	var events = current_wave.timeline.events
-
 	while event_index < events.size() and events[event_index].time <= time:
 		_spawn_event(events[event_index])
 		event_index += 1
-		
 	if event_index >= events.size():
-		_wave_complete()
-		
-func _wave_complete():
+		wave_state = WaveState.CLEARING
+
+func _on_wave_cleared():
+	wave_state = WaveState.COMPLETE
 	wave_complete.emit(current_wave)
 	current_wave = null
+	wave_state = WaveState.IDLE	
+
+func _check_wave_cleared():
+	if active_targets.is_empty():
+		wave_complete.emit(current_wave)
 	
 func _spawn_event(event: TimelineEvent) -> void:
 	if event.is_gold:
@@ -92,16 +119,22 @@ func _spawn_single_enemy(data: TargetData, position: Vector2) -> Target:
 	instance.data = data
 	instance.global_position = position
 	if instance is Target:
+		active_targets.append(instance)
 		instance.defeated.connect(_on_target_defeated)
+		instance.removed.connect(_on_target_removed)
 	add_child(instance)
 	return instance
 
 func _on_target_defeated(target: Target):
+	active_targets.erase(target)
 	target_defeated.emit(target)
 	if target is Meteor:
 		_spawn_crystals(target)
 	if target is Crystal:
 		_spawn_gold_from_target(target)
+		
+func _on_target_removed(target: Target):
+	active_targets.erase(target)
 
 func _spawn_crystals(target: Target):
 	var count = randi() % 3

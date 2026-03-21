@@ -20,7 +20,7 @@ func create(budget: int, total_time: float) -> WaveData:
 		var interval = base_interval + randf_range(-interval_variation, interval_variation)
 		var tick_budget = clamp(randi_range(int(budget*budget_variation_min), int(budget*budget_variation_max)), 1, budget)
 		var formation = Database.formation.find_random()
-		print_debug('Spawning ' + formation.resource_name + ' formation')
+		#print_debug('Spawning ' + formation.resource_name + ' formation')
 		var shared_pos := get_spawn_position(formation, 0) if formation.has_shared_position else Vector2.INF
 		var type = formation.targets.pick_random()
 		var data = Database.target.find_by_type(type)

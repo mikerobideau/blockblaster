@@ -28,7 +28,6 @@ script = ExtResource("2_tuumu")
 
 [node name="Tail" type="CPUParticles2D" parent="." index="0"]
 position = Vector2(0, 50)
-scale = Vector2(1, 1)
 amount = 25
 lifetime = 0.2
 explosiveness = 0.3
