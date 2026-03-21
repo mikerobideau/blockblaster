@@ -15,6 +15,7 @@ enum TargetType {
 	WHALE,
 	DRAGON,
 	METEOR,
+	COMET,
 	BOMB
 }
 
@@ -27,6 +28,7 @@ enum TargetType {
 @onready var explosion = $Explosion
 @onready var debris1 = $DebrisParticles
 @onready var debris2 = $DebrisParticles2
+@onready var tail = $Tail
 @onready var ship = get_tree().current_scene.ship
 
 @export var data: TargetData
@@ -48,15 +50,17 @@ var is_exiting := false
 
 func _ready():
 	scale = data.scale
-	#explosion.scale = data.scale
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health
 	_init_debris()
+	if data.randomize_rotation:
+		rotation = randf() * TAU
 	if data.movement:
 		speed = data.movement.speed
-		print_debug('---READY:  Setting direction')
-		rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
+		if !data.randomize_rotation:
+			rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
+		
 	if data.blaster != null:
 		burst_shots_remaining = data.blaster.burst_size
 		fire_timer.wait_time = data.blaster.fire_timeout
@@ -68,8 +72,7 @@ func _ready():
 	if data.movement is PathMovement or data.movement is TravelToPointMovement:
 		var center = get_viewport_rect().size / 2
 		direction = data.movement.get_direction(global_position, center)
-	if data.randomize_rotation:
-		rotation = randf() * TAU
+
 
 func _init_debris():
 	debris1.texture = data.debris_texture_1 if data.debris_texture_1 else default_debris_texture_1
@@ -121,7 +124,8 @@ func _track_parent_target_movement(delta: float):
 func _path_movement(delta):
 	match data.movement.type:
 		PathMovement.Type.STRAIGHT_ACROSS:
-			rotation = _rotate_towards_direction(delta)
+			if !data.randomize_rotation:
+				rotation = _rotate_towards_direction(delta)
 		PathMovement.Type.STRAIGHT_DOWN:
 			pass
 		PathMovement.Type.DRIFT:
@@ -203,7 +207,6 @@ func defeat():
 	sprite.visible = false
 	_start_debris()
 	if data.yellow_burst_on_defeat:
-		print_debug('yellow burst on defeat')
 		explosion.visible = true
 		explosion.play('default')
 		await explosion.animation_finished

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=7 format=3 uid="uid://c4do3c67r52il"]
+
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_d8cnc"]
+[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_ordkm"]
+[ext_resource type="Texture2D" uid="uid://dr5ccqp3ux6li" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_03.png" id="1_s1u6m"]
+[ext_resource type="Texture2D" uid="uid://c3kusqguii73v" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_04.png" id="2_jylkq"]
+[ext_resource type="PackedScene" uid="uid://d0d1mkpk0o1sa" path="res://object/target/visual/environmental/comet.tscn" id="2_mx7b8"]
+
+[sub_resource type="Resource" id="Resource_6bryf"]
+script = ExtResource("1_ordkm")
+type = 0
+speed = 900
+
+[resource]
+resource_name = "Comet"
+script = ExtResource("1_d8cnc")
+type = 5
+scene = ExtResource("2_mx7b8")
+scale = Vector2(0.4, 0.4)
+health = 1
+difficulty = 1
+is_leader = false
+randomize_rotation = false
+movement = SubResource("Resource_6bryf")
+shake_on_damage = false
+yellow_burst_on_defeat = false
+debris_texture_1 = ExtResource("1_s1u6m")
+debris_texture_2 = ExtResource("2_jylkq")
+debris_initial_velocity_min = 50
+debris_initial_velocity_max = 175
+debris_scale_amount_min = 0.01
+debris_scale_amount_max = 0.1
+debris_sphere_radius = 50.0

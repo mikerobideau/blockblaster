@@ -26,6 +26,7 @@ min_distance = 500
 speed = 250
 
 [resource]
+resource_name = "Whale"
 script = ExtResource("1_ut378")
 type = 2
 scene = ExtResource("4_d3816")
@@ -36,4 +37,10 @@ is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_faali")
 blaster = SubResource("Resource_ds1oo")
-supported_patterns = Array[int]([])
+shake_on_damage = true
+yellow_burst_on_defeat = true
+debris_initial_velocity_min = 500
+debris_initial_velocity_max = 700
+debris_scale_amount_min = 0.05
+debris_scale_amount_max = 0.2
+debris_sphere_radius = 128.0
