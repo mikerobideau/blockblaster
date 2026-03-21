@@ -47,11 +47,11 @@ func _ready() -> void:
 func _start():
 	environment_spawner.start()
 	var waves = []
-	var min_difficulty = 1
-	var max_difficulty = 75
+	var wave_number = 10
+	var min_difficulty = 55
+	var max_difficulty = 200
 	var a = min_difficulty
 	var b = min_difficulty * 2
-	var wave_number = 1
 	while a <= max_difficulty:
 		waves.append(wave_gen.create(a, wave_number))
 		var next = a + b

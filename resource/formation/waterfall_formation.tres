@@ -10,5 +10,5 @@ min_count = 5
 max_count = 20
 pattern = 3
 has_shared_position = true
-cost_multiplier = 1
+cost_multiplier = 0.5
 stream_interval = 0.1

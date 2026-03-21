@@ -17,7 +17,7 @@ enum SpawnPattern {
 @export var max_count: int = 1
 @export var pattern: SpawnPattern
 @export var has_shared_position := false
-@export var cost_multiplier := 1
+@export var cost_multiplier := 1.0
 #@export var single_edge := false
 #@export var mixed_target := false
 @export var stream_interval := 0.0
