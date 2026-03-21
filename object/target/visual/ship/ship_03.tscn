@@ -1,23 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://70yllkd4io8w"]
+[gd_scene load_steps=7 format=3 uid="uid://dmm0qno1ywdst"]
 
 [ext_resource type="Texture2D" uid="uid://40wdptxx0p1n" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_03.png" id="1_7ivyr"]
-[ext_resource type="Script" path="res://object/target/target.gd" id="1_triqi"]
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_exsbh"]
+[ext_resource type="Texture2D" uid="uid://cebkkla414vbe" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Damaged_Ship_03.png" id="2_4rxib"]
 
-[node name="Ship03" type="Area2D"]
-scale = Vector2(0.05, 0.05)
-script = ExtResource("1_triqi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fa7b"]
+atlas = ExtResource("2_4rxib")
+region = Rect2(0, 0, 868, 698)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_7ivyr")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jj72s"]
+atlas = ExtResource("1_7ivyr")
+region = Rect2(0, 0, 868, 698)
 
-[node name="HitBox" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-80, -320, 80, -320, 160, -160, 400, 320, 160, 240, 0, 320, -160, 240, -400, 320)
+[sub_resource type="SpriteFrames" id="SpriteFrames_fdv0l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fa7b")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jj72s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="Emitter" type="Node2D" parent="."]
-position = Vector2(0, -40)
+[node name="Target" instance=ExtResource("1_exsbh")]
 
-[node name="FireTimer" type="Timer" parent="."]
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_fdv0l")
+animation = &"damaged"
 
-[node name="BurstTimer" type="Timer" parent="."]
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(-90, -345, -75, -345, -60, -140, 0, -230, 50, -155, 70, -340, 90, -340, 105, -175, 140, -205, 430, 300, 420, 310, 195, 35, 190, 100, 140, 170, 145, 235, 0, 340, -145, 240, -145, 165, -185, 105, -185, 30, -415, 310, -425, 300, -135, -205, -110, -175)
+
+[node name="Emitter" parent="." index="3"]
+position = Vector2(0, -375)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

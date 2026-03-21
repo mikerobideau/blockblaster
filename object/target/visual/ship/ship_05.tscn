@@ -1,13 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkdstbq4jsra5"]
+[gd_scene load_steps=7 format=3 uid="uid://bkdstbq4jsra5"]
 
 [ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_7vp82"]
+[ext_resource type="Texture2D" uid="uid://ealpi7vsk1sn" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Damaged_Ship_05.png" id="2_hh7wx"]
+[ext_resource type="Texture2D" uid="uid://cokfpnq8lwfbe" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_05.png" id="3_ynajr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8lmm"]
+atlas = ExtResource("2_hh7wx")
+region = Rect2(0, 0, 834, 1030)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3cvl"]
+atlas = ExtResource("3_ynajr")
+region = Rect2(0, 0, 834, 1030)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1gbw2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8lmm")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3cvl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Target" instance=ExtResource("1_7vp82")]
 
-[node name="HitBox" parent="." index="1"]
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_1gbw2")
+animation = &"damaged"
+
+[node name="HitBox" parent="." index="2"]
 polygon = PackedVector2Array(-70, -510, 70, -510, 230, -140, 420, 10, 210, 510, 110, 230, 0, 400, -100, 240, -210, 500, -410, 10, -230, -140)
 
-[node name="Emitter" parent="." index="2"]
+[node name="Emitter" parent="." index="3"]
 position = Vector2(0, -530)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

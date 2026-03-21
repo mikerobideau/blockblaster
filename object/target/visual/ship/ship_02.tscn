@@ -1,23 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://wv4r78wlbhhc"]
+[gd_scene load_steps=7 format=3 uid="uid://woobk6myt1e2"]
 
-[ext_resource type="Texture2D" uid="uid://dwrk2j1nsw5hf" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_02.png" id="1_a83f0"]
-[ext_resource type="Script" path="res://object/target/target.gd" id="1_mcp45"]
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_ygysg"]
+[ext_resource type="Texture2D" uid="uid://dwrk2j1nsw5hf" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Ship_02.png" id="2_h4w45"]
+[ext_resource type="Texture2D" uid="uid://cc4jf1vqw21gj" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ships/Damaged_Ship_02.png" id="2_q4gah"]
 
-[node name="Ship02" type="Area2D"]
-scale = Vector2(0.1, 0.1)
-script = ExtResource("1_mcp45")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wm2k2"]
+atlas = ExtResource("2_q4gah")
+region = Rect2(0, 0, 598, 800)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_a83f0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7iqg"]
+atlas = ExtResource("2_h4w45")
+region = Rect2(0, 0, 598, 800)
 
-[node name="HitBox" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-80, -400, 80, -400, 160, -160, 320, 160, 240, 400, -240, 400, -320, 160, -160, -160)
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1qnr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wm2k2")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7iqg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="Emitter" type="Node2D" parent="."]
-position = Vector2(0, -48)
+[node name="Target" instance=ExtResource("1_ygysg")]
 
-[node name="FireTimer" type="Timer" parent="."]
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_e1qnr")
+animation = &"damaged"
 
-[node name="BurstTimer" type="Timer" parent="."]
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(290, 150, 120, -165, 125, -215, 100, -240, 110, -295, 85, -390, 70, -390, 65, -215, 5, -260, -60, -220, -65, -390, -80, -390, -105, -295, -100, -235, -120, -215, -120, -155, -295, 155, -205, 390, -130, 185, -95, 230, -95, 305, 0, 395, 90, 305, 90, 235, 130, 190, 205, 390)
+
+[node name="Emitter" parent="." index="3"]
+position = Vector2(0, -455)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
