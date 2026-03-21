@@ -6,7 +6,7 @@
 resource_name = "Line Stream"
 script = ExtResource("1_rt3tl")
 targets = Array[int]([0])
-count = 20
+count = 10
 pattern = 3
 has_shared_position = true
 cost_multiplier = 1

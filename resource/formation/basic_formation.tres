@@ -5,7 +5,7 @@
 [resource]
 resource_name = "Basic"
 script = ExtResource("1_aine0")
-targets = Array[int]([2])
+targets = Array[int]([2, 1])
 count = 1
 pattern = 0
 has_shared_position = false

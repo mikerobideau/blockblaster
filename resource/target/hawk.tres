@@ -16,7 +16,7 @@ pattern = 0
 damage = 1
 speed = 500
 projectile_count = 1
-burst_size = 3
+burst_size = 1
 burst_delay = 0.5
 fire_timeout = 2
 
@@ -30,7 +30,7 @@ script = ExtResource("1_tliq8")
 type = 1
 scene = ExtResource("4_5u7r2")
 scale = Vector2(0.1, 0.1)
-health = 7
+health = 3
 difficulty = 1
 is_leader = false
 randomize_rotation = false
