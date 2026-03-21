@@ -38,7 +38,7 @@ func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, 
 	event.time = t
 	event.scene = type
 	event.position = shared_pos if formation.has_shared_position else get_spawn_position(formation, i)
-	if data.movement == null:
+	if data.movement != null:
 		if data.movement is TravelToPointMovement:
 			event.waypoint = get_waypoint(formation, event.position)
 	else:
@@ -176,4 +176,4 @@ func get_pincer_position(i: int):
 
 func get_top_march_position(i: int, count: int) -> Vector2:
 	var spacing = Constant.SCREEN_WIDTH / (count + 1.0)
-	return Vector2(spacing * (i + 1), -padding)
+	return Vector2(spacing * (i + 1), padding)

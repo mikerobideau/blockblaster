@@ -10,6 +10,7 @@ enum TargetType {
 	SNAKE,
 	HAWK,
 	WHALE,
+	DRAGON,
 	METEOR,
 	BOMB
 }
@@ -40,6 +41,7 @@ var spawn_position: Vector2
 var distance_traveled := 0.0
 var is_defeated := false
 var all_debris: Array[CPUParticles2D]
+var is_exiting := false
 
 func _ready():
 	scale = data.scale
@@ -49,6 +51,7 @@ func _ready():
 	all_debris = [debris1, debris2]
 	if data.movement:
 		speed = data.movement.speed
+		print_debug('---READY:  Setting direction')
 		rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	if data.blaster != null:
 		burst_shots_remaining = data.blaster.burst_size
@@ -65,11 +68,9 @@ func _ready():
 		rotation = randf() * TAU
 
 func _physics_process(delta: float):
-	print_debug('movement')
 	if !data.movement:
 		return
 	if data.movement is TrackPlayerMovement:
-		print_debug('Tracking player movement')
 		_track_player_movement(delta)
 	if data.movement is TrackEnemyMovement:
 		_track_parent_target_movement(delta)
@@ -136,6 +137,7 @@ func _travel_to_point_movement(delta):
 	match movement.travel_state:
 		TravelToPointMovement.TravelState.APPROACH:
 			direction = (movement.waypoint - global_position).normalized()
+			print_debug('In TravelState.APPROACH and setting direction to ' + str(direction))
 			rotation = lerp_angle(
 				rotation,
 				direction.angle() + sprite_forward_offset,
@@ -149,12 +151,15 @@ func _travel_to_point_movement(delta):
 
 		TravelToPointMovement.TravelState.FIRE:
 			direction = (ship.global_position - global_position).normalized()
+			print_debug('In TravelState.FIRE and setting direction to ' + str(direction))
 			rotation = _rotate_towards_direction(delta)
 
 		TravelToPointMovement.TravelState.EXIT:
 			fire_timer.stop()
 			await get_tree().create_timer(data.movement.wait_to_exit).timeout
-			direction = (spawn_position - global_position).normalized()
+			if !is_exiting:
+				is_exiting = true
+				direction = (spawn_position - global_position).normalized()
 			rotation = lerp_angle(rotation, direction.angle() + sprite_forward_offset, rotation_speed * delta)
 			_move(delta)
 

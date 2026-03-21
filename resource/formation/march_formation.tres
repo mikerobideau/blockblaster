@@ -5,7 +5,7 @@
 [resource]
 resource_name = "March"
 script = ExtResource("1_jqhkq")
-targets = Array[int]([1])
+targets = Array[int]([3])
 count = 5
 pattern = 6
 has_shared_position = false

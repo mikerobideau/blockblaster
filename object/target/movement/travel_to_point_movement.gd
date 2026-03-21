@@ -8,7 +8,7 @@ enum TravelState {
 }
 
 @export var waypoint: Vector2
-@export var wait_to_exit: float
+@export var wait_to_exit := 1
 
 var travel_state := TravelState.APPROACH
 
