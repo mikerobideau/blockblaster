@@ -9,6 +9,7 @@ const SHIP_COLLISION_DAMAGE = 1
 enum TargetType {
 	SNAKE,
 	HAWK,
+	WHALE,
 	METEOR,
 	BOMB
 }
@@ -210,6 +211,7 @@ func _fire():
 		data.movement.travel_state = TravelToPointMovement.TravelState.EXIT
 
 func _fire_pattern():
+	Sound.play(data.blaster.sound)
 	match data.blaster.pattern:
 		EnemyBlasterData.Pattern.LINE:
 			_fire_line()
@@ -263,7 +265,6 @@ func _fire_parallel_spread():
 		get_tree().current_scene.add_child(energy)
 
 func _burst_fire():
-	Sound.play(Sound.Effect.BLASTER_FIRED)
 	_fire_pattern()
 	burst_shots_remaining -= 1
 	if burst_shots_remaining <= 0:

@@ -18,3 +18,4 @@ ultimate_damage = 10
 ultimate_radius = 25
 ultimate_duration = 3
 color = Color(0, 1, 0, 1)
+scale = Vector2(1, 1)

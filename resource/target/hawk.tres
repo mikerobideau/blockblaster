@@ -10,6 +10,7 @@
 script = ExtResource("2_jcvv4")
 scene = ExtResource("1_845ve")
 scale = Vector2(0.25, 0.25)
+sound = 2
 autostart = true
 pattern = 0
 damage = 1

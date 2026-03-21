@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=8 format=3 uid="uid://ryxdgx2e1ild"]
+
+[ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_03pt0"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_ut378"]
+[ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_4anjm"]
+[ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_h7v73"]
+[ext_resource type="PackedScene" uid="uid://bkdstbq4jsra5" path="res://object/target/visual/ship/ship_05.tscn" id="4_d3816"]
+
+[sub_resource type="Resource" id="Resource_ds1oo"]
+script = ExtResource("2_4anjm")
+scene = ExtResource("1_03pt0")
+scale = Vector2(0.3, 0.3)
+sound = 3
+autostart = true
+pattern = 1
+damage = 2
+speed = 500
+projectile_count = 8
+burst_size = 1
+burst_delay = 0.2
+fire_timeout = 2
+
+[sub_resource type="Resource" id="Resource_faali"]
+script = ExtResource("3_h7v73")
+min_distance = 500
+speed = 250
+
+[resource]
+script = ExtResource("1_ut378")
+type = 2
+scene = ExtResource("4_d3816")
+scale = Vector2(0.25, 0.25)
+health = 12
+difficulty = 2
+is_leader = false
+randomize_rotation = false
+movement = SubResource("Resource_faali")
+blaster = SubResource("Resource_ds1oo")
+supported_patterns = Array[int]([])

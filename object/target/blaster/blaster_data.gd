@@ -10,6 +10,7 @@ enum Pattern {
 
 @export var scene: PackedScene
 @export var scale := Vector2(1, 1)
+@export var sound: Sound.Effect
 @export var autostart := true
 @export var pattern := Pattern.LINE
 @export var damage := 1
