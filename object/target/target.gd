@@ -8,6 +8,7 @@ const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
 	SNAKE,
+	HAWK,
 	METEOR,
 	BOMB
 }
@@ -63,9 +64,11 @@ func _ready():
 		rotation = randf() * TAU
 
 func _physics_process(delta: float):
+	print_debug('movement')
 	if !data.movement:
 		return
 	if data.movement is TrackPlayerMovement:
+		print_debug('Tracking player movement')
 		_track_player_movement(delta)
 	if data.movement is TrackEnemyMovement:
 		_track_parent_target_movement(delta)
@@ -85,6 +88,7 @@ func _track_player_movement(delta: float):
 	var slow_radius = stop_radius + 150
 	var t = clamp((distance - stop_radius) / (slow_radius - stop_radius), 0, 1)
 	var smooth_t = t * t * (3 - 2 * t)
+
 
 	global_position += direction * speed * smooth_t * delta
 		
@@ -274,6 +278,7 @@ func _get_energy_scene() -> EnemyEnergy:
 	energy.damage = data.blaster.damage
 	energy.speed = data.blaster.speed
 	energy.rotation = energy.direction.angle() + sprite_forward_offset
+	energy.scale = data.blaster.scale
 	return energy
 
 func _remove():

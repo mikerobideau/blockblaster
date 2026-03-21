@@ -11,3 +11,4 @@ class_name BlasterData
 @export var ultimate_radius: int
 @export var ultimate_duration: int
 @export var color: Color
+@export var scale := Vector2(1, 1)
