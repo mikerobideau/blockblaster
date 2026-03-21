@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=9 format=3 uid="uid://rho5hkf85683"]
+
+[ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_35vrl"]
+[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_iqhbx"]
+[ext_resource type="Texture2D" uid="uid://c1lmfwuyjv8mv" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_10.png" id="2_2m6nq"]
+[ext_resource type="PackedScene" uid="uid://dly6oqcot2kx" path="res://object/target/visual/environmental/meteor.tscn" id="2_r70t5"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="3_gg1fs"]
+[ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
+
+[sub_resource type="Resource" id="Resource_rnidn"]
+script = ExtResource("1_iqhbx")
+type = 2
+speed = 250
+
+[sub_resource type="Resource" id="Resource_tnwfl"]
+script = ExtResource("4_8t5u3")
+location = 2
+
+[resource]
+resource_name = "Meteor"
+script = ExtResource("3_gg1fs")
+type = 4
+scene = ExtResource("2_r70t5")
+scale = Vector2(1, 1)
+health = 3
+difficulty = 1
+is_leader = false
+randomize_rotation = true
+spawn_behavior = SubResource("Resource_tnwfl")
+movement = SubResource("Resource_rnidn")
+shake_on_damage = false
+yellow_burst_on_defeat = false
+debris_texture_1 = ExtResource("1_35vrl")
+debris_texture_2 = ExtResource("2_2m6nq")
+debris_initial_velocity_min = 50
+debris_initial_velocity_max = 175
+debris_scale_amount_min = 0.05
+debris_scale_amount_max = 0.12
+debris_sphere_radius = 50.0

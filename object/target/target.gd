@@ -4,6 +4,9 @@ class_name Target
 signal defeated(target: Area2D)
 signal removed(target: Area2D)
 
+var default_debris_texture_1 = preload("res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_1.png")
+var default_debris_texture_2 = preload("res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_3.png")
+
 const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
@@ -45,10 +48,11 @@ var is_exiting := false
 
 func _ready():
 	scale = data.scale
+	#explosion.scale = data.scale
 	sprite.play('default')
 	spawn_position = global_position
 	health = data.health
-	all_debris = [debris1, debris2]
+	_init_debris()
 	if data.movement:
 		speed = data.movement.speed
 		print_debug('---READY:  Setting direction')
@@ -66,6 +70,17 @@ func _ready():
 		direction = data.movement.get_direction(global_position, center)
 	if data.randomize_rotation:
 		rotation = randf() * TAU
+
+func _init_debris():
+	debris1.texture = data.debris_texture_1 if data.debris_texture_1 else default_debris_texture_1
+	debris2.texture = data.debris_texture_2 if data.debris_texture_2 else default_debris_texture_2
+	all_debris = [debris1, debris2]
+	for debris in all_debris:
+		debris.initial_velocity_min = data.debris_initial_velocity_min if data.debris_initial_velocity_min else debris.initial_velocity_min
+		debris.initial_velocity_max = data.debris_initial_velocity_max if data.debris_initial_velocity_max else debris.initial_velocity_max
+		debris.scale_amount_min = data.debris_scale_amount_min if data.debris_scale_amount_min else debris.scale_amount_min
+		debris.scale_amount_max = data.debris_scale_amount_max if data.debris_scale_amount_max else debris.scale_amount_max
+		debris.emission_sphere_radius = data.debris_sphere_radius if data.debris_sphere_radius else debris.sphere_radius
 
 func _physics_process(delta: float):
 	if !data.movement:
@@ -165,7 +180,8 @@ func _travel_to_point_movement(delta):
 
 func take_damage(amount: int):
 	animation_player.stop()
-	animation_player.play('shake')
+	if data.shake_on_damage:
+		animation_player.play('shake')
 	health = clamp(health - amount, 0, health)
 	if health <= 0:
 		Sound.play(Sound.Effect.ENEMY_DEFEATED)
@@ -186,10 +202,12 @@ func defeat():
 	is_defeated = true
 	sprite.visible = false
 	_start_debris()
-	explosion.visible = true
-	explosion.play('default')
-	await explosion.animation_finished
-	explosion.queue_free()
+	if data.yellow_burst_on_defeat:
+		print_debug('yellow burst on defeat')
+		explosion.visible = true
+		explosion.play('default')
+		await explosion.animation_finished
+		explosion.queue_free()
 	await _await_all_debris()
 	defeated.emit(self)
 	queue_free()

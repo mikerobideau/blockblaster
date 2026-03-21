@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://xg4ajeq04p03"]
+[gd_scene load_steps=11 format=3 uid="uid://xg4ajeq04p03"]
 
 [ext_resource type="Script" path="res://object/target/target.gd" id="1_0vddg"]
 [ext_resource type="Texture2D" uid="uid://bg6jupb4ad86a" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_1.png" id="2_qutsp"]
 [ext_resource type="Texture2D" uid="uid://bb3n47gsk4aeu" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_2.png" id="3_3uhig"]
 [ext_resource type="Texture2D" uid="uid://w3qpr4pp0heg" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_3.png" id="4_exc8e"]
-[ext_resource type="Texture2D" uid="uid://crvrnvf0hb1vj" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_2.png" id="5_ie57w"]
 
 [sub_resource type="Animation" id="Animation_kch5b"]
 length = 0.001
@@ -64,10 +63,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Curve" id="Curve_glhpc"]
-_data = [Vector2(0.0695652, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.010989), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [node name="Target" type="Area2D"]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_0vddg")
@@ -96,36 +91,41 @@ sprite_frames = SubResource("SpriteFrames_fykao")
 
 [node name="DebrisParticles" type="CPUParticles2D" parent="."]
 emitting = false
-lifetime = 0.5
+amount = 5
+lifetime = 0.4
 one_shot = true
-explosiveness = 0.8
-randomness = 1.0
+explosiveness = 0.9
+randomness = 0.5
 texture = ExtResource("4_exc8e")
-emission_shape = 2
+emission_shape = 1
 emission_sphere_radius = 128.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 800.0
-initial_velocity_max = 1000.0
+initial_velocity_min = 500.0
+initial_velocity_max = 700.0
+angular_velocity_max = 360.0
+angle_max = 360.0
 scale_amount_min = 0.05
-scale_amount_max = 0.15
-scale_amount_curve = SubResource("Curve_glhpc")
+scale_amount_max = 0.12
 
 [node name="DebrisParticles2" type="CPUParticles2D" parent="."]
+scale = Vector2(1, 1)
 emitting = false
-lifetime = 0.5
+amount = 5
+lifetime = 0.4
 one_shot = true
-explosiveness = 0.8
-randomness = 1.0
-texture = ExtResource("5_ie57w")
+explosiveness = 0.9
+randomness = 0.5
+texture = ExtResource("4_exc8e")
 emission_shape = 2
-emission_sphere_radius = 128.0
+emission_sphere_radius = 40.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 800.0
-initial_velocity_max = 1000.0
+initial_velocity_min = 80.0
+initial_velocity_max = 175.0
+angular_velocity_max = 360.0
+angle_max = 360.0
 scale_amount_min = 0.05
-scale_amount_max = 0.15
-scale_amount_curve = SubResource("Curve_glhpc")
+scale_amount_max = 0.12
