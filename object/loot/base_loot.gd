@@ -1,11 +1,14 @@
 extends Area2D
 class_name BaseLoot
 
+@onready var lifetime_timer = $LifetimeTimer
+
 @export var value := 1
 @export var speed := 50
 @export var velocity: Vector2
 @export var vacuum_accel := 600
 @export var max_speed := 400
+@export var lifetime := 5
 
 var being_vacuumed := false
 var blaster: Blaster
@@ -13,6 +16,9 @@ var ship: Ship
 
 func _ready():
 	velocity = _random_up_direction() * speed
+	lifetime_timer.wait_time = lifetime
+	lifetime_timer.timeout.connect(remove)
+	lifetime_timer.start()
 
 func _process(delta):
 	if being_vacuumed:
@@ -51,6 +57,10 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is Ship:
 		_collect()
 
-# Override in subclass to emit the correct signal and play the correct sound
+#Override in subclass
 func _collect():
+	queue_free()
+	
+func remove():
+	print_debug('queuing coin free')
 	queue_free()

@@ -2,5 +2,5 @@ extends Area2D
 class_name Terminal
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is Target:
+	if area is Target or area is BaseLoot:
 		area.remove()

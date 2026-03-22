@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bc2hquo3222ho"]
+
+[node name="BaseLoot" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+
+[node name="LifetimeTimer" type="Timer" parent="."]
