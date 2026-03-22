@@ -7,6 +7,6 @@ signal collected(health: LootHealth)
 @onready var hit_box = $HitBox
 
 func _collect():
-	Sound.play(Sound.Effect.COIN)  # swap for a health sound when you have one
+	Sound.play(Sound.Effect.COIN)
 	collected.emit(self)
 	queue_free()

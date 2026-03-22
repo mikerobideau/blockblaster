@@ -13,3 +13,6 @@ func find_all_as_loot(rarity: LootData.Rarity = LootData.Rarity.COMMON) -> Array
 		entry.rarity = rarity
 		entries.append(entry)
 	return entries
+
+func _collect():
+	pass

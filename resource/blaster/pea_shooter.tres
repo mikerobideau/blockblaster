@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BlasterData" load_steps=4 format=3 uid="uid://cb88qcsk788x8"]
 
-[ext_resource type="Texture2D" uid="uid://cydgu1qy7cv4d" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_4_1.png" id="1_2u0dv"]
+[ext_resource type="Texture2D" uid="uid://bxoc8p3fof4dm" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_4_4.png" id="1_5mxxm"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_e1opw"]
 [ext_resource type="Texture2D" uid="uid://de8kvyy5asel3" path="res://asset/icon/blaster.png" id="2_6a0nc"]
 
@@ -8,7 +8,7 @@
 script = ExtResource("1_e1opw")
 name = "Pea Shooter"
 icon = ExtResource("2_6a0nc")
-energy_icon = ExtResource("1_2u0dv")
+energy_icon = ExtResource("1_5mxxm")
 damage = 1
 radius = 10
 speed = 1500

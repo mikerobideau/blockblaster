@@ -82,6 +82,8 @@ func _spawn_entry(
 			var loot_blaster = LootBlasterScene.instantiate()
 			loot_blaster.global_position = pos
 			loot_blaster.data = entry.blaster_data
+			loot_blaster.set_ship(ship)
+			loot_blaster.set_blaster(blaster)
 			loot_blaster.collected.connect(func(g): _on_loot_blaster_collected(g, parent))
 			parent.add_child(loot_blaster)		
 				

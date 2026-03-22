@@ -28,6 +28,7 @@ func _process(delta):
 		if dist < blaster.vacuum_radius:
 			global_position = destination
 			velocity = Vector2.ZERO
+			_collect()
 		velocity = velocity.move_toward(
 			dir.normalized() * max_speed,
 			vacuum_accel * delta
