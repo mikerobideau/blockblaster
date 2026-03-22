@@ -3,6 +3,7 @@ class_name LootResolver
 
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
 var HealthScene = preload("res://object/loot/health/loot_health.tscn")
+var LootBlasterScene = preload("res://object/loot/blaster/loot_blaster.tscn")
 
 const RARITY_WEIGHT: Dictionary = {
 	LootData.Rarity.COMMON: 1.0,
@@ -77,6 +78,12 @@ func _spawn_entry(
 				health.set_ship(ship)
 				health.collected.connect(func(g): _on_health_collected(g, parent))
 				parent.add_child(health)
+		LootData.Type.BLASTER:
+			var loot_blaster = LootBlasterScene.instantiate()
+			loot_blaster.global_position = pos
+			loot_blaster.data = entry.blaster_data
+			loot_blaster.collected.connect(func(g): _on_loot_blaster_collected(g, parent))
+			parent.add_child(loot_blaster)		
 				
 func _on_gold_collected(gold: Gold, parent: Node2D):
 	if parent.has_signal("gold_collected"):
@@ -85,4 +92,8 @@ func _on_gold_collected(gold: Gold, parent: Node2D):
 func _on_health_collected(health: LootHealth, parent: Node2D):
 	if parent.has_signal("health_collected"):
 		parent.emit_signal("health_collected", health)
+		
+func _on_loot_blaster_collected(loot_blaster: LootBlaster, parent: Node2D):
+	if parent.has_signal("loot_blaster_collected"):
+		parent.emit_signal("loot_blaster_collected", loot_blaster)
 		

@@ -43,10 +43,12 @@ func _ready() -> void:
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
 	spawner.gold_collected.connect(_on_gold_collected)
 	spawner.health_collected.connect(_on_health_collected)
+	spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
 	environment_spawner.set_blaster(blaster)
 	environment_spawner.set_ship(ship)
 	environment_spawner.gold_collected.connect(_on_gold_collected)
 	environment_spawner.health_collected.connect(_on_health_collected)
+	environment_spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
 	_start()
 	
 func _start():
@@ -129,14 +131,8 @@ func _add_projectile(position: Vector2):
 func _on_target_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 	#_add_loot(target)
-	
-func _add_loot(target: Area2D):
-	var loot_blaster = loot_factory.create_loot_blaster()
-	loot_blaster.position = target.position
-	loot_blaster.picked_up.connect(_preview_loot_blaster)
-	add_child(loot_blaster)
 		
-func _preview_loot_blaster(loot_blaster: LootBlaster):
+func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 	loot_blaster.queue_free()
 	_pause()
 	var card = CardScene.instantiate()

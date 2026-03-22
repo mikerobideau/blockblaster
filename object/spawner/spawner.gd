@@ -6,6 +6,7 @@ signal incoming_wave_detected(wave: WaveData)
 signal wave_complete(wave: WaveData)
 signal gold_collected(gold: Gold)
 signal health_collected(health: LootHealth)
+signal loot_blaster_collected(loot_blaster: LootBlaster)
 
 enum WaveState {
 	IDLE,

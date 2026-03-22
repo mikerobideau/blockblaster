@@ -1,17 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://bx6gf3jpr4xyl"]
+[gd_scene load_steps=5 format=3 uid="uid://c76axjfwu5qr2"]
 
 [ext_resource type="Script" path="res://object/loot/blaster/loot_blaster.gd" id="1_0x6g6"]
+[ext_resource type="PackedScene" uid="uid://bc2hquo3222ho" path="res://object/loot/base_loot.tscn" id="1_oq21a"]
 [ext_resource type="Texture2D" uid="uid://dtwdcuewslp3t" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Bonus_Items/Rockets_Bonus.png" id="1_u5ei4"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6a2co"]
-radius = 152.643
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3s7e"]
+radius = 150.0
 
-[node name="LootBlaster" type="Area2D"]
-scale = Vector2(0.3, 0.3)
+[node name="BaseLoot" instance=ExtResource("1_oq21a")]
+scale = Vector2(0.2, 0.2)
 script = ExtResource("1_0x6g6")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("1_u5ei4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_6a2co")
+[node name="HitBox" parent="." index="1"]
+shape = SubResource("CircleShape2D_m3s7e")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
