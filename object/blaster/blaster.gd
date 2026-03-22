@@ -22,6 +22,7 @@ var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
 var firing := false
 var ultimate_active := false
 var ship: Ship
+var sprite_forward_offset = PI / 2
 
 func _ready():
 	update(pea_shooter)
@@ -67,6 +68,7 @@ func _blast():
 	var dir = (get_global_mouse_position() - ship.emitter.global_position).normalized()
 	energy.global_position = ship.emitter.global_position
 	energy.direction = dir
+	energy.rotation = energy.direction.angle() + sprite_forward_offset
 	energy.damage = data.ultimate_damage if ultimate_active else data.damage
 	energy.radius = data.ultimate_radius if ultimate_active else data.radius
 	energy.speed = data.speed
