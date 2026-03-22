@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=18 format=3 uid="uid://cxnpjl1k31kj4"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://cxnpjl1k31kj4"]
 
 [ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_35vrl"]
 [ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_iqhbx"]
@@ -8,33 +8,6 @@
 [ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_k172p"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_1gv5l"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
-[ext_resource type="Texture2D" uid="uid://bxoc8p3fof4dm" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_4_4.png" id="4_bdrnx"]
-[ext_resource type="Texture2D" uid="uid://rg18w5k4isoa" path="res://asset/icon/eruption.png" id="5_1nkfu"]
-[ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="6_ip278"]
-
-[sub_resource type="Resource" id="Resource_oy0si"]
-script = ExtResource("6_ip278")
-name = "Test Blaster"
-icon = ExtResource("5_1nkfu")
-energy_icon = ExtResource("4_bdrnx")
-damage = 1
-radius = 10
-speed = 750
-ultimate_damage = 10
-ultimate_radius = 10
-ultimate_duration = 10
-color = Color(0, 0, 0, 1)
-scale = Vector2(0.5, 0.5)
-
-[sub_resource type="Resource" id="Resource_fift5"]
-script = ExtResource("3_k172p")
-loot_type = 2
-gold_min = 0
-gold_max = 0
-health_min = 0
-health_max = 0
-blaster_data = SubResource("Resource_oy0si")
-rarity = 0
 
 [sub_resource type="Resource" id="Resource_bls4q"]
 script = ExtResource("3_k172p")
@@ -49,7 +22,6 @@ rarity = 0
 script = ExtResource("4_1gv5l")
 rolls = 1
 drop_chance = 0.5
-entries = Array[ExtResource("3_k172p")]([SubResource("Resource_fift5")])
 guaranteed_entry = SubResource("Resource_bls4q")
 
 [sub_resource type="Resource" id="Resource_rnidn"]

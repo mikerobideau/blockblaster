@@ -29,7 +29,7 @@ func resolve(
 	for i in range(table.rolls):
 		if randf() > table.drop_chance:
 			continue
-		var entry = _roll(table.entries)
+		var entry = _roll(Database.blaster.find_all_as_loot())
 		if entry:
 			_spawn_entry(entry, spawn_pos, parent, blaster, ship)
 			
@@ -96,4 +96,3 @@ func _on_health_collected(health: LootHealth, parent: Node2D):
 func _on_loot_blaster_collected(loot_blaster: LootBlaster, parent: Node2D):
 	if parent.has_signal("loot_blaster_collected"):
 		parent.emit_signal("loot_blaster_collected", loot_blaster)
-		

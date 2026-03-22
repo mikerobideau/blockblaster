@@ -32,6 +32,11 @@ static func load_directory(path: String) -> Dictionary:
 	
 	dir.list_dir_end()
 	return _data
+	
+func find_all() -> Array[Resource]:
+	var result: Array[Resource] = []
+	result.assign(data.values())
+	return result
 
 func find_random() -> Resource:
 	var values = data.values()
