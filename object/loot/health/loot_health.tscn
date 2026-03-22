@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpsyyufejsr0k"]
+
+[ext_resource type="Script" path="res://object/loot/health/loot_health.gd" id="1_u7q4r"]
+[ext_resource type="Texture2D" uid="uid://v8w71m58qa45" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Bonus_Items/HP_Bonus.png" id="2_1uj2y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4jh3s"]
+radius = 151.822
+
+[node name="LootHealth" type="Area2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_u7q4r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1uj2y")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4jh3s")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

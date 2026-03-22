@@ -7,9 +7,9 @@ var TimelineEvent = preload("res://object/spawner/timeline_event.gd")
 var padding := 100
 
 func create(budget: int, wave_number: int) -> WaveData:
-	print_debug('-----------------------')
-	print_debug('Creating wave')
-	print_debug('Spending $' + str(budget))
+	#print_debug('-----------------------')
+	#print_debug('Creating wave')
+	#print_debug('Spending $' + str(budget))
 	var budget_variation_min = 0.1
 	var budget_variation_max = 0.3
 	var base_interval := 5.0
@@ -48,13 +48,13 @@ func create(budget: int, wave_number: int) -> WaveData:
 		#Adjust remaining budget
 		var cost = data.difficulty * count * formation.cost_multiplier
 		budget -= cost
-		print_debug('Spent $' + str(cost) + ' on ' + str(count) + ' targets with ' 
-			+ str(data.difficulty) + ' difficulty' + ' and ' + str(formation.cost_multiplier) 
-			+ ' formation mult')
+		#print_debug('Spent $' + str(cost) + ' on ' + str(count) + ' targets with ' 
+		#	+ str(data.difficulty) + ' difficulty' + ' and ' + str(formation.cost_multiplier) 
+		#	+ ' formation mult')
 		t += interval
 		
 	#Check that all of budget was spent
-	print_debug('Budget remaining ' + str(budget))
+	#print_debug('Budget remaining ' + str(budget))
 	return wave
 
 func _add_timeline_event(timeline: Timeline, t: float, type: Target.TargetType, data: TargetData, formation: Formation, i: int, shared_pos: Vector2, count: int):

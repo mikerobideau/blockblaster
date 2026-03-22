@@ -5,6 +5,7 @@ signal target_defeated(target: Target)
 signal incoming_wave_detected(wave: WaveData)
 signal wave_complete(wave: WaveData)
 signal gold_collected(gold: Gold)
+signal health_collected(health: LootHealth)
 
 enum WaveState {
 	IDLE,
@@ -137,10 +138,6 @@ func _on_target_defeated(target: Target):
 		
 func _on_target_removed(target: Target):
 	active_targets.erase(target)
-
-func _on_gold_collected(gold: Gold):
-	gold_collected.emit(gold)
-	gold.queue_free()
 	
 func set_blaster(b: Blaster):
 	blaster = b

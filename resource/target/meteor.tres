@@ -1,16 +1,16 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://rho5hkf85683"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://cxnpjl1k31kj4"]
 
-[ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_35vrl"]
-[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_iqhbx"]
-[ext_resource type="Texture2D" uid="uid://c1lmfwuyjv8mv" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_10.png" id="2_2m6nq"]
-[ext_resource type="PackedScene" uid="uid://dly6oqcot2kx" path="res://object/target/visual/environmental/meteor.tscn" id="2_r70t5"]
-[ext_resource type="Script" path="res://object/target/target_data.gd" id="3_gg1fs"]
-[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_k172p"]
-[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_1gv5l"]
-[ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
+[ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_e8y80"]
+[ext_resource type="Texture2D" uid="uid://c1lmfwuyjv8mv" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_10.png" id="2_d4o46"]
+[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_1jjgu"]
+[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_q67hb"]
+[ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="5_eb1uq"]
+[ext_resource type="PackedScene" uid="uid://dly6oqcot2kx" path="res://object/target/visual/environmental/meteor.tscn" id="6_7n1s1"]
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="7_8bp50"]
+[ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="8_kyne4"]
 
-[sub_resource type="Resource" id="Resource_6e2pl"]
-script = ExtResource("3_k172p")
+[sub_resource type="Resource" id="Resource_bls4q"]
+script = ExtResource("3_1jjgu")
 loot_type = 0
 gold_min = 1
 gold_max = 5
@@ -19,25 +19,26 @@ health_max = 0
 rarity = 0
 
 [sub_resource type="Resource" id="Resource_nugbr"]
-script = ExtResource("4_1gv5l")
+script = ExtResource("4_q67hb")
 rolls = 1
 drop_chance = 0.5
-entries = Array[ExtResource("3_k172p")]([SubResource("Resource_6e2pl")])
+entries = Array[ExtResource("3_1jjgu")]([])
+guaranteed_entry = SubResource("Resource_bls4q")
 
 [sub_resource type="Resource" id="Resource_rnidn"]
-script = ExtResource("1_iqhbx")
+script = ExtResource("5_eb1uq")
 type = 2
 speed = 250
 
 [sub_resource type="Resource" id="Resource_tnwfl"]
-script = ExtResource("4_8t5u3")
+script = ExtResource("8_kyne4")
 location = 2
 
 [resource]
 resource_name = "Meteor"
-script = ExtResource("3_gg1fs")
+script = ExtResource("7_8bp50")
 type = 4
-scene = ExtResource("2_r70t5")
+scene = ExtResource("6_7n1s1")
 difficulty = 1
 min_wave = 1
 loot_table = SubResource("Resource_nugbr")
@@ -50,8 +51,8 @@ spawn_behavior = SubResource("Resource_tnwfl")
 movement = SubResource("Resource_rnidn")
 shake_on_damage = false
 yellow_burst_on_defeat = false
-debris_texture_1 = ExtResource("1_35vrl")
-debris_texture_2 = ExtResource("2_2m6nq")
+debris_texture_1 = ExtResource("1_e8y80")
+debris_texture_2 = ExtResource("2_d4o46")
 debris_initial_velocity_min = 50
 debris_initial_velocity_max = 175
 debris_scale_amount_min = 0.01

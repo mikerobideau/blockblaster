@@ -42,8 +42,11 @@ func _ready() -> void:
 	spawner.target_defeated.connect(_on_target_defeated)
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
 	spawner.gold_collected.connect(_on_gold_collected)
+	spawner.health_collected.connect(_on_health_collected)
 	environment_spawner.set_blaster(blaster)
 	environment_spawner.set_ship(ship)
+	environment_spawner.gold_collected.connect(_on_gold_collected)
+	environment_spawner.health_collected.connect(_on_health_collected)
 	_start()
 	
 func _start():
@@ -90,8 +93,10 @@ func _unpause():
 	get_tree().paused = false
 	
 func _on_gold_collected(gold: Gold):
-	print_debug('adding 1 gold worth ' + str(gold.value))
 	money.add(gold.value)	
+	
+func _on_health_collected(h: LootHealth):
+	health.heal(h.value)
 
 func _on_ship_damage_taken(amount: int):
 	health.take_damage(amount)

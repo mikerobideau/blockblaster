@@ -1,6 +1,9 @@
 extends Node2D
 class_name EnvironmentSpawner
 
+signal gold_collected(gold: Gold)
+signal health_collected(health: LootHealth)
+
 var Meteor = preload("res://object/target/visual/environmental/meteor.tscn")
 
 var scene: PackedScene

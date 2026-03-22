@@ -4,18 +4,20 @@ class_name Health
 signal game_over()
 
 @onready var label = $Label
+@onready var max_health := 10
 
-var health := 10
+var health: int
 
 func _ready():
+	health = max_health
 	_update_label()
 
 func heal(amount: int):
-	health = clamp(health + amount, 0, 100)
+	health = clamp(health + amount, 0, max_health)
 	_update_label()
 	
 func take_damage(amount: int):
-	health = clamp(health - amount, 0, 100)
+	health = clamp(health - amount, 0, max_health)
 	_check_game_over()
 	_update_label()
 	

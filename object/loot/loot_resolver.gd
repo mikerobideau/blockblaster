@@ -2,6 +2,7 @@ extends Node
 class_name LootResolver
 
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
+var HealthScene = preload("res://object/loot/health/loot_health.tscn")
 
 const RARITY_WEIGHT: Dictionary = {
 	LootData.Rarity.COMMON: 1.0,
@@ -67,8 +68,21 @@ func _spawn_entry(
 				gold.set_ship(ship)
 				gold.collected.connect(func(g): _on_gold_collected(g, parent))
 				parent.add_child(gold)
+		LootData.Type.HEALTH:
+			var count = randi_range(entry.health_min, entry.health_max)
+			for i in range(count):
+				var health = HealthScene.instantiate()
+				health.global_position = pos
+				health.set_blaster(blaster)
+				health.set_ship(ship)
+				health.collected.connect(func(g): _on_health_collected(g, parent))
+				parent.add_child(health)
 				
 func _on_gold_collected(gold: Gold, parent: Node2D):
 	if parent.has_signal("gold_collected"):
 		parent.emit_signal("gold_collected", gold)
+		
+func _on_health_collected(health: LootHealth, parent: Node2D):
+	if parent.has_signal("health_collected"):
+		parent.emit_signal("health_collected", health)
 		

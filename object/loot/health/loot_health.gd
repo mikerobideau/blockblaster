@@ -1,20 +1,21 @@
 extends Area2D
-class_name Gold
+class_name LootHealth
 
-signal collected(gold: Gold)
+signal collected(health: LootHealth)
 
-@export var radius := 10
-@export var color := Color.YELLOW
+@onready var sprite = $Sprite2D
+@onready var hit_box = $HitBox
+
+@export var value := 1
 @export var speed := 50
 @export var velocity: Vector2
 @export var vacuum_accel := 600
 @export var max_speed := 400
-@export var value = 1
 
 var being_vacuumed := false
 var blaster: Blaster
 var ship: Ship
-
+	
 func _ready():
 	velocity = _random_up_direction() * speed
 	
@@ -26,6 +27,7 @@ func _process(delta):
 		if dist < blaster.vacuum_radius:
 			global_position = destination
 			velocity = Vector2.ZERO
+			print_debug('calling LootHealth._collect')
 			_collect()
 			return
 			
@@ -35,7 +37,7 @@ func _process(delta):
 		)
 		velocity = velocity.limit_length(max_speed)
 	global_position += velocity * delta
-	
+
 func set_ship(s: Ship):
 	ship = s
 	
@@ -53,7 +55,7 @@ func _on_vacuum_stopped():
 func _random_up_direction():
 	var x = deg_to_rad(randf_range(0, 180))
 	return Vector2(cos(x), sin(x)).normalized()
-
+	
 func _on_area_entered(area: Area2D) -> void:
 	if area is Ship:
 		being_vacuumed = true

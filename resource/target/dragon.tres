@@ -22,20 +22,20 @@ burst_size = 0
 burst_delay = 0.2
 fire_timeout = 0
 
-[sub_resource type="Resource" id="Resource_ahu5t"]
+[sub_resource type="Resource" id="Resource_xlrv2"]
 script = ExtResource("3_kyfkv")
-loot_type = 0
-gold_min = 1
-gold_max = 1
+loot_type = 1
+gold_min = 0
+gold_max = 0
 health_min = 1
-health_max = 5
+health_max = 1
 rarity = 0
 
 [sub_resource type="Resource" id="Resource_w02gs"]
 script = ExtResource("4_wmqce")
 rolls = 1
 drop_chance = 0.5
-entries = Array[ExtResource("3_kyfkv")]([SubResource("Resource_ahu5t")])
+entries = Array[ExtResource("3_kyfkv")]([SubResource("Resource_xlrv2")])
 
 [sub_resource type="Resource" id="Resource_ciqm8"]
 script = ExtResource("1_8kxbf")
