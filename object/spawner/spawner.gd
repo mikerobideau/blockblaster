@@ -30,6 +30,7 @@ var start_time := 0.0
 var target_db := TargetDatabase.new()
 var leader_ref: Target
 var active_targets: Array[Target] = []
+var loot_resolver := LootResolver.new()
 
 func  _ready():
 	pass
@@ -78,9 +79,6 @@ func _check_wave_cleared():
 		wave_complete.emit(current_wave)
 	
 func _spawn_event(event: TimelineEvent) -> void:
-	if event.is_gold:
-		_spawn_gold_at(event.position, event.gold_count)
-		return
 	if event.telegraph:
 		_telegraph_then_spawn(event)
 	else:
@@ -128,47 +126,18 @@ func _spawn_single_enemy(data: TargetData, position: Vector2) -> Target:
 func _on_target_defeated(target: Target):
 	active_targets.erase(target)
 	target_defeated.emit(target)
-	if target is Meteor:
-		_spawn_crystals(target)
-	if target is Crystal:
-		_spawn_gold_from_target(target)
+	if target.data and target.data.loot_table:
+		loot_resolver.resolve(
+			target.data.loot_table,
+			target.global_position,
+			self, 
+			blaster,
+			ship
+		)
 		
 func _on_target_removed(target: Target):
 	active_targets.erase(target)
 
-func _spawn_crystals(target: Target):
-	var count = randi() % 3
-	for i in range(count):
-		var crystal = CrystalScene.instantiate()
-		crystal.global_position = target.global_position
-		crystal.defeated.connect(_on_target_defeated)
-		add_child(crystal)
-
-func _spawn_gold_at(position: Vector2, count: int):
-	for i in range(count):
-		var gold = GoldScene.instantiate()
-		gold.global_position = position
-		gold.collected.connect(_on_gold_collected)
-		gold.set_blaster(blaster)
-		gold.set_ship(ship)
-		gold.collected.connect(_on_gold_collected)
-		add_child(gold)
-		
-func _spawn_gold_from_target(target: Target):
-	var bonus = randi_range(1, 6)
-	var count : int
-	if bonus == 6:
-		count = 100
-	else:	
-		count = randi_range(0, 5)
-	for i in range(count):
-		var gold = GoldScene.instantiate()
-		gold.global_position = target.global_position
-		gold.set_blaster(blaster)
-		gold.set_ship(ship)
-		gold.collected.connect(_on_gold_collected)
-		add_child(gold)
-	
 func _on_gold_collected(gold: Gold):
 	gold_collected.emit(gold)
 	gold.queue_free()

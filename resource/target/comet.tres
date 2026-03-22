@@ -1,10 +1,28 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=7 format=3 uid="uid://c4do3c67r52il"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=11 format=3 uid="uid://c4do3c67r52il"]
 
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_d8cnc"]
 [ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_ordkm"]
 [ext_resource type="Texture2D" uid="uid://dr5ccqp3ux6li" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_03.png" id="1_s1u6m"]
 [ext_resource type="Texture2D" uid="uid://c3kusqguii73v" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_04.png" id="2_jylkq"]
 [ext_resource type="PackedScene" uid="uid://d0d1mkpk0o1sa" path="res://object/target/visual/environmental/comet.tscn" id="2_mx7b8"]
+[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_r23gt"]
+[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_tnjic"]
+
+[sub_resource type="Resource" id="Resource_xjpht"]
+script = ExtResource("3_r23gt")
+loot_type = 0
+gold_min = 10
+gold_max = 10
+health_min = 1
+health_max = 5
+rarity = 0
+
+[sub_resource type="Resource" id="Resource_1276v"]
+script = ExtResource("4_tnjic")
+rolls = 1
+drop_chance = 0.5
+entries = Array[ExtResource("3_r23gt")]([])
+guaranteed_entry = SubResource("Resource_xjpht")
 
 [sub_resource type="Resource" id="Resource_6bryf"]
 script = ExtResource("1_ordkm")
@@ -16,10 +34,12 @@ resource_name = "Comet"
 script = ExtResource("1_d8cnc")
 type = 5
 scene = ExtResource("2_mx7b8")
-scale = Vector2(0.4, 0.4)
-health = 2
 difficulty = 1
 min_wave = 3
+loot_table = SubResource("Resource_1276v")
+scale = Vector2(0.4, 0.4)
+is_variable_scale = false
+health = 2
 is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_6bryf")

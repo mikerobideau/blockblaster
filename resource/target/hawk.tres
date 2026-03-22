@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=8 format=3 uid="uid://bai24k0sjcvb8"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=12 format=3 uid="uid://bai24k0sjcvb8"]
 
 [ext_resource type="PackedScene" uid="uid://b4a8kyg8fbni3" path="res://object/target/enemy/energy/energy_blue_line.tscn" id="1_845ve"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_tliq8"]
 [ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_jcvv4"]
 [ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_jvmut"]
+[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_og0th"]
 [ext_resource type="PackedScene" uid="uid://cjs520ldpsxk3" path="res://object/target/visual/ship/ship_04.tscn" id="4_5u7r2"]
+[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_6m2a0"]
 
 [sub_resource type="Resource" id="Resource_4hqyc"]
 script = ExtResource("2_jcvv4")
@@ -20,6 +22,21 @@ burst_size = 1
 burst_delay = 0.5
 fire_timeout = 2
 
+[sub_resource type="Resource" id="Resource_ggpca"]
+script = ExtResource("3_og0th")
+loot_type = 0
+gold_min = 1
+gold_max = 2
+health_min = 1
+health_max = 5
+rarity = 0
+
+[sub_resource type="Resource" id="Resource_jf0ra"]
+script = ExtResource("4_6m2a0")
+rolls = 1
+drop_chance = 0.5
+entries = Array[ExtResource("3_og0th")]([SubResource("Resource_ggpca")])
+
 [sub_resource type="Resource" id="Resource_txnlx"]
 script = ExtResource("3_jvmut")
 min_distance = 250
@@ -30,9 +47,12 @@ resource_name = "Hawk"
 script = ExtResource("1_tliq8")
 type = 1
 scene = ExtResource("4_5u7r2")
-scale = Vector2(0.1, 0.1)
-health = 5
 difficulty = 1
+min_wave = 1
+loot_table = SubResource("Resource_jf0ra")
+scale = Vector2(0.1, 0.1)
+is_variable_scale = false
+health = 5
 is_leader = false
 randomize_rotation = false
 movement = SubResource("Resource_txnlx")
