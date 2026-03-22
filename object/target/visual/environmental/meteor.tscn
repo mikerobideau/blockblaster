@@ -25,7 +25,7 @@ sprite_frames = SubResource("SpriteFrames_xhknq")
 animation = &"default"
 
 [node name="HitBox" parent="." index="2"]
-polygon = PackedVector2Array(0, -90, 85, -90, 130, -65, 150, -15, 135, 30, 90, 60, -95, 100, -125, 100, -135, 90, -145, 75, -145, 55, -135, -20, -150, -75, -135, -100, -105, -100, -65, -80)
+polygon = PackedVector2Array(0, -90, 85, -90, 130, -65, 150, -15, 135, 30, 85, 65, -95, 100, -125, 100, -135, 90, -145, 75, -145, 55, -135, -20, -150, -75, -135, -100, -105, -100, -65, -80)
 
 [node name="Emitter" parent="." index="3"]
 position = Vector2(0, -3.8147e-06)

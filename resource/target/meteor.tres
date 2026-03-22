@@ -1,11 +1,28 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=9 format=3 uid="uid://rho5hkf85683"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://rho5hkf85683"]
 
 [ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_35vrl"]
 [ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_iqhbx"]
 [ext_resource type="Texture2D" uid="uid://c1lmfwuyjv8mv" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_10.png" id="2_2m6nq"]
 [ext_resource type="PackedScene" uid="uid://dly6oqcot2kx" path="res://object/target/visual/environmental/meteor.tscn" id="2_r70t5"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="3_gg1fs"]
+[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_k172p"]
+[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_1gv5l"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
+
+[sub_resource type="Resource" id="Resource_6e2pl"]
+script = ExtResource("3_k172p")
+loot_type = 0
+gold_min = 1
+gold_max = 5
+health_min = 0
+health_max = 0
+rarity = 0
+
+[sub_resource type="Resource" id="Resource_nugbr"]
+script = ExtResource("4_1gv5l")
+rolls = 1
+drop_chance = 0.5
+entries = Array[ExtResource("3_k172p")]([SubResource("Resource_6e2pl")])
 
 [sub_resource type="Resource" id="Resource_rnidn"]
 script = ExtResource("1_iqhbx")
@@ -21,11 +38,12 @@ resource_name = "Meteor"
 script = ExtResource("3_gg1fs")
 type = 4
 scene = ExtResource("2_r70t5")
+difficulty = 1
+min_wave = 1
+loot_table = SubResource("Resource_nugbr")
 scale = Vector2(1, 1)
 is_variable_scale = true
 health = 3
-difficulty = 1
-min_wave = 1
 is_leader = false
 randomize_rotation = true
 spawn_behavior = SubResource("Resource_tnwfl")

@@ -42,14 +42,16 @@ func _ready() -> void:
 	spawner.target_defeated.connect(_on_target_defeated)
 	spawner.incoming_wave_detected.connect(_on_incoming_wave)
 	spawner.gold_collected.connect(_on_gold_collected)
+	environment_spawner.set_blaster(blaster)
+	environment_spawner.set_ship(ship)
 	_start()
 	
 func _start():
 	environment_spawner.start()
 	var waves = []
-	var wave_number = 10
-	var min_difficulty = 55
-	var max_difficulty = 200
+	var wave_number = 1
+	var min_difficulty = 1
+	var max_difficulty = 500
 	var a = min_difficulty
 	var b = min_difficulty * 2
 	while a <= max_difficulty:
