@@ -38,10 +38,8 @@ func  _ready():
 	pass
 	
 func start_wave(wave: WaveData):
-	print_debug('start wave')
 	incoming_wave_detected.emit(wave)
 	await get_tree().create_timer(Constant.INCOMING_WAVE_NOTICE_TIME, false).timeout
-	print_debug('wave wait timeout complete')
 	current_wave = wave
 	event_index = 0
 	start_time = Time.get_ticks_msec() / 1000.0

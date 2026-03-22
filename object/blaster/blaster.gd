@@ -1,12 +1,13 @@
 extends Control
 class_name Blaster
 
-var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
-
-signal fired(position: Vector2)
+signal fired()
 signal vacuum_started()
 signal vacuum_stopped()
 signal ability1_fired()
+
+var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
+var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
 
 @onready var fire_timer = $FireTimer
 @onready var ultimate_timer = $UltimateTimer
@@ -15,27 +16,30 @@ signal ability1_fired()
 
 @export var data: BlasterData
 @export var vacuum_radius := 25
-@export var freeze := 25
 @export var ultimate: Ultimate
 @export var ability1: Cooldown
 
-var default_blaster = pea_shooter
-var damage: int
-var radius: int
-var speed: int
 var firing := false
-var vacuuming := false
+var ultimate_active := false
+var ship: Ship
 
 func _ready():
-	update(default_blaster)
+	update(pea_shooter)
 	fire_timer.timeout.connect(_blast)
-	ultimate_timer.timeout.connect(_ultimate_complete)
-	
+	ultimate_timer.timeout.connect(_on_ultimate_complete)
+
 func update(d: BlasterData):
 	data = d
 	icon.texture = d.icon
-	ultimate_timer.wait_time = d.ultimate_duration
-	_reset_to_default_damage()
+
+func set_ship(s: Ship):
+	ship = s
+
+func set_ultimate(u: Ultimate):
+	ultimate = u
+
+func set_ability1(a: Cooldown):
+	ability1 = a
 
 func _input(event):
 	if event.is_action_pressed('primary'):
@@ -46,43 +50,39 @@ func _input(event):
 		firing = false
 		fire_timer.stop()
 	elif event.is_action_pressed('secondary'):
-		vacuuming = true
 		vacuum_started.emit()
 	elif event.is_action_released('secondary'):
-		vacuuming = false
 		vacuum_stopped.emit()
 	elif event.is_action_pressed('ultimate'):
 		_ultimate()
 	elif event.is_action_pressed('ability1'):
-		_ability1()
-		
-func set_ultimate(ultimate: Ultimate):
-	self.ultimate = ultimate
+		ability1_fired.emit(get_global_mouse_position())
+		ability1.reset_cooldown()
 
-func set_ability1(ability: Cooldown):
-	ability1 = ability
-
+	
 func _blast():
+	print_debug('energy_icon: ', data.energy_icon)
+	print_debug('data: ', data.resource_path)
 	if not firing:
 		return
-	#Sound.play(Sound.Effect.BLASTER4)
-	fired.emit(get_global_mouse_position())
-	
+	var energy = EnergyScene.instantiate()
+	var dir = (get_global_mouse_position() - ship.emitter.global_position).normalized()
+	energy.global_position = ship.emitter.global_position
+	energy.direction = dir
+	energy.damage = data.ultimate_damage if ultimate_active else data.damage
+	energy.radius = data.ultimate_radius if ultimate_active else data.radius
+	energy.speed = data.speed
+	energy.texture = data.energy_icon
+	print_debug('texture before add_child: ', energy.texture)
+	get_tree().current_scene.add_child(energy)
+	print_debug('texture after add_child: ', energy.texture)
+
 func _ultimate():
 	if ultimate.fully_charged():
+		ultimate_active = true
+		ultimate_timer.wait_time = data.ultimate_duration
 		ultimate_timer.start()
-		damage = data.ultimate_damage
-		radius = data.ultimate_radius
-		
-func _ultimate_complete():
-	_reset_to_default_damage()
+
+func _on_ultimate_complete():
+	ultimate_active = false
 	ultimate.reset_charge()
-		
-func _reset_to_default_damage():
-	damage = data.damage
-	radius = data.radius
-	speed = data.speed
-	
-func _ability1():
-	ability1_fired.emit(get_global_mouse_position())
-	ability1.reset_cooldown()

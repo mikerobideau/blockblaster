@@ -34,6 +34,27 @@ autoplay = true
 
 [node name="Menu" type="Node2D" parent="."]
 
+[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
+position = Vector2(964, 543)
+
+[node name="EnvironmentSpawner" parent="." instance=ExtResource("10_vvkos")]
+
+[node name="Terminals" type="Node2D" parent="."]
+
+[node name="Top Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
+position = Vector2(-709, -371)
+
+[node name="Bottom Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
+position = Vector2(-711, 1750)
+
+[node name="Left Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
+position = Vector2(-455, -496)
+
+[node name="Right Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
+position = Vector2(2384, -490)
+
+[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="IncomingWave" type="MarginContainer" parent="CanvasLayer"]
@@ -108,24 +129,3 @@ size_flags_vertical = 8
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-
-[node name="EnvironmentSpawner" parent="." instance=ExtResource("10_vvkos")]
-
-[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-position = Vector2(964, 543)
-
-[node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
-
-[node name="Terminals" type="Node2D" parent="."]
-
-[node name="Top Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
-position = Vector2(-709, -371)
-
-[node name="Bottom Terminal" parent="Terminals" instance=ExtResource("9_bsvvw")]
-position = Vector2(-711, 1750)
-
-[node name="Left Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
-position = Vector2(-455, -496)
-
-[node name="Right Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
-position = Vector2(2384, -490)

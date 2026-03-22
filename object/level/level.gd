@@ -33,8 +33,8 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
-	blaster.fired.connect(_on_blaster_fired)
 	blaster.ability1_fired.connect(_on_ability1_fired)
+	blaster.set_ship(ship)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
 	spawner.set_blaster(blaster)
@@ -102,18 +102,6 @@ func _on_health_collected(h: LootHealth):
 
 func _on_ship_damage_taken(amount: int):
 	health.take_damage(amount)
-
-func _on_blaster_fired(position: Vector2):
-	var start_pos =  ship.emitter.global_position
-	var target_pos = get_global_mouse_position()
-	var energy = EnergyScene.instantiate()
-	energy.global_position = start_pos
-	energy.direction = target_pos - start_pos
-	energy.damage = blaster.damage
-	energy.radius = blaster.radius
-	energy.speed = blaster.speed
-	energy.texture = blaster.data.energy_icon
-	add_child(energy)
 	
 func _on_ability1_fired(position: Vector2):
 	_add_projectile(position)
