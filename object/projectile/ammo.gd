@@ -12,14 +12,13 @@ var direction := Vector2.ZERO
 
 # In Ammo._ready()
 func _ready():
-	print_debug('Ammo _ready — texture: ', texture)
-	print_debug('Ammo _ready — sprite: ', sprite)
 	if texture:
 		sprite.texture = texture
-		print_debug('Ammo _ready — sprite.texture after set: ', sprite.texture)
-	print_debug('sprite visible: ', sprite.visible)
-	print_debug('sprite modulate: ', sprite.modulate)
-	print_debug('sprite z_index: ', sprite.z_index)
 
 func _physics_process(delta: float):
 	position += direction * speed * delta
+
+func set_texture(texture: Texture2D):
+	self.texture = texture
+	if sprite:
+		sprite.texture = texture

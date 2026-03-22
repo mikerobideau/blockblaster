@@ -61,8 +61,6 @@ func _input(event):
 
 	
 func _blast():
-	print_debug('energy_icon: ', data.energy_icon)
-	print_debug('data: ', data.resource_path)
 	if not firing:
 		return
 	var energy = EnergyScene.instantiate()
@@ -72,10 +70,8 @@ func _blast():
 	energy.damage = data.ultimate_damage if ultimate_active else data.damage
 	energy.radius = data.ultimate_radius if ultimate_active else data.radius
 	energy.speed = data.speed
-	energy.texture = data.energy_icon
-	print_debug('texture before add_child: ', energy.texture)
+	energy.set_texture(data.energy_icon)
 	get_tree().current_scene.add_child(energy)
-	print_debug('texture after add_child: ', energy.texture)
 
 func _ultimate():
 	if ultimate.fully_charged():

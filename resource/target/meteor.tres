@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_k172p"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_1gv5l"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
-[ext_resource type="Texture2D" uid="uid://dcy3exu308q7s" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/SCML/Fire_Shots/Fire_Shot_1_4.png" id="4_ipm8t"]
+[ext_resource type="Texture2D" uid="uid://bxoc8p3fof4dm" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_4_4.png" id="4_bdrnx"]
 [ext_resource type="Texture2D" uid="uid://rg18w5k4isoa" path="res://asset/icon/eruption.png" id="5_1nkfu"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="6_ip278"]
 
@@ -16,13 +16,13 @@
 script = ExtResource("6_ip278")
 name = "Test Blaster"
 icon = ExtResource("5_1nkfu")
-energy_icon = ExtResource("4_ipm8t")
-damage = 10
-radius = 50
-speed = 1000
-ultimate_damage = 0
-ultimate_radius = 0
-ultimate_duration = 0
+energy_icon = ExtResource("4_bdrnx")
+damage = 1
+radius = 10
+speed = 750
+ultimate_damage = 10
+ultimate_radius = 10
+ultimate_duration = 10
 color = Color(0, 0, 0, 1)
 scale = Vector2(0.5, 0.5)
 

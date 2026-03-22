@@ -62,5 +62,4 @@ func _collect():
 	queue_free()
 	
 func remove():
-	print_debug('queuing coin free')
 	queue_free()

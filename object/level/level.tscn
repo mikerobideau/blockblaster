@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b0tdr7424u746" path="res://object/spawner/environment_spawner.tscn" id="10_vvkos"]
 
 [node name="Level" type="Node2D"]
+visibility_layer = 2
 script = ExtResource("1_cga3n")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -31,8 +32,6 @@ texture = ExtResource("2_xtglg")
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2uvng")
 autoplay = true
-
-[node name="Menu" type="Node2D" parent="."]
 
 [node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
 position = Vector2(964, 543)
@@ -56,6 +55,8 @@ position = Vector2(2384, -490)
 [node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="Node" parent="CanvasLayer"]
 
 [node name="IncomingWave" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 5
