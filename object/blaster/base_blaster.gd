@@ -1,11 +1,15 @@
 extends Node2D
 class_name BaseBlaster
 
+signal fired()
+
 var sprite_forward_offset = PI / 2
 var burst_shots_remaining := 0
 
 @onready var fire_timer = $FireTimer
 @onready var burst_timer = $BurstTimer
+
+@export var source := Energy.Source.ENEMY
 
 var data: BlasterData
 var emitter: Node2D
@@ -53,15 +57,15 @@ func _fire_pattern(dir: Vector2, override_damage := -1):
 			_fire_parallel_spread(dir, dmg)
 		_:
 			_fire_line(dir, dmg)
+	fired.emit()
 
-func _make_energy(dmg: int) -> Area2D:
+func _make_energy(dmg: int) -> Energy:
 	var energy = data.scene.instantiate()
+	energy.source = source
 	energy.global_position = emitter.global_position
 	energy.damage = dmg
 	energy.speed = data.speed
 	energy.scale = data.scale
-	if energy.has_method('set_texture'):
-		energy.set_texture(data.energy_icon)
 	return energy
 
 func _fire_line(dir: Vector2, dmg: int):

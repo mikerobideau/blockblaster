@@ -61,6 +61,7 @@ func _ready():
 		if !data.randomize_rotation:
 			rotation = -PI / 2 if direction == Vector2.LEFT else PI / 2
 	blaster.setup(data.blaster, emitter)
+	blaster.fired.connect(_on_blaster_fired)
 	if data.movement is PathMovement or data.movement is TravelToPointMovement:
 		var center = get_viewport_rect().size / 2
 		direction = data.movement.get_direction(global_position, center)
@@ -153,21 +154,29 @@ func _travel_to_point_movement(delta):
 				rotation_speed * delta
 			)
 			_move(delta)
-			
-			if global_position.distance_to(movement.waypoint) < 100:
+			if global_position.distance_to(movement.waypoint) < 10:
 				movement.travel_state = TravelToPointMovement.TravelState.FIRE
+				blaster.fire_timer.start()
 
 		TravelToPointMovement.TravelState.FIRE:
 			direction = (ship.global_position - global_position).normalized()
 			rotation = _rotate_towards_direction(delta)
 
 		TravelToPointMovement.TravelState.EXIT:
-			await get_tree().create_timer(data.movement.wait_to_exit).timeout
-			if !is_exiting:
+			blaster.fire_timer.stop()
+			if not is_exiting:
 				is_exiting = true
 				direction = (spawn_position - global_position).normalized()
-			rotation = lerp_angle(rotation, direction.angle() + sprite_forward_offset, rotation_speed * delta)
+			rotation = lerp_angle(
+				rotation,
+				direction.angle() + sprite_forward_offset,
+				rotation_speed * delta
+			)
 			_move(delta)
+
+func _on_blaster_fired():
+	if data.movement is TravelToPointMovement:
+		data.movement.travel_state = TravelToPointMovement.TravelState.EXIT
 
 func take_damage(amount: int):
 	animation_player.stop()

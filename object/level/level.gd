@@ -12,7 +12,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var ship = $Ship
 @onready var incoming_wave_label = $CanvasLayer/IncomingWave/Label
 @onready var game_state_label = $CanvasLayer/GameState
-@onready var blaster_ui = $CanvasLayer/BottomBar/HBox/Blaster
+@onready var blaster_ui = $CanvasLayer/BottomBar/HBox/BlasterUi
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/HBox/Health
@@ -35,10 +35,12 @@ func _ready() -> void:
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
 	blaster = ship.blaster
+	blaster.setup(blaster.default_blaster_data, ship.emitter)
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ship(ship)
 	blaster.set_ultimate(ultimate)
 	blaster.set_ability1(ability1)
+	blaster_ui.update(blaster.data)
 	spawner.set_blaster(blaster)
 	spawner.set_ship(ship)
 	spawner.target_defeated.connect(_on_target_defeated)

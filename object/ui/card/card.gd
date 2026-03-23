@@ -17,7 +17,7 @@ func _ready():
 	icon.texture = data.icon
 	type.text = 'BLASTER'
 	title.text = data.name
-	description.text = 'Damage: ' + str(data.damage) + ', Radius: ' + str(data.radius)
+	description.text = 'Damage: ' + str(data.damage)
 
 func _on_add_pressed() -> void:
 	added.emit(data)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://object/ship/ship.gd" id="1_kfrqc"]
 [ext_resource type="Texture2D" uid="uid://bliljwd22kly8" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_01/Ship_LVL_1.png" id="2_ssoch"]
-[ext_resource type="PackedScene" uid="uid://dian378w2atam" path="res://object/blaster/player_blaster.tscn" id="3_p3h4t"]
+[ext_resource type="PackedScene" uid="uid://bbwyhes56guus" path="res://object/blaster/player_blaster.tscn" id="3_p3h4t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pqrpl"]
 size = Vector2(156, 125)

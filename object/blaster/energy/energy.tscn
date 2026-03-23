@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqiousprphhvf"]
+[gd_scene load_steps=2 format=3 uid="uid://dqiousprphhvf"]
 
 [ext_resource type="Script" path="res://object/blaster/energy/energy.gd" id="1_suvay"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_pujh1"]
 
 [node name="Energy" type="Area2D"]
 script = ExtResource("1_suvay")
@@ -11,7 +9,6 @@ script = ExtResource("1_suvay")
 position = Vector2(2.98023e-08, 0)
 scale = Vector2(0.232143, 0.232143)
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_pujh1")
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

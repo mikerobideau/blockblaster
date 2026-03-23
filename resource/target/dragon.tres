@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://object/target/movement/travel_to_point_movement.gd" id="1_8kxbf"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_emnbq"]
-[ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_kmvj6"]
+[ext_resource type="PackedScene" uid="uid://b1d4qptpt0uux" path="res://object/blaster/visuals/blue_line_energy.tscn" id="1_wx3fs"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="2_361go"]
 [ext_resource type="PackedScene" uid="uid://woobk6myt1e2" path="res://object/target/visual/ship/ship_02.tscn" id="2_rweub"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_wmqce"]
@@ -10,22 +10,19 @@
 [sub_resource type="Resource" id="Resource_jar66"]
 script = ExtResource("2_361go")
 name = ""
-scene = ExtResource("1_kmvj6")
-scale = Vector2(0.25, 0.25)
+scene = ExtResource("1_wx3fs")
+scale = Vector2(1, 1)
 damage = 1
 speed = 500
-color = Color(0, 0, 0, 1)
-radius = 0
+fire_timeout = 0.0
+sound = 0
 ultimate_damage = 0
-ultimate_radius = 0
 ultimate_duration = 0
-sound = 6
 autostart = true
 pattern = 3
 projectile_count = 2
 burst_size = 0
 burst_delay = 0.2
-fire_timeout = 0
 
 [sub_resource type="Resource" id="Resource_w02gs"]
 script = ExtResource("4_wmqce")

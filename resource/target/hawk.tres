@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TargetData" load_steps=10 format=3 uid="uid://bai24k0sjcvb8"]
 
-[ext_resource type="PackedScene" uid="uid://b4a8kyg8fbni3" path="res://object/target/enemy/energy/energy_blue_line.tscn" id="1_845ve"]
+[ext_resource type="PackedScene" uid="uid://b1d4qptpt0uux" path="res://object/blaster/visuals/blue_line_energy.tscn" id="1_ct50l"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_tliq8"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="2_jcvv4"]
 [ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_jvmut"]
@@ -10,22 +10,19 @@
 [sub_resource type="Resource" id="Resource_4hqyc"]
 script = ExtResource("2_jcvv4")
 name = ""
-scene = ExtResource("1_845ve")
-scale = Vector2(0.25, 0.25)
+scene = ExtResource("1_ct50l")
+scale = Vector2(1, 1)
 damage = 1
 speed = 500
-color = Color(0, 0, 0, 1)
-radius = 0
+fire_timeout = 5.0
+sound = 0
 ultimate_damage = 0
-ultimate_radius = 0
 ultimate_duration = 0
-sound = 2
 autostart = true
 pattern = 0
 projectile_count = 1
 burst_size = 1
 burst_delay = 0.5
-fire_timeout = 2
 
 [sub_resource type="Resource" id="Resource_jf0ra"]
 script = ExtResource("4_6m2a0")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1d4qptpt0uux"]
+
+[ext_resource type="PackedScene" uid="uid://dqiousprphhvf" path="res://object/blaster/energy/energy.tscn" id="1_hbsoc"]
+[ext_resource type="Texture2D" uid="uid://cfo5b1pvru348" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Fire_Shot_4_2.png" id="2_x8j0w"]
+
+[node name="Energy" instance=ExtResource("1_hbsoc")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_x8j0w")
+
+[node name="HitBox" parent="." index="1"]
+polygon = PackedVector2Array(-3, -19, -2, -20, 0, -21, 2, -20, 3, -19, 4, -16, 4, -13, 2, 16, 0, 21, -2, 16, -4, -13, -4, -16)
