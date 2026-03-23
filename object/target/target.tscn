@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://xg4ajeq04p03"]
+[gd_scene load_steps=12 format=3 uid="uid://xg4ajeq04p03"]
 
 [ext_resource type="Script" path="res://object/target/target.gd" id="1_0vddg"]
 [ext_resource type="Texture2D" uid="uid://bg6jupb4ad86a" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_1.png" id="2_qutsp"]
 [ext_resource type="Texture2D" uid="uid://bb3n47gsk4aeu" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_2.png" id="3_3uhig"]
 [ext_resource type="Texture2D" uid="uid://w3qpr4pp0heg" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_3.png" id="4_exc8e"]
+[ext_resource type="PackedScene" uid="uid://bugbojgujsjp8" path="res://object/blaster/base_blaster.tscn" id="5_l4xm3"]
 
 [sub_resource type="Animation" id="Animation_kch5b"]
 length = 0.001
@@ -80,10 +81,6 @@ libraries = {
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(0, -48)
 
-[node name="FireTimer" type="Timer" parent="."]
-
-[node name="BurstTimer" type="Timer" parent="."]
-
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 visible = false
 scale = Vector2(0.4, 0.4)
@@ -128,3 +125,5 @@ angular_velocity_max = 360.0
 angle_max = 360.0
 scale_amount_min = 0.05
 scale_amount_max = 0.12
+
+[node name="Blaster" parent="." instance=ExtResource("5_l4xm3")]

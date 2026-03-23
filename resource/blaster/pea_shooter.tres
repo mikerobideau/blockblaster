@@ -7,13 +7,20 @@
 [resource]
 script = ExtResource("1_e1opw")
 name = "Pea Shooter"
+scale = Vector2(1, 1)
+damage = 1
+speed = 1500
+color = Color(0, 1, 0, 1)
 icon = ExtResource("2_6a0nc")
 energy_icon = ExtResource("1_5mxxm")
-damage = 1
 radius = 10
-speed = 1500
 ultimate_damage = 10
 ultimate_radius = 25
 ultimate_duration = 3
-color = Color(0, 1, 0, 1)
-scale = Vector2(1, 1)
+sound = 0
+autostart = true
+pattern = 0
+projectile_count = 1
+burst_size = 1
+burst_delay = 0.2
+fire_timeout = 5

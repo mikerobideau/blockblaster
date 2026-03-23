@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c32ysny5b7a1c"]
+
+[ext_resource type="Script" path="res://object/ui/hud/blaster_ui.gd" id="1_mqrhn"]
+[ext_resource type="Texture2D" uid="uid://egnyf3wjrhb2" path="res://asset/space-shooter-game-kit/Space-shooter-game-gui/PNG/Main_UI/Bonus_BTN_01.png" id="2_tlqpu"]
+
+[node name="BlasterUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_mqrhn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tlqpu")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)

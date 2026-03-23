@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dian378w2atam"]
+
+[ext_resource type="Script" path="res://object/blaster/player_blaster.gd" id="1_17j5h"]
+
+[node name="PlayerBlaster" type="Node2D"]
+script = ExtResource("1_17j5h")
+
+[node name="UltimateTimer" type="Timer" parent="."]

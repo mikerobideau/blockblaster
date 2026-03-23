@@ -12,7 +12,7 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 @onready var ship = $Ship
 @onready var incoming_wave_label = $CanvasLayer/IncomingWave/Label
 @onready var game_state_label = $CanvasLayer/GameState
-@onready var blaster = $CanvasLayer/BottomBar/HBox/Blaster
+@onready var blaster_ui = $CanvasLayer/BottomBar/HBox/Blaster
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
 @onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/HBox/Health
@@ -27,12 +27,14 @@ var loot_factory = LootFactory.new()
 var target_factory := TargetFactory.new()
 var is_game_over := false
 var wave_gen = WaveGenerator.new()
+var blaster: PlayerBlaster
 
 func _ready() -> void:	
 	#get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
+	blaster = ship.blaster
 	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ship(ship)
 	blaster.set_ultimate(ultimate)
@@ -135,7 +137,8 @@ func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 func _on_blaster_added(data: BlasterData):
 	_clear_menu()
 	_unpause()
-	blaster.update(data)
+	blaster_ui.update(data)
+	blaster.setup(data, ship.emitter)
 	
 func _on_blaster_declined():
 	_clear_menu()

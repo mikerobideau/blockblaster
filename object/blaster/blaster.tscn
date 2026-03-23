@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c7qkuy4g4kk72"]
 
-[ext_resource type="Script" path="res://object/blaster/blaster.gd" id="1_c2crq"]
+[ext_resource type="Script" path="res://object/blaster/player_blaster.gd" id="1_c2crq"]
 [ext_resource type="PackedScene" uid="uid://c2mftptyebvk" path="res://object/blaster/crosshair.tscn" id="2_enexy"]
 [ext_resource type="Texture2D" uid="uid://d26aicfa1hhg3" path="res://asset/space-shooter-game-kit/Space-shooter-game-gui/PNG/Main_UI/Bonus_BTN_02.png" id="2_erg7k"]
-[ext_resource type="Texture2D" uid="uid://byc0fvrk0va3j" path="res://resource/enemy_group/blaster.png" id="3_kpb0q"]
+[ext_resource type="Texture2D" path="res://resource/enemy_group/blaster.png" id="3_kpb0q"]
 
 [node name="Blaster" type="Control"]
 custom_minimum_size = Vector2(110, 110)

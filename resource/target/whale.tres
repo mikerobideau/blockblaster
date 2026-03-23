@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://ryxdgx2e1ild"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=12 format=3 uid="uid://ryxdgx2e1ild"]
 
 [ext_resource type="PackedScene" uid="uid://bbao4v8s7duhh" path="res://object/target/enemy/energy/energy_fire.tscn" id="1_03pt0"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_ut378"]
-[ext_resource type="Script" path="res://object/target/blaster/blaster_data.gd" id="2_4anjm"]
+[ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="2_4anjm"]
 [ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_h7v73"]
 [ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_j8qv0"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_2k0x3"]
@@ -10,26 +10,23 @@
 
 [sub_resource type="Resource" id="Resource_ds1oo"]
 script = ExtResource("2_4anjm")
+name = ""
 scene = ExtResource("1_03pt0")
 scale = Vector2(0.3, 0.3)
+damage = 2
+speed = 500
+color = Color(0, 0, 0, 1)
+radius = 0
+ultimate_damage = 0
+ultimate_radius = 0
+ultimate_duration = 0
 sound = 3
 autostart = true
 pattern = 1
-damage = 2
-speed = 500
 projectile_count = 8
 burst_size = 1
 burst_delay = 0.2
 fire_timeout = 2
-
-[sub_resource type="Resource" id="Resource_qmiri"]
-script = ExtResource("3_j8qv0")
-loot_type = 1
-gold_min = 0
-gold_max = 0
-health_min = 1
-health_max = 5
-rarity = 0
 
 [sub_resource type="Resource" id="Resource_a8hva"]
 script = ExtResource("3_j8qv0")
@@ -44,7 +41,6 @@ rarity = 0
 script = ExtResource("4_2k0x3")
 rolls = 1
 drop_chance = 0.5
-entries = Array[ExtResource("3_j8qv0")]([SubResource("Resource_qmiri")])
 guaranteed_entry = SubResource("Resource_a8hva")
 
 [sub_resource type="Resource" id="Resource_faali"]

@@ -16,7 +16,7 @@ func resolve(
 	table: LootTable,
 	spawn_pos: Vector2,
 	parent: Node2D,
-	blaster: Blaster,
+	blaster: PlayerBlaster,
 	ship: Ship
 ):
 	if table == null:
@@ -56,7 +56,7 @@ func _spawn_entry(
 	entry: LootData,
 	pos: Vector2,
 	parent: Node2D,
-	blaster: Blaster,
+	blaster: PlayerBlaster,
 	ship: Ship
 ):
 	match entry.loot_type:

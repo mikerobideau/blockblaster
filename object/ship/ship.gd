@@ -10,6 +10,7 @@ const SHIP_COLLISION_DAMAGE = 1
 @onready var emitter = $Emitter
 @onready var invulnerability_overlay = $InvulnerabilityOverlay
 @onready var invulnerability_timer = $InvulnerabilityTimer
+@onready var blaster = $Blaster
 
 @export var speed := 400
 @export var rotation_speed := 10.0

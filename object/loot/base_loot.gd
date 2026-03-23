@@ -11,7 +11,7 @@ class_name BaseLoot
 @export var lifetime := 5
 
 var being_vacuumed := false
-var blaster: Blaster
+var blaster: PlayerBlaster
 var ship: Ship
 
 func _ready():
@@ -39,7 +39,7 @@ func _process(delta):
 func set_ship(s: Ship):
 	ship = s
 
-func set_blaster(b: Blaster):
+func set_blaster(b: PlayerBlaster):
 	blaster = b
 	blaster.vacuum_started.connect(_on_vacuum_started)
 	blaster.vacuum_stopped.connect(_on_vacuum_stopped)

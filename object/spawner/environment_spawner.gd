@@ -11,7 +11,7 @@ var scene: PackedScene
 var interval_min := 1
 var interval_max := 4
 var loot_resolver := LootResolver.new()
-var blaster: Blaster
+var blaster: PlayerBlaster
 var ship: Ship
 
 func start():
@@ -44,7 +44,7 @@ func _on_target_defeated(target: Target):
 			ship
 		)
 		
-func set_blaster(b: Blaster):
+func set_blaster(b: PlayerBlaster):
 	blaster = b
 	
 func set_ship(s: Ship):

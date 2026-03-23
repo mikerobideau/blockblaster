@@ -22,7 +22,7 @@ var TelegraphScene = preload("res://object/target/visual/telegraph/telegraph.tsc
 
 @onready var music_player = $MusicPlayer
 
-@export var blaster: Blaster
+@export var blaster: PlayerBlaster
 @export var ship: Ship
 
 var wave_state := WaveState.IDLE
@@ -138,7 +138,7 @@ func _on_target_defeated(target: Target):
 func _on_target_removed(target: Target):
 	active_targets.erase(target)
 	
-func set_blaster(b: Blaster):
+func set_blaster(b: PlayerBlaster):
 	blaster = b
 	
 func set_ship(s: Ship):
