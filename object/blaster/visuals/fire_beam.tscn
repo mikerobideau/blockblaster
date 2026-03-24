@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2bgt18sjcglk"]
+
+[ext_resource type="PackedScene" uid="uid://dqiousprphhvf" path="res://object/blaster/energy/energy.tscn" id="1_3wode"]
+[ext_resource type="Texture2D" uid="uid://5bhxsg8aynxy" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_1_2.png" id="2_544s0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlrt4"]
+size = Vector2(10, 37)
+
+[node name="Energy" instance=ExtResource("1_3wode")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_544s0")
+
+[node name="HitBox" parent="." index="1"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_hlrt4")

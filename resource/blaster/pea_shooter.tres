@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_e1opw"]
 [ext_resource type="Texture2D" uid="uid://de8kvyy5asel3" path="res://asset/icon/blaster.png" id="2_6a0nc"]
-[ext_resource type="PackedScene" uid="uid://b1d4qptpt0uux" path="res://object/blaster/visuals/blue_line_energy.tscn" id="3_j7sen"]
+[ext_resource type="PackedScene" uid="uid://ke61tfr164bs" path="res://object/blaster/visuals/blue_spray_energy.tscn" id="2_soc2v"]
 
 [resource]
 script = ExtResource("1_e1opw")
 name = "Pea Shooter"
-scene = ExtResource("3_j7sen")
-scale = Vector2(1, 1)
+scene = ExtResource("2_soc2v")
+scale = Vector2(0.2, 0.2)
 damage = 1
 speed = 1500
 fire_timeout = 0.25
@@ -19,5 +19,5 @@ ultimate_duration = 3
 autostart = true
 pattern = 0
 projectile_count = 1
-burst_size = 1
+burst_size = 0
 burst_delay = 0.2

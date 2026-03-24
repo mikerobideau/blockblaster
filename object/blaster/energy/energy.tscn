@@ -7,8 +7,7 @@ script = ExtResource("1_suvay")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.98023e-08, 0)
-scale = Vector2(0.232143, 0.232143)
 
-[node name="HitBox" type="CollisionPolygon2D" parent="."]
+[node name="HitBox" type="CollisionShape2D" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
