@@ -19,5 +19,6 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_tlqpu")
 
 [node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.2, 0.2)

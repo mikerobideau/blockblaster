@@ -5,7 +5,7 @@ enum Pattern { LINE, RING, SPREAD, PARALLEL_SPREAD }
 
 # Shared
 @export var name: String
-@export var scene: PackedScene       # energy/projectile scene to spawn
+@export var scene: PackedScene
 @export var scale := Vector2(1, 1)
 @export var damage := 1
 @export var speed := 500
