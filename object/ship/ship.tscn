@@ -8,6 +8,7 @@
 size = Vector2(156, 125)
 
 [node name="Ship" type="Area2D"]
+scale = Vector2(0.65, 0.65)
 script = ExtResource("1_kfrqc")
 
 [node name="Emitter" type="Node2D" parent="."]
