@@ -2,18 +2,22 @@
 
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_3n2rq"]
 [ext_resource type="Texture2D" uid="uid://rg18w5k4isoa" path="res://asset/icon/eruption.png" id="1_cds8g"]
-[ext_resource type="Texture2D" uid="uid://ia020cvgb46t" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/PNG/Ship_Effects/Fire_Shot_2_2.png" id="1_ibrvo"]
+[ext_resource type="PackedScene" uid="uid://dkvyq62lwa31b" path="res://object/blaster/visuals/lava_energy.tscn" id="2_c5r8j"]
 
 [resource]
 script = ExtResource("1_3n2rq")
 name = "Lava Shooter"
-icon = ExtResource("1_cds8g")
-energy_icon = ExtResource("1_ibrvo")
-damage = 2
-radius = 10
+scene = ExtResource("2_c5r8j")
+scale = Vector2(0.3, 0.2)
+damage = 1
 speed = 500
+fire_timeout = 0.05
+icon = ExtResource("1_cds8g")
+sound = 0
 ultimate_damage = 10
-ultimate_radius = 10
 ultimate_duration = 10
-color = Color(0.913725, 0, 0, 1)
-scale = Vector2(1, 1)
+autostart = true
+pattern = 0
+projectile_count = 1
+burst_size = 1
+burst_delay = 0.2

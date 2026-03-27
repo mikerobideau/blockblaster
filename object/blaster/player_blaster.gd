@@ -5,7 +5,7 @@ signal vacuum_started()
 signal vacuum_stopped()
 signal ability1_fired()
 
-const default_blaster_data = preload("res://resource/blaster/pea_shooter.tres")
+const default_blaster_data = preload("res://resource/blaster/burst_blaster.tres")
 
 @export var vacuum_radius := 50
 
@@ -18,6 +18,7 @@ var ship: Ship
 @onready var ultimate_timer = $UltimateTimer
 
 func _ready():
+	print_debug('intializing player blaster')
 	source = Energy.Source.PLAYER
 	data = default_blaster_data
 	ultimate_timer.timeout.connect(_on_ultimate_complete)
@@ -41,9 +42,11 @@ func _input(event):
 		firing = true
 		_blast()
 		fire_timer.start()
+		burst_timer.start()
 	elif event.is_action_released('primary'):
 		firing = false
-		fire_timer.stop()
+		print_debug('fire timer stop')
+		burst_timer.stop()
 	elif event.is_action_pressed('secondary'):
 		vacuum_started.emit()
 	elif event.is_action_released('secondary'):

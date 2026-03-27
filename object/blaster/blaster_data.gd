@@ -15,7 +15,7 @@ enum Pattern { LINE, RING, SPREAD, PARALLEL_SPREAD }
 @export var sound: Sound.Effect
 @export var ultimate_damage: int
 @export var ultimate_duration: int
-@export var autostart := true
+@export var autostart := false
 @export var pattern := Pattern.LINE
 @export var projectile_count := 1
 @export var burst_size := 1

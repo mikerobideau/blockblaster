@@ -5,8 +5,6 @@ var ProjectileScene = preload("res://object/blaster/projectile.tscn")
 var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 var CardScene = preload("res://object/ui/card/card.tscn")
 var BlasterScene = preload("res://object/blaster/blaster.tscn")
-var pea_shooter = preload("res://resource/blaster/pea_shooter.tres")
-var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
 @onready var targets = $Area2Ds
 @onready var ship = $Ship
@@ -23,8 +21,6 @@ var lava_shooter = preload("res://resource/blaster/lava_shooter.tres")
 
 const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
 
-var loot_factory = LootFactory.new()
-var target_factory := TargetFactory.new()
 var is_game_over := false
 var wave_gen = WaveGenerator.new()
 var blaster: PlayerBlaster
@@ -130,7 +126,7 @@ func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 	var card = CardScene.instantiate()
 	card.added.connect(_on_blaster_added)
 	card.declined.connect(_on_blaster_declined)
-	card.data = lava_shooter
+	card.data = loot_blaster.data
 	var camera = get_viewport().get_camera_2d()
 	var center = camera.get_screen_center_position()
 	card.global_position = center

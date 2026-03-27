@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BlasterData" load_steps=4 format=3 uid="uid://hhdob3u5523o"]
+
+[ext_resource type="PackedScene" uid="uid://7o063kjl2q6" path="res://object/blaster/visuals/fireball_energy.tscn" id="1_1m7cn"]
+[ext_resource type="Texture2D" uid="uid://jnf2dnmyexew" path="res://asset/icon/flamer.png" id="1_vg22n"]
+[ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="1_yccy0"]
+
+[resource]
+script = ExtResource("1_yccy0")
+name = "Fireball Spread"
+scene = ExtResource("1_1m7cn")
+scale = Vector2(0.3, 0.3)
+damage = 1
+speed = 1000
+fire_timeout = 0.5
+icon = ExtResource("1_vg22n")
+sound = 0
+ultimate_damage = 10
+ultimate_duration = 10
+autostart = false
+pattern = 2
+projectile_count = 3
+burst_size = 1
+burst_delay = 0.2
