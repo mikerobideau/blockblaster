@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="3_q8fav"]
 
 [resource]
+resource_name = "Standard Issue"
 script = ExtResource("3_q8fav")
 name = "Standard Issue"
 scene = ExtResource("2_h5ty3")
@@ -20,4 +21,4 @@ autostart = true
 pattern = 0
 projectile_count = 1
 burst_size = 0
-burst_delay = 0.2
+burst_delay = 0.0

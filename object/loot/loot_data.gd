@@ -10,4 +10,5 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @export var health_min := 1
 @export var health_max := 5
 @export var blaster_data: BlasterData
+@export var ability_data: AbilityData
 @export var rarity := Rarity.COMMON

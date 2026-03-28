@@ -6,12 +6,12 @@
 [ext_resource type="AudioStream" uid="uid://dax5dyql1etpi" path="res://asset/sound/music/664619__cigaro30__synthwave-beat.wav" id="3_2uvng"]
 [ext_resource type="PackedScene" uid="uid://dj58su1f2i1ef" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
-[ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
 [ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
 [ext_resource type="PackedScene" uid="uid://dtfr7um1stgxv" path="res://object/money/money.tscn" id="7_54rq2"]
 [ext_resource type="PackedScene" uid="uid://cusxjldgksg5c" path="res://object/spawner/terminal_side.tscn" id="8_cvbo2"]
 [ext_resource type="PackedScene" uid="uid://c32ysny5b7a1c" path="res://object/ui/hud/blaster_ui.tscn" id="9_878qi"]
 [ext_resource type="PackedScene" uid="uid://btitngoo8omn" path="res://object/spawner/terminal_top.tscn" id="9_bsvvw"]
+[ext_resource type="PackedScene" uid="uid://dk760d3lln2fb" path="res://object/ui/hud/ability/ability_ui.tscn" id="10_ub374"]
 [ext_resource type="PackedScene" uid="uid://b0tdr7424u746" path="res://object/spawner/environment_spawner.tscn" id="10_vvkos"]
 
 [node name="Level" type="Node2D"]
@@ -109,10 +109,10 @@ layout_mode = 2
 theme_override_constants/separation = 100
 
 [node name="BlasterUi" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("9_878qi")]
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+size_flags_vertical = 8
 
-[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
+[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("10_ub374")]
 layout_mode = 2
 size_flags_vertical = 8
 

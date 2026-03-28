@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TargetData" load_steps=13 format=3 uid="uid://cxnpjl1k31kj4"]
+[gd_resource type="Resource" script_class="TargetData" load_steps=14 format=3 uid="uid://cxnpjl1k31kj4"]
 
 [ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="1_35vrl"]
 [ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_iqhbx"]
@@ -6,16 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://dly6oqcot2kx" path="res://object/target/visual/environmental/meteor.tscn" id="2_r70t5"]
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="3_gg1fs"]
 [ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_k172p"]
+[ext_resource type="Resource" uid="uid://baxle62n53d5a" path="res://resource/ability/barrel_roll.tres" id="3_yov5h"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_1gv5l"]
 [ext_resource type="Script" path="res://object/target/spawn/spawn_behavior_data.gd" id="4_8t5u3"]
 
 [sub_resource type="Resource" id="Resource_bls4q"]
 script = ExtResource("3_k172p")
-loot_type = 0
-gold_min = 1
-gold_max = 5
+loot_type = 3
+gold_min = 0
+gold_max = 0
 health_min = 0
 health_max = 0
+ability_data = ExtResource("3_yov5h")
 rarity = 0
 
 [sub_resource type="Resource" id="Resource_nugbr"]

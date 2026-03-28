@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://8pbia0xwg85v" path="res://asset/icon/rss.png" id="1_ju70b"]
 
 [resource]
+resource_name = "Burst Blaster"
 script = ExtResource("1_goaq5")
 name = "Burst Blaster"
 scene = ExtResource("1_iakqr")

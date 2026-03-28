@@ -5,7 +5,7 @@ signal vacuum_started()
 signal vacuum_stopped()
 signal ability1_fired()
 
-const default_blaster_data = preload("res://resource/blaster/burst_blaster.tres")
+const default_blaster_data = preload("res://resource/blaster/standard_issue.tres")
 
 @export var vacuum_radius := 50
 
@@ -33,9 +33,6 @@ func set_ship(s: Ship):
 
 func set_ultimate(u: Ultimate):
 	ultimate = u
-
-func set_ability1(a: Cooldown):
-	ability1 = a
 
 func _input(event):
 	if event.is_action_pressed('primary'):

@@ -11,7 +11,7 @@
 script = ExtResource("2_361go")
 name = ""
 scene = ExtResource("1_wx3fs")
-scale = Vector2(1, 1)
+scale = Vector2(0.2, 0.2)
 damage = 1
 speed = 500
 fire_timeout = 0.0
