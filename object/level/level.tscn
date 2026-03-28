@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
-[ext_resource type="PackedScene" uid="uid://dow2arcl6qfyk" path="res://object/ship/ship.tscn" id="2_j5ybf"]
 [ext_resource type="Texture2D" uid="uid://37hwhqgwk8sx" path="res://asset/0101_void_spaceStuff-stars-02_v001-gridless-SCREEN.jpg" id="2_xtglg"]
 [ext_resource type="AudioStream" uid="uid://dax5dyql1etpi" path="res://asset/sound/music/664619__cigaro30__synthwave-beat.wav" id="3_2uvng"]
 [ext_resource type="PackedScene" uid="uid://dj58su1f2i1ef" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
+[ext_resource type="PackedScene" uid="uid://dsr014qhc0qft" path="res://object/ship/pixel_ship.tscn" id="4_2irkm"]
 [ext_resource type="PackedScene" uid="uid://iwiqxjsgj2wb" path="res://object/ability/cooldown/cooldown.tscn" id="4_m88oe"]
 [ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
 [ext_resource type="PackedScene" uid="uid://dtfr7um1stgxv" path="res://object/money/money.tscn" id="7_54rq2"]
@@ -33,8 +33,7 @@ texture = ExtResource("2_xtglg")
 stream = ExtResource("3_2uvng")
 autoplay = true
 
-[node name="Ship" parent="." instance=ExtResource("2_j5ybf")]
-position = Vector2(964, 543)
+[node name="Ship" parent="." instance=ExtResource("4_2irkm")]
 
 [node name="EnvironmentSpawner" parent="." instance=ExtResource("10_vvkos")]
 
