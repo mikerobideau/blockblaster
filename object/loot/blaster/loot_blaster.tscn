@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://object/loot/blaster/loot_blaster.gd" id="1_0x6g6"]
 [ext_resource type="PackedScene" uid="uid://bc2hquo3222ho" path="res://object/loot/base_loot.tscn" id="1_oq21a"]
-[ext_resource type="Texture2D" uid="uid://dtwdcuewslp3t" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Bonus_Items/Rockets_Bonus.png" id="1_u5ei4"]
+[ext_resource type="Texture2D" uid="uid://b3k3qcbadu41w" path="res://asset/icon/disc.png" id="3_xdw17"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m3s7e"]
 radius = 150.0
@@ -12,7 +12,7 @@ scale = Vector2(0.2, 0.2)
 script = ExtResource("1_0x6g6")
 
 [node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("1_u5ei4")
+texture = ExtResource("3_xdw17")
 
 [node name="HitBox" parent="." index="1"]
 shape = SubResource("CircleShape2D_m3s7e")
