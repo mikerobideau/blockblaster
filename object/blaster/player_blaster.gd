@@ -5,7 +5,7 @@ signal vacuum_started()
 signal vacuum_stopped()
 signal ability1_fired()
 
-const default_blaster_data = preload("res://resource/blaster/burst_blaster.tres")
+const default_blaster_data = preload("res://resource/blaster/standard_issue.tres")
 
 @export var vacuum_radius := 50
 
