@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://b83sx2jjivpm3"]
+
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_w0fjv"]
+[ext_resource type="Texture2D" uid="uid://dymcnmc23frpm" path="res://asset/pixel/ship/pink_ship.png" id="2_ka4pv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hd3iw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ka4pv")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ka4pv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Target" instance=ExtResource("1_w0fjv")]
+
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_hd3iw")
+animation = &"default"
+
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(20, -215, 190, -55, 255, 40, 255, 165, 220, 165, 155, 100, 125, 100, 95, 135, -95, 135, -125, 100, -160, 100, -220, 165, -255, 165, -255, 40, -190, -55, -95, -150, -15, -215)
+
+[node name="Emitter" parent="." index="3"]
+position = Vector2(0, -250)

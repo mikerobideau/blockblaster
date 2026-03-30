@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_tliq8"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="2_jcvv4"]
 [ext_resource type="Script" path="res://object/target/movement/track_player_movement.gd" id="3_jvmut"]
-[ext_resource type="PackedScene" uid="uid://cjs520ldpsxk3" path="res://object/target/visual/ship/ship_04.tscn" id="4_5u7r2"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_6m2a0"]
+[ext_resource type="PackedScene" uid="uid://b83sx2jjivpm3" path="res://object/target/visual/pixel_ship/pink_ship.tscn" id="5_vcamt"]
 
 [sub_resource type="Resource" id="Resource_4hqyc"]
 script = ExtResource("2_jcvv4")
@@ -38,11 +38,11 @@ speed = 250
 resource_name = "Hawk"
 script = ExtResource("1_tliq8")
 type = 1
-scene = ExtResource("4_5u7r2")
+scene = ExtResource("5_vcamt")
 difficulty = 1
 min_wave = 1
 loot_table = SubResource("Resource_jf0ra")
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.2, 0.2)
 is_variable_scale = false
 health = 5
 is_leader = false
