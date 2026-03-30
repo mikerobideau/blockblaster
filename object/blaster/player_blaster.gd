@@ -16,9 +16,9 @@ var ability1: Cooldown
 var ship: Ship
 
 @onready var ultimate_timer = $UltimateTimer
+@onready var crosshair = $Crosshair
 
 func _ready():
-	print_debug('intializing player blaster')
 	source = Energy.Source.PLAYER
 	data = default_blaster_data
 	ultimate_timer.timeout.connect(_on_ultimate_complete)
@@ -34,9 +34,6 @@ func set_ship(s: Ship):
 func set_ultimate(u: Ultimate):
 	ultimate = u
 
-func set_ability1(a: Cooldown):
-	ability1 = a
-
 func _input(event):
 	if event.is_action_pressed('primary'):
 		firing = true
@@ -45,7 +42,6 @@ func _input(event):
 		burst_timer.start()
 	elif event.is_action_released('primary'):
 		firing = false
-		print_debug('fire timer stop')
 		burst_timer.stop()
 	elif event.is_action_pressed('secondary'):
 		vacuum_started.emit()
@@ -53,15 +49,16 @@ func _input(event):
 		vacuum_stopped.emit()
 	elif event.is_action_pressed('ultimate'):
 		_ultimate()
-	#elif event.is_action_pressed('ability1'):
-	#	ability1_fired.emit(get_global_mouse_position())
-	#	ability1.reset_cooldown()
 
 func _on_fire_timer():
 	_blast()
 
 func _blast():
 	if not firing:
+		return
+	if not emitter or not ship:
+		return
+	if ship.is_any_ability_active():
 		return
 	var dir = (get_global_mouse_position() - emitter.global_position).normalized()
 	var dmg = data.ultimate_damage if ultimate_active else -1

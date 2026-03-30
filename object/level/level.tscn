@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cusxjldgksg5c" path="res://object/spawner/terminal_side.tscn" id="8_cvbo2"]
 [ext_resource type="PackedScene" uid="uid://c32ysny5b7a1c" path="res://object/ui/hud/blaster_ui.tscn" id="9_878qi"]
 [ext_resource type="PackedScene" uid="uid://btitngoo8omn" path="res://object/spawner/terminal_top.tscn" id="9_bsvvw"]
+[ext_resource type="PackedScene" uid="uid://dk760d3lln2fb" path="res://object/ui/hud/ability/ability_ui.tscn" id="10_ub374"]
 [ext_resource type="PackedScene" uid="uid://b0tdr7424u746" path="res://object/spawner/environment_spawner.tscn" id="10_vvkos"]
 
 [node name="Level" type="Node2D"]
@@ -115,10 +116,10 @@ layout_mode = 2
 theme_override_constants/separation = 100
 
 [node name="BlasterUi" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("9_878qi")]
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+size_flags_vertical = 8
 
-[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("4_m88oe")]
+[node name="Ability1" parent="CanvasLayer/BottomBar/HBox" instance=ExtResource("10_ub374")]
 layout_mode = 2
 size_flags_vertical = 8
 

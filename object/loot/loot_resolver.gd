@@ -4,6 +4,7 @@ class_name LootResolver
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
 var HealthScene = preload("res://object/loot/health/loot_health.tscn")
 var LootBlasterScene = preload("res://object/loot/blaster/loot_blaster.tscn")
+var LootAbilityScene = preload("res://object/loot/ability/loot_ability.tscn")
 
 const RARITY_WEIGHT: Dictionary = {
 	LootData.Rarity.COMMON: 1.0,
@@ -86,7 +87,18 @@ func _spawn_entry(
 			loot_blaster.set_blaster(blaster)
 			loot_blaster.collected.connect(func(g): _on_loot_blaster_collected(g, parent))
 			parent.add_child(loot_blaster)		
-				
+		LootData.Type.ABILITY:
+			if entry.ability_data == null:
+				push_warning("LootResolver: ability entry has no ability data assigned")
+				return
+			var loot_ability = LootAbilityScene.instantiate()
+			loot_ability.global_position = pos
+			loot_ability.data = entry.ability_data
+			loot_ability.set_ship(ship)
+			loot_ability.set_blaster(blaster)
+			loot_ability.collected.connect(func(g): _on_loot_ability_collected(g, parent))
+			parent.add_child(loot_ability)
+			
 func _on_gold_collected(gold: Gold, parent: Node2D):
 	if parent.has_signal("gold_collected"):
 		parent.emit_signal("gold_collected", gold)
@@ -98,3 +110,7 @@ func _on_health_collected(health: LootHealth, parent: Node2D):
 func _on_loot_blaster_collected(loot_blaster: LootBlaster, parent: Node2D):
 	if parent.has_signal("loot_blaster_collected"):
 		parent.emit_signal("loot_blaster_collected", loot_blaster)
+
+func _on_loot_ability_collected(loot_ability: LootAbility, parent: Node2D):
+	if parent.has_signal("loot_ability_collected"):
+		parent.emit_signal("loot_ability_collected", loot_ability)

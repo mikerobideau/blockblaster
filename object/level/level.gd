@@ -12,7 +12,7 @@ var BlasterScene = preload("res://object/blaster/blaster.tscn")
 @onready var game_state_label = $CanvasLayer/GameState
 @onready var blaster_ui = $CanvasLayer/BottomBar/HBox/BlasterUi
 @onready var ultimate = $CanvasLayer/BottomBar/HBox/Ultimate
-@onready var ability1 = $CanvasLayer/BottomBar/HBox/Ability1
+@onready var ability1_ui = $CanvasLayer/BottomBar/HBox/Ability1
 @onready var health = $CanvasLayer/BottomBar/HBox/Health
 @onready var money = $CanvasLayer/BottomBar/HBox/Money
 @onready var menu = $CanvasLayer/Menu
@@ -32,10 +32,8 @@ func _ready() -> void:
 	health.game_over.connect(_on_game_over)
 	blaster = ship.blaster
 	blaster.setup(blaster.default_blaster_data, ship.emitter)
-	blaster.ability1_fired.connect(_on_ability1_fired)
 	blaster.set_ship(ship)
 	blaster.set_ultimate(ultimate)
-	blaster.set_ability1(ability1)
 	blaster_ui.update(blaster.data)
 	spawner.set_blaster(blaster)
 	spawner.set_ship(ship)
@@ -44,11 +42,13 @@ func _ready() -> void:
 	spawner.gold_collected.connect(_on_gold_collected)
 	spawner.health_collected.connect(_on_health_collected)
 	spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
+	spawner.loot_ability_collected.connect(_on_loot_ability_collected)
 	environment_spawner.set_blaster(blaster)
 	environment_spawner.set_ship(ship)
 	environment_spawner.gold_collected.connect(_on_gold_collected)
 	environment_spawner.health_collected.connect(_on_health_collected)
 	environment_spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
+	environment_spawner.loot_ability_collected.connect(_on_loot_ability_collected)
 	_start()
 	
 func _start():
@@ -102,14 +102,6 @@ func _on_health_collected(h: LootHealth):
 
 func _on_ship_damage_taken(amount: int):
 	health.take_damage(amount)
-	
-func _on_ability1_fired(position: Vector2):
-	_add_projectile(position)
-	for target in get_children():
-		if target is Target:
-			var distance = target.position.distance_to(position)
-			if distance < blaster.ability1.damage_radius:
-				target.take_damage(blaster.ability1.damage_amount, false)
 
 func _add_projectile(position: Vector2):
 	var projectile = ProjectileScene.instantiate()
@@ -118,7 +110,6 @@ func _add_projectile(position: Vector2):
 	
 func _on_target_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
-	#_add_loot(target)
 		
 func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 	loot_blaster.queue_free()
@@ -131,6 +122,18 @@ func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 	var center = camera.get_screen_center_position()
 	card.global_position = center
 	menu.add_child(card)
+	
+func _on_loot_ability_collected(loot_ability: LootAbility):
+	loot_ability.queue_free()
+	_pause()
+	var card = CardScene.instantiate()
+	card.added.connect(_on_ability_added)
+	card.declined.connect(_on_ability_declined)
+	card.data = loot_ability.data
+	var camera = get_viewport().get_camera_2d()
+	var center = camera.get_screen_center_position()
+	card.global_position = center
+	menu.add_child(card)
 		
 func _on_blaster_added(data: BlasterData):
 	_clear_menu()
@@ -139,6 +142,16 @@ func _on_blaster_added(data: BlasterData):
 	blaster.setup(data, ship.emitter)
 	
 func _on_blaster_declined():
+	_clear_menu()
+	_unpause()
+	
+func _on_ability_added(data: AbilityData):
+	_clear_menu()
+	_unpause()
+	ability1_ui.update(data)
+	#ability1.setup(data, ship.emitter)
+	
+func _on_ability_declined():
 	_clear_menu()
 	_unpause()
 	

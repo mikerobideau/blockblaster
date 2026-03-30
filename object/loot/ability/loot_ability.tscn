@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ur8tk717idut"]
+
+[ext_resource type="Script" path="res://object/loot/ability/loot_ability.gd" id="1_onbse"]
+[ext_resource type="Texture2D" uid="uid://b3k3qcbadu41w" path="res://asset/icon/disc.png" id="2_6jgy3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j84k3"]
+radius = 138.13
+
+[node name="LootAbility" type="Area2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_onbse")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6jgy3")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_j84k3")
+
+[node name="LifetimeTimer" type="Timer" parent="."]

@@ -4,6 +4,7 @@ class_name EnvironmentSpawner
 signal gold_collected(gold: Gold)
 signal health_collected(health: LootHealth)
 signal loot_blaster_collected(loot_blaster: LootBlaster)
+signal loot_ability_collected(loot_ability: LootAbility)
 
 var Meteor = preload("res://object/target/visual/environmental/meteor.tscn")
 

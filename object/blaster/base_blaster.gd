@@ -38,6 +38,9 @@ func _on_fire_timer():
 	_fire_pattern(dir)
 
 func _on_burst_timer():
+	if burst_direction == Vector2.ZERO:
+		burst_timer.stop()
+		return
 	_fire_single(burst_direction, data.damage)
 	burst_shots_remaining -= 1
 	if burst_shots_remaining <= 0:

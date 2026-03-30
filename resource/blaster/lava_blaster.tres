@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dkvyq62lwa31b" path="res://object/blaster/visuals/lava_energy.tscn" id="2_c5r8j"]
 
 [resource]
+resource_name = "Lava Blaster"
 script = ExtResource("1_3n2rq")
 name = "Lava Shooter"
 scene = ExtResource("2_c5r8j")

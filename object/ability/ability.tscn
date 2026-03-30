@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceahw1vbofyl2"]
+
+[ext_resource type="Script" path="res://object/ability/ability.gd" id="1_e11j3"]
+
+[node name="Ability" type="Node2D"]
+script = ExtResource("1_e11j3")
+
+[node name="DurationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CooldownTimer" type="Timer" parent="."]
