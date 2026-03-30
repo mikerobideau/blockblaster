@@ -21,10 +21,7 @@ func setup(d: AbilityData, s: Ship):
 	duration_timer.timeout.connect(_on_duration_complete)
 
 func is_ready():
-	#print_debug('checking ready')
 	var is_ready = !active and cooldown_timer.is_stopped()
-	print_debug('cooldown timer is stopped ' + str(cooldown_timer.is_stopped()))
-	print(str(is_ready))
 	return is_ready
 
 func activate():
@@ -41,6 +38,5 @@ func _on_duration_complete():
 	active = false
 	if data.disables_cursor:
 		ship.blaster.crosshair.visible = true
-	print_debug('starting cooldown timer')
 	cooldown_timer.start()
 	finished.emit()
