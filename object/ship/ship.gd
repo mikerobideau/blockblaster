@@ -22,6 +22,7 @@ var invulnerable := false
 var ability: Ability
 
 func _ready():
+	sprite.play('default')
 	equip_ability(DEFAULT_ABILITY_DATA)
 	set_invulnerable(false)
 	invulnerability_timer.wait_time = INVULNERABILITY_TIME
@@ -40,8 +41,8 @@ func _physics_process(delta: float):
 	global_position += direction * speed * delta
 	var to_cursor = get_global_mouse_position() - global_position
 	var cursor_disabled = ability.active and ability.data.disables_cursor
-	if !cursor_disabled:
-		rotation = to_cursor.angle() + PI / 2
+	#if !cursor_disabled:
+	#	rotation = to_cursor.angle() + PI / 2
 
 func take_damage(amount: int):
 	if !invulnerable:

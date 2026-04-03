@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://lwtqgic4qmv6"]
+
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_uvhaq"]
+[ext_resource type="Texture2D" uid="uid://7lh2k0rpe3iu" path="res://asset/pixel/ship/green_ship.png" id="2_8dciy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hgvv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8dciy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Target" instance=ExtResource("1_uvhaq")]
+
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_0hgvv")
+animation = &"default"
+
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(-55, -220, -20, -220, -20, -255, 20, -255, 20, -220, 55, -220, 55, -40, 130, -40, 130, 255, 90, 255, 55, 220, 20, 255, -20, 255, -55, 220, -90, 255, -130, 255, -130, -40, -55, -40)

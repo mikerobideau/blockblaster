@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://dsr014qhc0qft"]
+
+[ext_resource type="Script" path="res://object/ship/ship.gd" id="1_jjhky"]
+[ext_resource type="Texture2D" uid="uid://d1difsvpsh38n" path="res://asset/ocean/character/submarine/1.png" id="2_3ht4a"]
+[ext_resource type="PackedScene" uid="uid://bbwyhes56guus" path="res://object/blaster/player_blaster.tscn" id="3_gjufv"]
+[ext_resource type="Texture2D" uid="uid://c5fmn832bxb2v" path="res://asset/ocean/character/submarine/2.png" id="3_sop62"]
+[ext_resource type="Texture2D" uid="uid://cetmxwxoe5gbv" path="res://asset/ocean/character/submarine/3.png" id="4_jmtcf"]
+[ext_resource type="Texture2D" uid="uid://dpbr1yrxwxf2d" path="res://asset/ocean/character/submarine/4.png" id="5_5golb"]
+[ext_resource type="Texture2D" uid="uid://bw6m4n2m8x7cn" path="res://asset/ocean/character/submarine/5.png" id="6_sstbw"]
+[ext_resource type="Texture2D" uid="uid://dto2xaoj24nsb" path="res://asset/ocean/character/submarine/6.png" id="7_4y1ce"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6te15"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3ht4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_sop62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jmtcf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5golb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sstbw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4y1ce")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64yfv"]
+size = Vector2(156, 125)
+
+[node name="Ship" type="Area2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_jjhky")
+
+[node name="Emitter" type="Node2D" parent="."]
+position = Vector2(23.5, -23)
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 9.53674e-07)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_6te15")
+frame_progress = 0.539304
+
+[node name="ProjectileHitBox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 14.5)
+shape = SubResource("RectangleShape2D_64yfv")
+
+[node name="InvulnerabilityOverlay" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.14902, 1)
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+
+[node name="Blaster" parent="." instance=ExtResource("3_gjufv")]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

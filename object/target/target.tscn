@@ -1,9 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://xg4ajeq04p03"]
+[gd_scene load_steps=6 format=3 uid="uid://xg4ajeq04p03"]
 
 [ext_resource type="Script" path="res://object/target/target.gd" id="1_0vddg"]
-[ext_resource type="Texture2D" uid="uid://bg6jupb4ad86a" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_1.png" id="2_qutsp"]
-[ext_resource type="Texture2D" uid="uid://bb3n47gsk4aeu" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Explosion_2.png" id="3_3uhig"]
-[ext_resource type="Texture2D" uid="uid://w3qpr4pp0heg" path="res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_3.png" id="4_exc8e"]
 [ext_resource type="PackedScene" uid="uid://bugbojgujsjp8" path="res://object/blaster/base_blaster.tscn" id="5_l4xm3"]
 
 [sub_resource type="Animation" id="Animation_kch5b"]
@@ -42,28 +39,6 @@ _data = {
 "shake": SubResource("Animation_igp7j")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hapu3"]
-atlas = ExtResource("2_qutsp")
-region = Rect2(0, 0, 578, 578)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_luvrc"]
-atlas = ExtResource("3_3uhig")
-region = Rect2(0, 0, 864, 114)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_fykao"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hapu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_luvrc")
-}],
-"loop": false,
-"name": &"default",
-"speed": 15.0
-}]
-
 [node name="Target" type="Area2D"]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_0vddg")
@@ -81,50 +56,19 @@ libraries = {
 [node name="Emitter" type="Node2D" parent="."]
 position = Vector2(0, -48)
 
-[node name="Explosion" type="AnimatedSprite2D" parent="."]
-visible = false
-scale = Vector2(0.4, 0.4)
-sprite_frames = SubResource("SpriteFrames_fykao")
-
 [node name="DebrisParticles" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 5
+amount = 100
 lifetime = 0.4
 one_shot = true
-explosiveness = 0.9
-randomness = 0.5
-texture = ExtResource("4_exc8e")
+explosiveness = 1.0
 emission_shape = 1
 emission_sphere_radius = 128.0
 direction = Vector2(0, 0)
-spread = 180.0
+spread = 130.22
 gravity = Vector2(0, 0)
-initial_velocity_min = 500.0
-initial_velocity_max = 700.0
-angular_velocity_max = 360.0
-angle_max = 360.0
-scale_amount_min = 0.05
-scale_amount_max = 0.12
-
-[node name="DebrisParticles2" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 5
-lifetime = 0.4
-one_shot = true
-explosiveness = 0.9
-randomness = 0.5
-texture = ExtResource("4_exc8e")
-emission_shape = 2
-emission_sphere_radius = 40.0
-direction = Vector2(0, 0)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 80.0
-initial_velocity_max = 175.0
-angular_velocity_max = 360.0
-angle_max = 360.0
-scale_amount_min = 0.05
-scale_amount_max = 0.12
+initial_velocity_min = 217.41
+initial_velocity_max = 221.11
 
 [node name="Blaster" parent="." instance=ExtResource("5_l4xm3")]
 

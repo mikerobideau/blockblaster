@@ -34,6 +34,7 @@ animations = [{
 [node name="Target" instance=ExtResource("1_suweo")]
 
 [node name="Sprite2D" parent="." index="0"]
+visible = false
 sprite_frames = SubResource("SpriteFrames_rjjwe")
 animation = &"damaged"
 
@@ -42,5 +43,3 @@ polygon = PackedVector2Array(-100, -355, -80, -385, -50, -360, -50, -245, 5, -20
 
 [node name="Emitter" parent="." index="3"]
 position = Vector2(0, -400)
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

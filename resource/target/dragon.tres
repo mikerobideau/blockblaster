@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://object/target/target_data.gd" id="1_emnbq"]
 [ext_resource type="PackedScene" uid="uid://b1d4qptpt0uux" path="res://object/blaster/visuals/blue_line_energy.tscn" id="1_wx3fs"]
 [ext_resource type="Script" path="res://object/blaster/blaster_data.gd" id="2_361go"]
-[ext_resource type="PackedScene" uid="uid://woobk6myt1e2" path="res://object/target/visual/ship/ship_02.tscn" id="2_rweub"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_wmqce"]
+[ext_resource type="PackedScene" uid="uid://lwtqgic4qmv6" path="res://object/target/visual/pixel_ship/green_ship.tscn" id="5_krybt"]
 
 [sub_resource type="Resource" id="Resource_jar66"]
 script = ExtResource("2_361go")
@@ -39,7 +39,7 @@ speed = 250
 resource_name = "Dragon"
 script = ExtResource("1_emnbq")
 type = 3
-scene = ExtResource("2_rweub")
+scene = ExtResource("5_krybt")
 difficulty = 1
 min_wave = 1
 loot_table = SubResource("Resource_w02gs")
@@ -51,9 +51,9 @@ randomize_rotation = false
 movement = SubResource("Resource_ciqm8")
 blaster = SubResource("Resource_jar66")
 shake_on_damage = true
-yellow_burst_on_defeat = true
-debris_initial_velocity_min = 500
-debris_initial_velocity_max = 700
-debris_scale_amount_min = 0.1
-debris_scale_amount_max = 0.1
-debris_sphere_radius = 128.0
+debris_color = Color(1, 1, 1, 1)
+debris_initial_velocity_min = 200
+debris_initial_velocity_max = 300
+debris_scale_amount_min = 2
+debris_scale_amount_max = 10
+debris_sphere_radius = 128

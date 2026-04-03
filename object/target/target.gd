@@ -4,9 +4,6 @@ class_name Target
 signal defeated(target: Area2D)
 signal removed(target: Area2D)
 
-var default_debris_texture_1 = preload("res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_1.png")
-var default_debris_texture_2 = preload("res://asset/space-shooter-game-kit/Enemy-spaceship-game-sprites/PNG/Ship_Effects/Ship_Fragment_3.png")
-
 const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
@@ -24,8 +21,7 @@ enum TargetType {
 @onready var hit_box = $HitBox
 @onready var animation_player = $AnimationPlayer
 @onready var explosion = $Explosion
-@onready var debris1 = $DebrisParticles
-@onready var debris2 = $DebrisParticles2
+@onready var debris = $DebrisParticles
 @onready var tail = $Tail
 @onready var blaster = $Blaster
 @onready var ship = get_tree().current_scene.ship
@@ -41,7 +37,6 @@ var parent_target: Target
 var spawn_position: Vector2
 var distance_traveled := 0.0
 var is_defeated := false
-var all_debris: Array[CPUParticles2D]
 var is_exiting := false
 
 func _ready():
@@ -67,15 +62,13 @@ func _ready():
 		direction = data.movement.get_direction(global_position, center)
 
 func _init_debris():
-	debris1.texture = data.debris_texture_1 if data.debris_texture_1 else default_debris_texture_1
-	debris2.texture = data.debris_texture_2 if data.debris_texture_2 else default_debris_texture_2
-	all_debris = [debris1, debris2]
-	for debris in all_debris:
-		debris.initial_velocity_min = data.debris_initial_velocity_min if data.debris_initial_velocity_min else debris.initial_velocity_min
-		debris.initial_velocity_max = data.debris_initial_velocity_max if data.debris_initial_velocity_max else debris.initial_velocity_max
-		debris.scale_amount_min = data.debris_scale_amount_min if data.debris_scale_amount_min else debris.scale_amount_min
-		debris.scale_amount_max = data.debris_scale_amount_max if data.debris_scale_amount_max else debris.scale_amount_max
-		debris.emission_sphere_radius = data.debris_sphere_radius if data.debris_sphere_radius else debris.sphere_radius
+	debris.one_shot = true
+	debris.color = data.debris_color
+	debris.initial_velocity_min = data.debris_initial_velocity_min
+	debris.initial_velocity_max = data.debris_initial_velocity_max
+	debris.scale_amount_min = data.debris_scale_amount_min
+	debris.scale_amount_max = data.debris_scale_amount_max
+	debris.emission_sphere_radius = data.debris_sphere_radius
 
 func _physics_process(delta: float):
 	if !data.movement:
@@ -201,23 +194,14 @@ func defeat():
 		return
 	is_defeated = true
 	sprite.visible = false
-	_start_debris()
-	if data.yellow_burst_on_defeat:
-		explosion.visible = true
-		explosion.play('default')
-		await explosion.animation_finished
-		explosion.queue_free()
+	debris.restart()
+	#debris.emitting = true
 	await _await_all_debris()
 	defeated.emit(self)
 	queue_free()
 	
-func _start_debris():
-	for d in all_debris:
-		d.emitting = true
-
 func _await_all_debris():
-	for d in all_debris:
-		return d.finished
+	await debris.finished
 
 func remove():
 	queue_free()

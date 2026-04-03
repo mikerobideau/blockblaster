@@ -1,17 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dly6oqcot2kx"]
+[gd_scene load_steps=4 format=3 uid="uid://dly6oqcot2kx"]
 
 [ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_dcxbf"]
-[ext_resource type="Texture2D" uid="uid://bs06k8xlqc8xe" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_09.png" id="2_ve5vc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a622a"]
-atlas = ExtResource("2_ve5vc")
-region = Rect2(0, 0, 300, 206)
+[ext_resource type="Texture2D" uid="uid://yqlnj1jgo60y" path="res://asset/pixel/meteor/meteor1.png" id="2_pc5rx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xhknq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a622a")
+"texture": ExtResource("2_pc5rx")
 }],
 "loop": true,
 "name": &"default",
@@ -19,18 +15,21 @@ animations = [{
 }]
 
 [node name="Target" instance=ExtResource("1_dcxbf")]
+scale = Vector2(1, 1)
 
 [node name="Sprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_xhknq")
 animation = &"default"
 
 [node name="HitBox" parent="." index="2"]
-polygon = PackedVector2Array(0, -90, 85, -90, 130, -65, 150, -15, 135, 30, 85, 65, -95, 100, -125, 100, -135, 90, -145, 75, -145, 55, -135, -20, -150, -75, -135, -100, -105, -100, -65, -80)
+polygon = PackedVector2Array(-75, -235, 130, -235, 235, -130, 235, 25, 25, 235, -80, 235, -130, 180, -235, 75, -235, -80, -130, -180)
 
 [node name="Emitter" parent="." index="3"]
 position = Vector2(0, -3.8147e-06)
 
-[node name="Explosion" parent="." index="6"]
+[node name="Explosion" parent="." index="4"]
 scale = Vector2(0.3, 0.3)
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[node name="DebrisParticles" parent="." index="5"]
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://3e22jn4bcn76"]
+[gd_scene load_steps=3 format=3 uid="uid://cu48fdhfgr3vy"]
 
 [ext_resource type="Script" path="res://object/target/enemy/meteor/meteor.gd" id="1_ycemt"]
 [ext_resource type="Texture2D" uid="uid://2eu226d3fc2n" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_05.png" id="2_cjhqo"]

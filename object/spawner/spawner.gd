@@ -17,7 +17,6 @@ enum WaveState {
 }
 
 var TargetScene = preload('res://object/target/target.tscn')
-var CrystalScene = preload("res://object/target/enemy/crystal/crystal.tscn")
 var GoldScene = preload("res://object/loot/gold/gold.tscn")
 var TelegraphScene = preload("res://object/target/visual/telegraph/telegraph.tscn")
 

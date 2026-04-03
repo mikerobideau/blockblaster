@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctgpg37wkprtx"]
+
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_oogah"]
+[ext_resource type="Texture2D" uid="uid://255v8w2lauql" path="res://asset/pixel/ship/yellow_ship.png" id="2_03mah"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxm1e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_03mah")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Target" instance=ExtResource("1_oogah")]
+
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_cxm1e")
+animation = &"default"
+
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(-50, -155, 50, -155, 255, 50, 255, 155, 155, 155, 50, 50, -50, 50, -150, 155, -255, 155, -255, 50)
