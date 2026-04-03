@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://egnyf3wjrhb2" path="res://asset/space-shooter-game-kit/Space-shooter-game-gui/PNG/Main_UI/Bonus_BTN_01.png" id="2_tlqpu"]
 
 [node name="BlasterUI" type="Control"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(50, 75)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 100.0
@@ -14,6 +14,7 @@ size_flags_horizontal = 0
 script = ExtResource("1_mqrhn")
 
 [node name="Border" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_tlqpu")

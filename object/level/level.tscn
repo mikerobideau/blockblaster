@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=13 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
-[ext_resource type="Texture2D" uid="uid://37hwhqgwk8sx" path="res://asset/0101_void_spaceStuff-stars-02_v001-gridless-SCREEN.jpg" id="2_xtglg"]
 [ext_resource type="AudioStream" uid="uid://dax5dyql1etpi" path="res://asset/sound/music/664619__cigaro30__synthwave-beat.wav" id="3_2uvng"]
 [ext_resource type="PackedScene" uid="uid://dj58su1f2i1ef" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
@@ -21,26 +20,18 @@ script = ExtResource("1_cga3n")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(963, 543)
 
-[node name="BackgroundSolid" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
 offset_right = 40.0
 offset_bottom = 40.0
-color = Color(0, 0, 0, 1)
-
-[node name="Background" type="TextureRect" parent="."]
-visible = false
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 6720.0
-offset_bottom = 5040.0
-scale = Vector2(0.3, 0.3)
-mouse_filter = 2
-texture = ExtResource("2_xtglg")
+color = Color(0, 0.363977, 0.649822, 1)
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2uvng")
 autoplay = true
 
 [node name="Ship" parent="." instance=ExtResource("4_2irkm")]
+position = Vector2(962, 542)
 
 [node name="EnvironmentSpawner" parent="." instance=ExtResource("10_vvkos")]
 
