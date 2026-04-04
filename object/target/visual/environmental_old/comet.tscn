@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d0d1mkpk0o1sa"]
 
 [ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_tsw3t"]
-[ext_resource type="Script" path="res://object/target/visual/environmental/comet.gd" id="2_tuumu"]
+[ext_resource type="Script" path="res://object/target/visual/environmental_old/comet.gd" id="2_tuumu"]
 [ext_resource type="Texture2D" uid="uid://csk1i0x5r37ti" path="res://asset/space-shooter-game-kit/Spaceship-2d-game-sprites/SCML/Fire_Shots/Fire_Shot_2_4.png" id="2_x0v83"]
 [ext_resource type="Texture2D" uid="uid://c3kusqguii73v" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_04.png" id="3_keglj"]
 

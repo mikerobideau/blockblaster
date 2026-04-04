@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://b5ewwlnp5ljqy"]
+[gd_scene load_steps=14 format=3 uid="uid://b5ewwlnp5ljqy"]
 
 [ext_resource type="Script" path="res://object/level/level.gd" id="1_cga3n"]
 [ext_resource type="Script" path="res://object/level/camera.gd" id="2_f5odd"]
+[ext_resource type="AudioStream" uid="uid://dax5dyql1etpi" path="res://asset/sound/music/664619__cigaro30__synthwave-beat.wav" id="3_2uvng"]
 [ext_resource type="PackedScene" uid="uid://dj58su1f2i1ef" path="res://object/spawner/spawner.tscn" id="3_3uqxu"]
-[ext_resource type="Shader" path="res://shader/background.gdshader" id="3_5mcnd"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
-[ext_resource type="Script" path="res://object/level/background.gd" id="3_li4wn"]
 [ext_resource type="PackedScene" uid="uid://dsr014qhc0qft" path="res://object/ship/submarine.tscn" id="4_2irkm"]
 [ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
 [ext_resource type="PackedScene" uid="uid://dtfr7um1stgxv" path="res://object/money/money.tscn" id="7_54rq2"]
@@ -15,14 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://dk760d3lln2fb" path="res://object/ui/hud/ability/ability_ui.tscn" id="10_ub374"]
 [ext_resource type="PackedScene" uid="uid://b0tdr7424u746" path="res://object/spawner/environment_spawner.tscn" id="10_vvkos"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_phaht"]
-shader = ExtResource("3_5mcnd")
-shader_parameter/color_a = Color(0.05, 0.18, 0.35, 1)
-shader_parameter/color_b = Color(0.01, 0.07, 0.15, 1)
-shader_parameter/shimmer_color = Color(0.4915, 1, 0.95019, 1)
-shader_parameter/shimmer_strength = 0.162
-shader_parameter/time = 0.0
-
 [node name="Level" type="Node2D"]
 visibility_layer = 2
 script = ExtResource("1_cga3n")
@@ -31,8 +22,18 @@ script = ExtResource("1_cga3n")
 position = Vector2(963, 543)
 script = ExtResource("2_f5odd")
 
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0.363977, 0.649822, 1)
+
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2uvng")
 autoplay = true
+
+[node name="Ship" parent="." instance=ExtResource("4_2irkm")]
+position = Vector2(962, 542)
 
 [node name="EnvironmentSpawner" parent="." instance=ExtResource("10_vvkos")]
 
@@ -50,21 +51,7 @@ position = Vector2(-455, -496)
 [node name="Right Terminal" parent="Terminals" instance=ExtResource("8_cvbo2")]
 position = Vector2(2384, -490)
 
-[node name="BackgroundCanvas" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="Background" type="ColorRect" parent="BackgroundCanvas"]
-material = SubResource("ShaderMaterial_phaht")
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 1920.0
-offset_bottom = 1080.0
-color = Color(0, 0.363977, 0.649822, 1)
-script = ExtResource("3_li4wn")
-
 [node name="Spawner" parent="." instance=ExtResource("3_3uqxu")]
-
-[node name="Ship" parent="." instance=ExtResource("4_2irkm")]
-position = Vector2(300, 542)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

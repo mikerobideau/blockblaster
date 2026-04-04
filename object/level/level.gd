@@ -6,6 +6,8 @@ var EnergyScene = preload("res://object/blaster/energy/energy.tscn")
 var CardScene = preload("res://object/ui/card/card.tscn")
 var BlasterScene = preload("res://object/blaster/blaster.tscn")
 
+@onready var camera = $Camera2D
+@onready var background = $BackgroundCanvas/Background
 @onready var targets = $Area2Ds
 @onready var ship = $Ship
 @onready var incoming_wave_label = $CanvasLayer/IncomingWave/Label
@@ -20,14 +22,25 @@ var BlasterScene = preload("res://object/blaster/blaster.tscn")
 @onready var environment_spawner = $EnvironmentSpawner
 
 const TARGET_DEFEATED_ULTIMATE_CHARGE = 10
-
+const ZONES = [
+	[0,     "shallows"],
+	[3000,  "reef"],
+	[7000,  "midnight"],
+	[12000, "hydrothermal"],
+	[18000, "bioluminescent"],
+]
+ 
+var current_zone_index := 0
 var is_game_over := false
 var wave_gen = WaveGenerator.new()
 var blaster: PlayerBlaster
 
 func _ready() -> void:	
+	background.set_biome('shallows')
 	#get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	camera.set_ship(ship)
+	ship.camera = camera
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
 	blaster = ship.blaster
@@ -51,8 +64,22 @@ func _ready() -> void:
 	environment_spawner.loot_ability_collected.connect(_on_loot_ability_collected)
 	_start()
 	
+func _process(delta: float):
+	_update_zone()
+	
+func _update_zone():
+	var next_index := current_zone_index + 1
+	if next_index >= ZONES.size():
+		return
+	var next_threshold: float = ZONES[next_index][0]
+	if camera.global_position.x >= next_threshold:
+		current_zone_index = next_index
+		var biome: String = ZONES[current_zone_index][1]
+		background.set_biome(biome)
+		
+	
 func _start():
-	environment_spawner.start()
+	#environment_spawner.start()
 	var waves = []
 	var wave_number = 1
 	var min_difficulty = 1
@@ -66,13 +93,13 @@ func _start():
 		b = next
 		wave_number += 1
 		
-	for wave in waves:
-		spawner.start_wave(wave)
-		await spawner.wave_complete
-		await get_tree().create_timer(2, false).timeout
+	#for wave in waves:
+	#	spawner.start_wave(wave)
+	#	await spawner.wave_complete
+	#	await get_tree().create_timer(2, false).timeout
 		
-	await _on_level_cleared_countdown_started()
-	_on_level_clear()
+	#await _on_level_cleared_countdown_started()
+	#_on_level_clear()
 	
 func _on_game_over():
 	if is_game_over == true:

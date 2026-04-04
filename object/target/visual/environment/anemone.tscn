@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://4iekim17ys54"]
+
+[ext_resource type="PackedScene" uid="uid://xg4ajeq04p03" path="res://object/target/target.tscn" id="1_ox2f6"]
+[ext_resource type="Texture2D" uid="uid://dhpqj4ajw2y5s" path="res://asset/ocean/environment/anemone/aneomone.png" id="2_vxphf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xmjbk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vxphf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Target" instance=ExtResource("1_ox2f6")]
+
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_xmjbk")
+animation = &"default"
+
+[node name="HitBox" parent="." index="2"]
+polygon = PackedVector2Array(-15, -60, 15, -60, 15, 60, -15, 60)
+
+[node name="Emitter" parent="." index="3"]
+position = Vector2(0, -3.8147e-06)

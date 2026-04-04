@@ -22,6 +22,7 @@ const DEFAULT_ABILITY_DATA = preload("res://resource/ability/barrel_roll.tres")
 @export var bob_amplitude := 40.0
 @export var bob_frequency := 0.4
 @export var max_tilt_angle := 90.0
+@export var camera: Camera2D
 
 var invulnerable := false
 var ability: Ability
@@ -53,25 +54,23 @@ func _physics_process(delta: float):
 	var bob_offset := Vector2(0.0, sin(bob_time * bob_frequency * TAU) * bob_amplitude * idle_factor)
  
 	global_position += (velocity + bob_offset) * delta
- 
-	#if velocity.length() > 8.0:
-	#	var tilt_target := velocity.x / speed * 0.18   # radians, subtle
-	#	rotation = lerp(rotation, tilt_target, 6.0 * delta)
-	#else:
-	#	rotation = lerp(rotation, 0.0, 4.0 * delta)
-		
-	# Facing: flip left/right to face the cursor, tilt up/down within max_tilt_angle.
-	# The ship never rotates past horizontal so it can never appear upside down.
+	
+	#Ship cannot move left
+	#if camera != null:
+	#	global_position.x = max(global_position.x, camera.left_edge_world_x())
+
 	var cursor_disabled = ability.active and ability.data.disables_cursor
 	if !cursor_disabled:
 		var to_cursor := get_global_mouse_position() - global_position
-		# Horizontal flip — no rotation involved, so no risk of flipping upside down
+		
+		# Horizontal flip
 		sprite.flip_h = to_cursor.x < 0
-		# Tilt: measure angle from horizontal using only the vertical component.
-		# abs(to_cursor.x) keeps the angle in the right half-plane regardless of facing.
+		
+		# Tilt
 		var raw_angle := rad_to_deg(atan2(to_cursor.y, abs(to_cursor.x)))
 		var clamped_angle = clamp(raw_angle, -max_tilt_angle, max_tilt_angle)
-		# Invert tilt when facing left so up/down stays consistent with cursor position
+		
+		# Invert tilt when facing left
 		if to_cursor.x < 0:
 			clamped_angle = -clamped_angle
 		rotation = lerp_angle(rotation, deg_to_rad(clamped_angle), rotation_speed * delta)

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://object/target/movement/path_movement.gd" id="1_ordkm"]
 [ext_resource type="Texture2D" uid="uid://dr5ccqp3ux6li" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_03.png" id="1_s1u6m"]
 [ext_resource type="Texture2D" uid="uid://c3kusqguii73v" path="res://asset/space-shooter-game-kit/Space-shooter-game-objects/PNG/Meteors/Meteor_04.png" id="2_jylkq"]
-[ext_resource type="PackedScene" uid="uid://d0d1mkpk0o1sa" path="res://object/target/visual/environmental/comet.tscn" id="2_mx7b8"]
+[ext_resource type="PackedScene" uid="uid://d0d1mkpk0o1sa" path="res://object/target/visual/environmental_old/comet.tscn" id="2_mx7b8"]
 [ext_resource type="Script" path="res://object/loot/loot_data.gd" id="3_r23gt"]
 [ext_resource type="Script" path="res://object/loot/loot_table.gd" id="4_tnjic"]
 
