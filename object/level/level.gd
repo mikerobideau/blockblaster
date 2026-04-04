@@ -52,7 +52,7 @@ func _ready() -> void:
 	_start()
 	
 func _start():
-	#environment_spawner.start()
+	environment_spawner.start()
 	var waves = []
 	var wave_number = 1
 	var min_difficulty = 1
@@ -66,13 +66,13 @@ func _start():
 		b = next
 		wave_number += 1
 		
-	#for wave in waves:
-	#	spawner.start_wave(wave)
-	#	await spawner.wave_complete
-		#await get_tree().create_timer(2, false).timeout
+	for wave in waves:
+		spawner.start_wave(wave)
+		await spawner.wave_complete
+		await get_tree().create_timer(2, false).timeout
 		
-	#await _on_level_cleared_countdown_started()
-	#_on_level_clear()
+	await _on_level_cleared_countdown_started()
+	_on_level_clear()
 	
 func _on_game_over():
 	if is_game_over == true:
