@@ -16,9 +16,7 @@ func set_ship(s: Ship):
 	target_x = s.global_position.x
 
 func _physics_process(delta: float):
-	print_debug('processing physics')
 	if ship == null:
-		print_debug('no ship!')
 		return
 		
 	var half_w := viewport_size.x / 2.0
@@ -26,7 +24,6 @@ func _physics_process(delta: float):
 	var ship_screen_fraction := ship_screen_x / viewport_size.x
 	
 	if ship_screen_fraction > deadzone_right:
-		print_debug('past the deadzone!')
 		var overshoot = (ship_screen_fraction - deadzone_right) * viewport_size.x
 		target_x += overshoot
 		
