@@ -7,6 +7,7 @@ signal removed(target: Area2D)
 const SHIP_COLLISION_DAMAGE = 1
 
 enum TargetType {
+	ANEMONE,
 	SNAKE,
 	HAWK,
 	WHALE,

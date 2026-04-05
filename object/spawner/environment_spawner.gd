@@ -6,34 +6,52 @@ signal health_collected(health: LootHealth)
 signal loot_blaster_collected(loot_blaster: LootBlaster)
 signal loot_ability_collected(loot_ability: LootAbility)
 
-var Meteor = preload("res://object/target/visual/environmental_old/meteor.tscn")
+@export var resources: Array[Resource] = [
+	preload("res://resource/target/anemone.tres")
+]
+@export var camera_path: NodePath
+@export var spawn_lookahead := 200.0
+@export var gap_min := 300.0
+@export var gap_max := 700.0
+@export var despawn_margin := 200.0
+@export var ground_height = 0.0
 
-var scene: PackedScene
-var interval_min := 1
-var interval_max := 4
-var loot_resolver := LootResolver.new()
 var blaster: PlayerBlaster
 var ship: Ship
+var camera: Camera2D
+var viewport_w: float
+var next_spawn_x: float
+var rng := RandomNumberGenerator.new()
+var loot_resolver := LootResolver.new()
 
-func start():
-	while true:
-		await get_tree().create_timer(randf_range(interval_min, interval_max), false).timeout
-		var data = Database.target.find_by_type(Target.TargetType.METEOR)
-		var instance_data = data.duplicate()
-		var scene = data.scene.instantiate()
-		scene.data = data
-		scene.global_position = _get_spawn_position()
-		scene.defeated.connect(_on_target_defeated)
-		add_child(scene)
-
-func _get_spawn_position() -> Vector2:
-	var side = randi() % 4
-	match side:
-		0: return Vector2(randf_range(0, Constant.SCREEN_WIDTH), -100)
-		1: return Vector2(randf_range(0, Constant.SCREEN_WIDTH), Constant.SCREEN_HEIGHT + 100)
-		2: return Vector2(-100, randf_range(0, Constant.SCREEN_HEIGHT))
-		3: return Vector2(Constant.SCREEN_WIDTH + 100, randf_range(0, Constant.SCREEN_HEIGHT))
-		_: return Vector2.ZERO
+func _ready():
+	viewport_w = get_viewport_rect().size.x
+	rng.randomize()
+	next_spawn_x = viewport_w + spawn_lookahead
+	
+func _process(delta: float):
+	if camera == null or resources.is_empty():
+		return
+		
+	var cam_right = camera.global_position.x + viewport_w / 2.0
+	var cam_left = camera.global_position.x - viewport_w/ 2.0
+	
+	while next_spawn_x < cam_right + spawn_lookahead:
+		spawn_object(next_spawn_x)
+		next_spawn_x += rng.randf_range(gap_min, gap_max)
+		
+	for child in get_children():
+		if child.global_position.x < cam_left - despawn_margin:
+			child.queue_free()
+	
+func spawn_object(world_x: float):
+	var data: TargetData = resources[rng.randi() % resources.size()]
+	var obj: Target = data.scene.instantiate()
+	obj.data = data
+	var ground_y = get_viewport_rect().size.y - ground_height
+	obj.global_position = Vector2(world_x, ground_y)
+	obj.defeated.connect(_on_target_defeated)
+	add_child(obj)
 
 func _on_target_defeated(target: Target):
 	if target.data and target.data.loot_table:
@@ -44,9 +62,3 @@ func _on_target_defeated(target: Target):
 			blaster,
 			ship
 		)
-		
-func set_blaster(b: PlayerBlaster):
-	blaster = b
-	
-func set_ship(s: Ship):
-	ship = s

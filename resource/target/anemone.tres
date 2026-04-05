@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="TargetData" load_steps=7 format=3 uid="uid://dpvnsb5b8u8ll"]
+
+[ext_resource type="Script" path="res://object/target/target_data.gd" id="1_4yxo7"]
+[ext_resource type="Script" path="res://object/loot/loot_data.gd" id="1_hn8pm"]
+[ext_resource type="Script" path="res://object/loot/loot_table.gd" id="1_rx8w7"]
+[ext_resource type="PackedScene" uid="uid://4iekim17ys54" path="res://object/target/visual/environment/anemone.tscn" id="2_tee0m"]
+
+[sub_resource type="Resource" id="Resource_au5bf"]
+script = ExtResource("1_hn8pm")
+loot_type = 0
+gold_min = 1
+gold_max = 5
+health_min = 1
+health_max = 5
+rarity = 0
+
+[sub_resource type="Resource" id="Resource_1hwj1"]
+script = ExtResource("1_rx8w7")
+rolls = 1
+drop_chance = 0.5
+guaranteed_entry = SubResource("Resource_au5bf")
+
+[resource]
+resource_name = "Anemone"
+script = ExtResource("1_4yxo7")
+type = 0
+scene = ExtResource("2_tee0m")
+difficulty = 1
+min_wave = 1
+loot_table = SubResource("Resource_1hwj1")
+scale = Vector2(1, 1)
+is_variable_scale = false
+health = 3
+is_leader = false
+randomize_rotation = false
+shake_on_damage = false
+debris_color = Color(1, 0.188235, 0.815686, 1)
+debris_initial_velocity_min = 200
+debris_initial_velocity_max = 300
+debris_scale_amount_min = 2
+debris_scale_amount_max = 10
+debris_sphere_radius = 128

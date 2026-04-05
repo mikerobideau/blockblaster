@@ -6,7 +6,7 @@
 [ext_resource type="Shader" path="res://shader/background.gdshader" id="3_5mcnd"]
 [ext_resource type="PackedScene" uid="uid://bgdpt4v6ldpdx" path="res://object/ability/ultimate/ultimate.tscn" id="3_bvvwg"]
 [ext_resource type="Script" path="res://object/level/background.gd" id="3_li4wn"]
-[ext_resource type="PackedScene" uid="uid://dsr014qhc0qft" path="res://object/ship/submarine.tscn" id="4_2irkm"]
+[ext_resource type="PackedScene" path="res://object/ship/submarine.tscn" id="4_2irkm"]
 [ext_resource type="PackedScene" uid="uid://dkye2q24g882b" path="res://object/ship/health.tscn" id="6_c5xln"]
 [ext_resource type="PackedScene" uid="uid://dtfr7um1stgxv" path="res://object/money/money.tscn" id="7_54rq2"]
 [ext_resource type="PackedScene" uid="uid://cusxjldgksg5c" path="res://object/spawner/terminal_side.tscn" id="8_cvbo2"]

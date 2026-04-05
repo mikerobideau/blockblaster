@@ -56,8 +56,9 @@ func _ready() -> void:
 	spawner.health_collected.connect(_on_health_collected)
 	spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
 	spawner.loot_ability_collected.connect(_on_loot_ability_collected)
-	environment_spawner.set_blaster(blaster)
-	environment_spawner.set_ship(ship)
+	environment_spawner.camera = camera
+	environment_spawner.blaster = blaster
+	environment_spawner.ship = ship
 	environment_spawner.gold_collected.connect(_on_gold_collected)
 	environment_spawner.health_collected.connect(_on_health_collected)
 	environment_spawner.loot_blaster_collected.connect(_on_loot_blaster_collected)
@@ -139,6 +140,7 @@ func _on_target_defeated(target: Target):
 	ultimate.charge(TARGET_DEFEATED_ULTIMATE_CHARGE)
 		
 func _on_loot_blaster_collected(loot_blaster: LootBlaster):
+	print_debug('loot blaster collected')
 	loot_blaster.queue_free()
 	_pause()
 	var card = CardScene.instantiate()
@@ -151,6 +153,7 @@ func _on_loot_blaster_collected(loot_blaster: LootBlaster):
 	menu.add_child(card)
 	
 func _on_loot_ability_collected(loot_ability: LootAbility):
+	print_debug('loot ability collected')
 	loot_ability.queue_free()
 	_pause()
 	var card = CardScene.instantiate()
