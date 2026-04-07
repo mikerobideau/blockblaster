@@ -39,7 +39,7 @@ func _ready() -> void:
 	background.set_biome('shallows')
 	#get_tree().debug_collisions_hint = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	camera.set_ship(ship)
+	camera.ship = ship
 	ship.camera = camera
 	ship.damage_taken.connect(_on_ship_damage_taken)
 	health.game_over.connect(_on_game_over)
