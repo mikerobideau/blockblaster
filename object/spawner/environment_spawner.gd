@@ -6,6 +6,8 @@ signal health_collected(health: LootHealth)
 signal loot_blaster_collected(loot_blaster: LootBlaster)
 signal loot_ability_collected(loot_ability: LootAbility)
 
+const ZONE_WIDTH = 1920
+
 @export var resources: Array[Resource] = [
 	preload("res://resource/target/anemone.tres")
 ]
@@ -27,27 +29,26 @@ var next_spawn_x: float
 var rng := RandomNumberGenerator.new()
 var loot_resolver := LootResolver.new()
 var current_biome := "shallows"
+var last_zone_right_edge: float = 0.0
 
 func _ready():
 	viewport_w = get_viewport_rect().size.x
 	viewport_h = get_viewport_rect().size.y
 	rng.randomize()
-	next_spawn_x = viewport_w + spawn_lookahead
+	spawn_zone(last_zone_right_edge)
 	
 func _process(delta: float):
 	if camera == null or resources.is_empty():
 		return
 		
-	var cam_right = camera.global_position.x + viewport_w / 2.0
-	var cam_left = camera.global_position.x - viewport_w/ 2.0
-	
-	while next_spawn_x < cam_right + spawn_lookahead:
-		spawn_cluster(next_spawn_x)
-		next_spawn_x += rng.randf_range(gap_min, gap_max)
+	if !next_spawn_x:
+		next_spawn_x = camera.global_position.x + viewport_w / 2 + spawn_lookahead
 		
-	for child in get_children():
-		if child.global_position.x < cam_left - despawn_margin:
-			child.queue_free()
+	var cam_right = camera.global_position.x + get_viewport_rect().size.x / 2
+		
+	if last_zone_right_edge < cam_right + spawn_lookahead:
+		spawn_zone(next_spawn_x)
+		next_spawn_x += viewport_w + spawn_lookahead
 	
 func spawn_cluster(origin_x: float):
 	var profile = get_biome_profile(current_biome)
@@ -70,6 +71,13 @@ func spawn_cluster(origin_x: float):
 		anchors_placed += 1
 		
 	#TODO: Add filler objects
+	
+func spawn_zone(x: int):
+	var zone = preload("res://object/zone/zone.tscn").instantiate()
+	zone.rng = rng
+	add_child(zone)
+	zone.global_position.x = last_zone_right_edge
+	last_zone_right_edge += ZONE_WIDTH
 	
 func spawn_object(pool: Array[Resource], x: float, y: float):
 	if pool.is_empty():

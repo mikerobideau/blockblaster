@@ -19,8 +19,8 @@ const DEFAULT_ABILITY_DATA = preload("res://resource/ability/barrel_roll.tres")
 @export var invulnerable_color := Color.RED
 @export var drag := 0.99
 @export var thrust_response := 0.02
-@export var bob_amplitude := 40.0
-@export var bob_frequency := 0.4
+@export var bob_amplitude := 0.0
+@export var bob_frequency := 0.0
 @export var max_tilt_angle := 90.0
 @export var camera: Camera2D
 
