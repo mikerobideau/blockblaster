@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv2y0jmfss8bb"]
+
+[ext_resource type="Script" path="res://object/book/page.gd" id="1_cy4t0"]
+[ext_resource type="Shader" path="res://shader/sketch.gdshader" id="1_tyh47"]
+[ext_resource type="Texture2D" uid="uid://d1difsvpsh38n" path="res://asset/ocean/character/submarine/1.png" id="2_0rtfr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nj7p4"]
+shader = ExtResource("1_tyh47")
+shader_parameter/sample_scale = 4.0
+shader_parameter/edge_strength = 2.0
+shader_parameter/threshold = 0.1
+shader_parameter/texel_size = null
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_68tsd"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Page" type="Node2D"]
+script = ExtResource("1_cy4t0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 1, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_nj7p4")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_68tsd")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1920, 1080)
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_0rtfr")
