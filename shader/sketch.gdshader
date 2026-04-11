@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform float sample_scale = 0.5;
-uniform float edge_strength = 0.5;
+uniform float sample_scale = 1.0	;
+uniform float edge_strength = 1.0;
 uniform float threshold = 0.1;
 uniform vec2 texel_size;
 
