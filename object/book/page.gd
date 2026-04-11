@@ -11,12 +11,12 @@ func _ready():
 	var size: Vector2 = Vector2(subviewport.size)
 	sketch.material.set_shader_parameter("reveal_progress", 0.0)
 	sketch.material.set_shader_parameter("texel_size", Vector2(1.0, 1.0) / size)
-	await get_tree().create_timer(0.05).timeout
+	await get_tree().create_timer(0.5).timeout
 	chapter.start_typing()
-	await get_tree().create_timer(0.05).timeout
+	await get_tree().create_timer(0.5).timeout
 	await chapter.finished_typing
 	_reveal_sketch()
 	
 func _reveal_sketch():
 	var tween = create_tween()
-	tween.tween_property(sketch.material, "shader_parameter/reveal_progress", 1.0, 3.0)
+	tween.tween_property(sketch.material, "shader_parameter/reveal_progress", 1.0, 1.0)
