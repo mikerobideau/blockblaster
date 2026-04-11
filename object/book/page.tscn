@@ -1,38 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://dv2y0jmfss8bb"]
+[gd_scene load_steps=7 format=3 uid="uid://dv2y0jmfss8bb"]
 
 [ext_resource type="Script" path="res://object/book/page.gd" id="1_cy4t0"]
 [ext_resource type="Shader" path="res://shader/sketch.gdshader" id="1_tyh47"]
 [ext_resource type="Texture2D" uid="uid://d1difsvpsh38n" path="res://asset/ocean/character/submarine/1.png" id="2_0rtfr"]
+[ext_resource type="PackedScene" uid="uid://ceer316vmcaly" path="res://object/book/typewriter_text/typewriter_text.tscn" id="2_y3l1y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nj7p4"]
 shader = ExtResource("1_tyh47")
 shader_parameter/sample_scale = 4.0
 shader_parameter/edge_strength = 2.0
 shader_parameter/threshold = 0.1
-shader_parameter/texel_size = null
+shader_parameter/reveal_progress = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_fky7c"]
-viewport_path = NodePath("SubViewport")
+viewport_path = NodePath("Picture/SubViewport")
 
-[node name="Page" type="Node2D"]
+[node name="Page" type="Control"]
+custom_minimum_size = Vector2(600, 900)
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_cy4t0")
 
-[node name="Page" type="ColorRect" parent="."]
-visible = false
+[node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(600, 900)
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(300, 200)
+[node name="ChapterContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 100.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="RawImage" type="TextureRect" parent="SubViewport"]
+[node name="TypewriterText" parent="ChapterContainer" instance=ExtResource("2_y3l1y")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+
+[node name="Picture" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 900.0
+
+[node name="SubViewport" type="SubViewport" parent="Picture"]
+size = Vector2i(461, 334)
+
+[node name="RawImage" type="TextureRect" parent="Picture/SubViewport"]
 offset_right = 461.0
 offset_bottom = 334.0
 texture = ExtResource("2_0rtfr")
 
-[node name="Sketch" type="TextureRect" parent="."]
+[node name="Sketch" type="TextureRect" parent="Picture"]
 material = SubResource("ShaderMaterial_nj7p4")
-offset_right = 300.0
-offset_bottom = 200.0
+layout_mode = 2
 texture = SubResource("ViewportTexture_fky7c")

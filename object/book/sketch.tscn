@@ -8,7 +8,7 @@ shader = ExtResource("1_nn7gb")
 shader_parameter/sample_scale = 0.5
 shader_parameter/edge_strength = 5.0
 shader_parameter/threshold = 0.2
-shader_parameter/texel_size = null
+shader_parameter/reveal_progress = 0.0
 
 [node name="Sketch" type="SubViewport"]
 

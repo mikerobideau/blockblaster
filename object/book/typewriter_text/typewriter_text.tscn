@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceer316vmcaly"]
+
+[ext_resource type="Script" path="res://object/book/typewriter_text/typewriter_text.gd" id="1_gfdhr"]
+
+[node name="TypewriterText" type="Label"]
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Chapter 1"
+script = ExtResource("1_gfdhr")
+
+[node name="Timer" type="Timer" parent="."]
